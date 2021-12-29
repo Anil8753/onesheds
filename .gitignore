@@ -17,3 +17,4 @@
 *.DS_Store
 
 /dev/vars/
+apps/ag-warhousemen/service/bin/gin.log
