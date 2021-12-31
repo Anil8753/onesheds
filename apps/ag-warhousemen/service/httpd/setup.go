@@ -5,7 +5,9 @@ import (
 	"io"
 	"log"
 	"os"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -35,4 +37,20 @@ func Setup() {
 
 	// Use the following code if you need to write the logs to file and console at the same time.
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+}
+
+func SetupCORS(engine *gin.Engine) {
+	// CORS for https://foo.com and https://github.com origins, allowing:
+	// - PUT and PATCH methods
+	// - Origin header
+	// - Credentials share
+	// - Preflight requests cached for 12 hours
+	engine.Use(cors.New(cors.Config{
+		//AllowAllOrigins: true,
+		AllowOrigins:     []string{"http://localhost:4200"},
+		AllowMethods:     []string{"*"},
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: false,
+		MaxAge:           12 * time.Hour,
+	}))
 }

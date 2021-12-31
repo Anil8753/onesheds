@@ -85,5 +85,5 @@ func ExtractTokenID(c *gin.Context) (string, error) {
 		return u.(string), nil
 	}
 
-	return "", nil
+	return "", errors.New("user token is not valid")
 }

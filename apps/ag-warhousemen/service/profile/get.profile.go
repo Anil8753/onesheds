@@ -2,18 +2,27 @@ package profile
 
 import (
 	"encoding/json"
+
 	"net/http"
 
 	"github.com/anil8753/onesheds/apps/warehousemen/service/auth"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/token"
 	"github.com/gin-gonic/gin"
 )
 
 func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		user := "anilkumar@gmail.com"
+		user, err := token.ExtractTokenID(c)
+		if err != nil {
+			c.JSON(
+				http.StatusUnauthorized,
+				nethttp.NewHttpResponseWithMsg(nethttp.UserNotAuthorized, err.Error()),
+			)
+			return
+		}
 
 		iud, err := s.Dep.GetDB().Get(user)
 		if err != nil {

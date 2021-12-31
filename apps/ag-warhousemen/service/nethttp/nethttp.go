@@ -11,6 +11,7 @@ const (
 	WrongCredentials
 	UserAlreadyExist
 	UserNotExist
+	UserNotAuthorized
 	InvalidRequestData
 	ServerIssue
 )
@@ -24,6 +25,7 @@ func init() {
 		WrongCredentials:   "wrong credentials",
 		UserAlreadyExist:   "user already exist",
 		UserNotExist:       "user not exist",
+		UserNotAuthorized:  "user not authorized",
 		InvalidRequestData: "invalid request data",
 		ServerIssue:        "server issue",
 	}

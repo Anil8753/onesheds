@@ -9,6 +9,7 @@ func main() {
 	Setup()
 
 	engine := gin.Default()
+	SetupCORS(engine)
 	hDependencies := NewHandlerDependency()
 	InitRoutes(engine, hDependencies)
 
