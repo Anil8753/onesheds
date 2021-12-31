@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -22,29 +22,29 @@ import { TokenInterceptor } from './intercepters/token.interceptor';
 import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignupComponent,
-    SigninComponent,
-    PageNotFoundComponent,
-    DashboardComponent,
-    VerifyAccountComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgbModule,
-    ReactiveFormsModule,
-    FormlyModule.forRoot(),
-    FormlyBootstrapModule,
-    BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), // ToastrModule added
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-  ],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      SignupComponent,
+      SigninComponent,
+      PageNotFoundComponent,
+      DashboardComponent,
+      VerifyAccountComponent,
+   ],
+   imports: [
+      BrowserModule,
+      AppRoutingModule,
+      HttpClientModule,
+      NgbModule,
+      ReactiveFormsModule,
+      FormlyModule.forRoot(),
+      FormlyBootstrapModule,
+      BrowserAnimationsModule, // required animations module
+      ToastrModule.forRoot(), // ToastrModule added
+   ],
+   providers: [
+      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+   ],
+   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -7,16 +7,20 @@ import { SignupComponent } from './components/signup/signup.component';
 import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
 
 const routes: Routes = [
-  {path: 'signin', component: SigninComponent},
-  {path: 'signup', component: SignupComponent},
-  {path: 'verify_account', component: VerifyAccountComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: '', redirectTo: '/dashboardng generate component page-not-found', pathMatch: 'full'},
-  {path: '**', component: PageNotFoundComponent}
+   { path: 'signin', component: SigninComponent },
+   { path: 'signup', component: SignupComponent },
+   { path: 'verify_account', component: VerifyAccountComponent },
+   { path: 'dashboard', component: DashboardComponent },
+   {
+      path: '',
+      redirectTo: '/dashboardng generate component page-not-found',
+      pathMatch: 'full',
+   },
+   { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+   imports: [RouterModule.forRoot(routes)],
+   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

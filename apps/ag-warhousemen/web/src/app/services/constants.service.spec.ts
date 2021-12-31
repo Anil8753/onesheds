@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ConfigService } from './config.service';
+import { ConstantsService } from './constants.service';
 
-describe('ConfigService', () => {
-   let service: ConfigService;
+describe('ConstantsService', () => {
+   let service: ConstantsService;
 
    beforeEach(() => {
       TestBed.configureTestingModule({});
-      service = TestBed.inject(ConfigService);
+      service = TestBed.inject(ConstantsService);
    });
 
    it('should be created', () => {
