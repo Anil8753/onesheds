@@ -19,10 +19,8 @@ export class SigninComponent implements OnInit {
    fields: FormlyFieldConfig[] = [];
 
    constructor(
-      private http: HttpClient,
       private router: Router,
       private toastr: ToastrService,
-      private configService: ConfigService,
       private authService: AuthService,
       private errMsgService: ErrorMsgService
    ) {

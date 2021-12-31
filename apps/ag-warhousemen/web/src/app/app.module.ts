@@ -17,7 +17,6 @@ import { SigninComponent } from './components/signin/signin.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ToastrModule } from 'ngx-toastr';
-import { JwtInterceptor } from './intercepters/jwt.interceptor';
 import { TokenInterceptor } from './intercepters/token.interceptor';
 import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
 
@@ -42,7 +41,6 @@ import { VerifyAccountComponent } from './components/verify-account/verify-accou
       ToastrModule.forRoot(), // ToastrModule added
    ],
    providers: [
-      { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
       { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
    ],
    bootstrap: [AppComponent],
