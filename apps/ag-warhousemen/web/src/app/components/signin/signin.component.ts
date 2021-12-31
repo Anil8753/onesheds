@@ -6,6 +6,7 @@ import { ConfigService } from 'src/app/services/config.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
+import { ErrorMsgService } from 'src/app/services/error-msg.service';
 
 @Component({
   selector: 'app-signin',
@@ -24,6 +25,7 @@ export class SigninComponent implements OnInit {
     private toastr: ToastrService,
     private configService: ConfigService,
     private authService: AuthService,
+    private errMsgService: ErrorMsgService,
   ) { 
     this.initFormly();
   }
@@ -48,7 +50,7 @@ export class SigninComponent implements OnInit {
           this.router.navigateByUrl('dashboard');
         },
         error: (e) => {
-          this.toastr.error('Login failed. Please check your user id and password.', 'Error!');
+          this.toastr.error(this.errMsgService.get(e.error), 'Error!');
           console.error(e)
         },
         complete: () => {} 

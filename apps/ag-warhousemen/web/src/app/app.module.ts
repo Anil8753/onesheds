@@ -19,6 +19,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ToastrModule } from 'ngx-toastr';
 import { JwtInterceptor } from './intercepters/jwt.interceptor';
 import { TokenInterceptor } from './intercepters/token.interceptor';
+import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TokenInterceptor } from './intercepters/token.interceptor';
     SignupComponent,
     SigninComponent,
     PageNotFoundComponent,
-    DashboardComponent
+    DashboardComponent,
+    VerifyAccountComponent
   ],
   imports: [
     BrowserModule,

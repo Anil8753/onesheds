@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ConfigService } from 'src/app/services/config.service';
 import { ToastrService } from 'ngx-toastr';
+import { ErrorMsgService } from 'src/app/services/error-msg.service';
 
 @Component({
   selector: 'app-signup',
@@ -22,6 +23,7 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private configService: ConfigService,
+    private errMsgService: ErrorMsgService,
     ) {
       this.initFormly();
      }
@@ -50,7 +52,7 @@ export class SignupComponent implements OnInit {
           this.router.navigateByUrl('/signin');
         },
         error: (e) => {
-          this.toastr.error('Registration failed. Please contact support', 'Error!');
+          this.toastr.error(this.errMsgService.get(e.error), 'Error!');
           console.error(e)
         },
         complete: () => {}
