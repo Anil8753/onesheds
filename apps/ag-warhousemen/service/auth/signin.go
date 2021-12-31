@@ -17,7 +17,7 @@ type SigninReq struct {
 }
 
 type SigninResp struct {
-	AccessToken string `json:"access_token"`
+	AccessToken string `json:"accessToken"`
 }
 
 func (s *Auth) SigninHandler() gin.HandlerFunc {

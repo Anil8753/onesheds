@@ -1,9 +1,9 @@
 package nethttp
 
 type HttpResponse struct {
-	Code     int
-	CodeDesc string
-	Desc     interface{}
+	Code     int         `json:"code"`
+	CodeDesc string      `json:"codeDesc"`
+	Data     interface{} `json:"data"`
 }
 
 const (
@@ -38,5 +38,5 @@ func NewHttpResponse(code int) *HttpResponse {
 
 func NewHttpResponseWithMsg(code int, msg interface{}) *HttpResponse {
 	codedesc := mappings[code]
-	return &HttpResponse{Code: code, CodeDesc: codedesc, Desc: msg}
+	return &HttpResponse{Code: code, CodeDesc: codedesc, Data: msg}
 }

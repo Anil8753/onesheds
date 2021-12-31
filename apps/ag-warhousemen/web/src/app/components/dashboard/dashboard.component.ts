@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
          .get<any>(`${this.configService.baseUrl()}/api/v1/profile`)
          .subscribe({
             next: (v) => {
-               const cert = JSON.parse(v['Desc']);
+               const cert = JSON.parse(v['data']);
                this.profileData = JSON.stringify(cert, null, 4);
             },
             error: (e) => {

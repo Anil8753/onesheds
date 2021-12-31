@@ -1,5 +1,11 @@
-import { HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, tap } from 'rxjs';
+import { ConfigService } from './config.service';
+import { INTERCEPTOR_NO_AUTH_HEADER } from '../services/constants.service';
+
+const ACCESS_TOKEN_LOCAL_STORAGE_KEY = 'auth.accessToken';
+// const REFRESH_TOKEN_LOCAL_STORAGE_KEY = 'auth.refreshToken';
 
 @Injectable({
    providedIn: 'root',
@@ -7,14 +13,33 @@ import { Injectable } from '@angular/core';
 export class AuthService {
    cachedRequests: Array<HttpRequest<any>> = [];
 
-   constructor() {}
+   constructor(
+      private http: HttpClient,
+      private configService: ConfigService
+   ) {}
 
-   public setToken(token: string) {
-      localStorage.setItem('token', token);
+   public signIn(reqData: any): Observable<SigninResp> {
+      return this.http
+         .post<SigninResp>(
+            `${this.configService.baseUrl()}/api/v1/signin`,
+            reqData,
+            {
+               headers: { [INTERCEPTOR_NO_AUTH_HEADER]: 'true' },
+            }
+         )
+         .pipe(
+            tap((resp) => {
+               this.setAccessToken(resp.data.accessToken);
+            })
+         );
    }
 
-   public getToken(): string | null {
-      return localStorage.getItem('token');
+   public setAccessToken(token: string) {
+      localStorage.setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, token);
+   }
+
+   public getAccessToken(): string | null {
+      return localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY);
    }
 
    // public isAuthenticated(): boolean {
@@ -32,4 +57,14 @@ export class AuthService {
       // retry the requests. this method can
       // be called after the token is refreshed
    }
+}
+
+export interface SigninResp {
+   code: number;
+   codeDesc: string;
+   data: Data;
+}
+
+export interface Data {
+   accessToken: string;
 }

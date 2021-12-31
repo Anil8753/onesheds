@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorMsgService } from 'src/app/services/error-msg.service';
-import { INTERCEPTOR_NO_AUTH_HEADER } from '../../services/constants.service';
 
 @Component({
    selector: 'app-signin',
@@ -42,25 +41,16 @@ export class SigninComponent implements OnInit {
          password: this.model.password,
       };
 
-      this.http
-         .post<SigninResp>(
-            `${this.configService.baseUrl()}/api/v1/signin`,
-            postData,
-            {
-               headers: { [INTERCEPTOR_NO_AUTH_HEADER]: 'true' },
-            }
-         )
-         .subscribe({
-            next: (v) => {
-               this.authService.setToken(v.Desc.access_token);
-               this.router.navigateByUrl('dashboard');
-            },
-            error: (e) => {
-               this.toastr.error(this.errMsgService.get(e.error), 'Error!');
-               console.error(e);
-            },
-            complete: () => {},
-         });
+      this.authService.signIn(postData).subscribe({
+         next: (v) => {
+            this.router.navigateByUrl('dashboard');
+         },
+         error: (e) => {
+            this.toastr.error(this.errMsgService.get(e.error), 'Error!');
+            console.error(e);
+         },
+         complete: () => {},
+      });
    }
 
    private initFormly() {
@@ -90,14 +80,4 @@ export class SigninComponent implements OnInit {
 interface SigninModel {
    email: string;
    password: string;
-}
-
-interface SigninResp {
-   Code: number;
-   CodeDesc: string;
-   Desc: Desc;
-}
-
-interface Desc {
-   access_token: string;
 }

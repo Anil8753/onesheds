@@ -23,16 +23,16 @@ export class ErrorMsgService {
    constructor() {}
 
    public get(obj: ErrorObject): string {
-      if (this.errors.has(obj.Code)) {
-         return this.errors.get(obj.Code) as string;
+      if (this.errors.has(obj.code)) {
+         return this.errors.get(obj.code) as string;
       }
 
-      if (!!obj.CodeDesc) {
-         return obj.CodeDesc;
+      if (!!obj.codeDesc) {
+         return obj.codeDesc;
       }
 
-      if (!!obj.Desc) {
-         return obj.Desc;
+      if (!!obj.data) {
+         return obj.data;
       }
 
       return 'Unknown error, please try after some time';
@@ -40,7 +40,7 @@ export class ErrorMsgService {
 }
 
 export interface ErrorObject {
-   Code: number;
-   CodeDesc: string;
-   Desc: string;
+   code: number;
+   codeDesc: string;
+   data: string;
 }

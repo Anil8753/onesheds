@@ -29,7 +29,8 @@ export class TokenInterceptor implements HttpInterceptor {
          );
       }
 
-      if (!!this.auth.getToken()) {
+      // has access token
+      if (!!this.auth.getAccessToken()) {
          return next.handle(this.addTokenToRequest(request));
       }
 
@@ -42,7 +43,7 @@ export class TokenInterceptor implements HttpInterceptor {
    private addTokenToRequest(request: HttpRequest<any>): HttpRequest<any> {
       return request.clone({
          setHeaders: {
-            Authorization: `Bearer ${this.auth.getToken()}`,
+            Authorization: `Bearer ${this.auth.getAccessToken()}`,
          },
       });
    }
