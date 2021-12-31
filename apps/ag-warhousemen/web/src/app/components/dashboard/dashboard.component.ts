@@ -23,10 +23,11 @@ export class DashboardComponent implements OnInit {
   }
 
   fetch() {
-    this.http.get(`${this.configService.baseUrl()}/api/v1/profile`)
+    this.http.get<any>(`${this.configService.baseUrl()}/api/v1/profile`)
       .subscribe({
         next: (v) => {
-          this.profileData = v;
+          const cert = JSON.parse(v["Desc"])
+          this.profileData = JSON.stringify(cert, null, 4)
         },
         error: (e) => {
           this.toastr.error('Failed to fetch the profile data.', 'Error!');
