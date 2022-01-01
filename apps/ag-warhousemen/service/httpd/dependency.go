@@ -16,7 +16,7 @@ func (i *HandlerDependency) GetDB() interfaces.Database {
 func NewHandlerDependency() *HandlerDependency {
 
 	h := HandlerDependency{
-		DBInst: db.New(),
+		DBInst: db.NewLevelDB("generic"),
 	}
 
 	return &h

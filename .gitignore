@@ -21,3 +21,6 @@ apps/ag-warhousemen/service/bin/gin.log
 apps/ag-warhousemen/service/service.log
 apps/ag-warhousemen/service/bin/service.log
 apps/ag-warhousemen/bin/service.log
+apps/ag-warhousemen/bin/db
+apps/ag-warhousemen/bin/db
+apps/ag-warhousemen/service/bin/generic/db
