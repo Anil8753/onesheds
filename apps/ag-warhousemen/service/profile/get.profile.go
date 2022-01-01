@@ -8,25 +8,17 @@ import (
 	"github.com/anil8753/onesheds/apps/warehousemen/service/auth"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/token"
 	"github.com/gin-gonic/gin"
 )
 
 func (s *Profile) GetProfileHandler() gin.HandlerFunc {
-	return func(c *gin.Context) {
+	return func(ctx *gin.Context) {
 
-		u, err := token.ExtractUserData(c)
-		if err != nil {
-			c.JSON(
-				http.StatusUnauthorized,
-				nethttp.NewHttpResponseWithMsg(nethttp.UserNotAuthorized, err.Error()),
-			)
-			return
-		}
+		user := ctx.GetString("user")
 
-		iud, err := s.Dep.GetDB().Get(u.User)
+		iud, err := s.Dep.GetDB().Get(user)
 		if err != nil {
-			c.JSON(
+			ctx.JSON(
 				http.StatusBadRequest,
 				nethttp.NewHttpResponseWithMsg(nethttp.UserNotExist, err.Error()),
 			)
@@ -35,7 +27,7 @@ func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 
 		b, err := json.Marshal(iud)
 		if err != nil {
-			c.JSON(
+			ctx.JSON(
 				http.StatusInternalServerError,
 				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
 			)
@@ -44,7 +36,7 @@ func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 
 		var udata auth.UserData
 		if err := json.Unmarshal(b, &udata); err != nil {
-			c.JSON(
+			ctx.JSON(
 				http.StatusInternalServerError,
 				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
 			)
@@ -53,14 +45,14 @@ func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 
 		resp, err := s.executeLedger(udata.Crypto)
 		if err != nil {
-			c.JSON(
+			ctx.JSON(
 				http.StatusInternalServerError,
 				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
 			)
 			return
 		}
 
-		c.JSON(
+		ctx.JSON(
 			http.StatusOK,
 			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, string(resp)),
 		)

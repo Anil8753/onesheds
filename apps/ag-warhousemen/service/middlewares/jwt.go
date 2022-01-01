@@ -8,13 +8,24 @@ import (
 )
 
 func JwtAuth() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		err := token.TokenValid(c)
+	return func(ctx *gin.Context) {
+		err := token.TokenValid(ctx)
 		if err != nil {
-			c.String(http.StatusUnauthorized, "Unauthorized")
-			c.Abort()
+			ctx.String(http.StatusUnauthorized, "Unauthorized")
+			ctx.Abort()
 			return
 		}
-		c.Next()
+
+		u, err := token.ExtractUserData(ctx)
+		if err != nil {
+			ctx.String(http.StatusUnauthorized, "Unauthorized")
+			ctx.Abort()
+			return
+		}
+
+		ctx.Set("user", u.User)
+		ctx.Set("userUniqueId", u.UserUniqueId)
+
+		ctx.Next()
 	}
 }
