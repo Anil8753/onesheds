@@ -15,7 +15,7 @@ import (
 func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		user, err := token.ExtractTokenID(c)
+		u, err := token.ExtractUserData(c)
 		if err != nil {
 			c.JSON(
 				http.StatusUnauthorized,
@@ -24,7 +24,7 @@ func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 			return
 		}
 
-		iud, err := s.Dep.GetDB().Get(user)
+		iud, err := s.Dep.GetDB().Get(u.User)
 		if err != nil {
 			c.JSON(
 				http.StatusBadRequest,

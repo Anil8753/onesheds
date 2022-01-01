@@ -32,6 +32,7 @@ func InitRoutes(engine *gin.Engine, dep *HandlerDependency) {
 	public := api.Group("/v1")
 	public.POST("/signup", r.HAuth.SignupHandler())
 	public.POST("/signin", r.HAuth.SigninHandler())
+	public.POST("/refreshtoken", r.HAuth.RefreshTokenHandler())
 
 	// protected
 	protected := api.Group("/v1")

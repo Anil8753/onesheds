@@ -6,7 +6,7 @@ import { INTERCEPTOR_NO_AUTH_HEADER } from '../services/constants.service';
 import { Router } from '@angular/router';
 
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = 'auth.accessToken';
-// const REFRESH_TOKEN_LOCAL_STORAGE_KEY = 'auth.refreshToken';
+const REFRESH_TOKEN_LOCAL_STORAGE_KEY = 'auth.refreshToken';
 
 @Injectable({
    providedIn: 'root',
@@ -32,6 +32,7 @@ export class AuthService {
          .pipe(
             tap((resp) => {
                this.setAccessToken(resp.data.accessToken);
+               this.setRefreshToken(resp.data.refreshToken);
             })
          );
    }
@@ -46,7 +47,7 @@ export class AuthService {
 
       return this.http
          .post<SigninResp>(
-            `${this.configService.baseUrl()}/api/v1/refreshToken`,
+            `${this.configService.baseUrl()}/api/v1/refreshtoken`,
             postData,
             {
                headers: { [INTERCEPTOR_NO_AUTH_HEADER]: 'true' },
@@ -71,8 +72,12 @@ export class AuthService {
       return localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY);
    }
 
+   public setRefreshToken(token: string) {
+      localStorage.setItem(REFRESH_TOKEN_LOCAL_STORAGE_KEY, token);
+   }
+
    public getRefreshToken(): string | null {
-      return '';
+      return localStorage.getItem(REFRESH_TOKEN_LOCAL_STORAGE_KEY);
    }
 }
 
@@ -84,4 +89,5 @@ export interface SigninResp {
 
 export interface Data {
    accessToken: string;
+   refreshToken: string;
 }

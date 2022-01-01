@@ -21,6 +21,10 @@ export class DashboardComponent implements OnInit {
       this.fetch();
    }
 
+   refresh() {
+      this.fetch();
+   }
+   
    fetch() {
       this.http
          .get<any>(`${this.configService.baseUrl()}/api/v1/profile`)

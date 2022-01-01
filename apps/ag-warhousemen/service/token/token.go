@@ -3,6 +3,7 @@ package token
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -12,21 +13,93 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GenerateToken(userUniqueID string) (string, error) {
+type UserData struct {
+	User         string
+	UserUniqueId string
+}
 
-	token_lifespan, err := strconv.Atoi(os.Getenv("TOKEN_HOUR_LIFESPAN"))
+type TokenPair struct {
+	AccessToken  string `json:"accessToken"`
+	RefreshToken string `json:"refreshToken"`
+}
 
+func GenerateTokenPair(u *UserData) (*TokenPair, error) {
+
+	secret := os.Getenv("API_SECRET")
+	accessTokenTimespan, err := strconv.Atoi(os.Getenv("ACCESS_TOKEN_MIN_LIFESPAN"))
 	if err != nil {
-		return "", err
+		accessTokenTimespan = 5
+		log.Default().Println("env ACCESS_TOKEN_MIN_LIFESPAN not set. using default value 5 minutes")
 	}
 
-	claims := jwt.MapClaims{}
-	claims["authorized"] = true
-	claims["user_id"] = userUniqueID
-	claims["exp"] = time.Now().Add(time.Hour * time.Duration(token_lifespan)).Unix()
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	refreshTokenTimespan, err := strconv.Atoi(os.Getenv("REFRESH_TOKEN_HOUR_LIFESPAN"))
+	if err != nil {
+		refreshTokenTimespan = 6
+		log.Default().Println("env ACCESS_TOKEN_MIN_LIFESPAN not set. using default value 6 hours")
+	}
 
-	return token.SignedString([]byte(os.Getenv("API_SECRET")))
+	// Create token
+	token := jwt.New(jwt.SigningMethodHS256)
+
+	// Set claims
+	claims := token.Claims.(jwt.MapClaims)
+	claims["sub"] = 1
+	claims["authorized"] = true
+	claims["user"] = u.User
+	claims["userUniqueId"] = u.UserUniqueId
+	claims["exp"] = time.Now().Add(time.Minute * time.Duration(accessTokenTimespan)).Unix()
+
+	// Generate encoded token and send it as response.
+	// The signing string should be secret (a generated UUID works too)
+	t, err := token.SignedString([]byte(secret))
+	if err != nil {
+		return nil, err
+	}
+
+	refreshToken := jwt.New(jwt.SigningMethodHS256)
+	rtClaims := refreshToken.Claims.(jwt.MapClaims)
+	rtClaims["sub"] = 1
+	rtClaims["user"] = u.User
+	rtClaims["exp"] = time.Now().Add(time.Hour * time.Duration(refreshTokenTimespan)).Unix()
+
+	rt, err := refreshToken.SignedString([]byte(secret))
+	if err != nil {
+		return nil, err
+	}
+
+	return &TokenPair{AccessToken: t, RefreshToken: rt}, nil
+}
+
+func ExtractUserData(c *gin.Context) (*UserData, error) {
+
+	tokenString := ExtractToken(c)
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte(os.Getenv("API_SECRET")), nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if ok && token.Valid {
+		user, ok := claims["user"]
+		if !ok {
+			return nil, errors.New("user not found")
+		}
+
+		userUniqueId, ok := claims["userUniqueId"]
+		if !ok {
+			return nil, errors.New("userUniqueId not found")
+		}
+
+		return &UserData{User: user.(string), UserUniqueId: userUniqueId.(string)}, nil
+	}
+
+	return nil, errors.New("user token is not valid")
 }
 
 func TokenValid(c *gin.Context) error {
@@ -61,29 +134,31 @@ func ExtractToken(c *gin.Context) string {
 	return ""
 }
 
-func ExtractTokenID(c *gin.Context) (string, error) {
-
-	tokenString := ExtractToken(c)
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+func GetUserFromRefreshToken(tokenStr string) (string, error) {
+	// Parse takes the token string and a function for looking up the key.
+	// The latter is especially useful if you use multiple keys for your application.
+	// The standard is to use 'kid' in the head of the token to identify
+	// which key to use, but the parsed token (head and claims) is provided
+	// to the callback, providing flexibility.
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
+
+		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 		return []byte(os.Getenv("API_SECRET")), nil
 	})
 
-	if err != nil {
-		return "", err
-	}
-
-	claims, ok := token.Claims.(jwt.MapClaims)
-	if ok && token.Valid {
-		u, ok := claims["user_id"]
-
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		// Get the user record from database or
+		u, ok := claims["user"]
 		if !ok {
-			return "", errors.New("user_id not found")
+			return "", errors.New("user key not found in the claim")
 		}
+
 		return u.(string), nil
 	}
 
-	return "", errors.New("user token is not valid")
+	return "", err
 }

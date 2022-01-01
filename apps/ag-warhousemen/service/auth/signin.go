@@ -16,16 +16,12 @@ type SigninReq struct {
 	Password string `json:"password" binding:"required"`
 }
 
-type SigninResp struct {
-	AccessToken string `json:"accessToken"`
-}
-
 func (s *Auth) SigninHandler() gin.HandlerFunc {
-	return func(c *gin.Context) {
+	return func(ctx *gin.Context) {
 
 		var reqData SigninReq
-		if err := c.ShouldBindJSON(&reqData); err != nil {
-			c.JSON(
+		if err := ctx.ShouldBindJSON(&reqData); err != nil {
+			ctx.JSON(
 				http.StatusBadRequest,
 				nethttp.NewHttpResponseWithMsg(nethttp.InvalidRequestData, err.Error()),
 			)
@@ -34,7 +30,7 @@ func (s *Auth) SigninHandler() gin.HandlerFunc {
 
 		u, err := s.getUserData(reqData.User)
 		if err != nil {
-			c.JSON(
+			ctx.JSON(
 				http.StatusBadRequest,
 				nethttp.NewHttpResponseWithMsg(nethttp.UserNotExist, err.Error()),
 			)
@@ -44,7 +40,7 @@ func (s *Auth) SigninHandler() gin.HandlerFunc {
 		// check password
 		err = s.loginCheck(u.Password, reqData.Password)
 		if err != nil {
-			c.JSON(
+			ctx.JSON(
 				http.StatusUnauthorized,
 				nethttp.NewHttpResponse(nethttp.WrongCredentials),
 			)
@@ -52,18 +48,18 @@ func (s *Auth) SigninHandler() gin.HandlerFunc {
 		}
 
 		// generate jwt token
-		token, err := token.GenerateToken(u.User)
+		tokenPair, err := token.GenerateTokenPair(&token.UserData{User: u.User, UserUniqueId: u.UserUniqueId})
 		if err != nil {
-			c.JSON(
+			ctx.JSON(
 				http.StatusInternalServerError,
 				nethttp.NewHttpResponseWithMsg(nethttp.WrongCredentials, err.Error()),
 			)
 			return
 		}
 
-		c.JSON(
+		ctx.JSON(
 			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, SigninResp{AccessToken: token}),
+			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, tokenPair),
 		)
 	}
 }
