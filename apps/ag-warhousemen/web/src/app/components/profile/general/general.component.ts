@@ -123,12 +123,11 @@ export class GeneralComponent implements OnInit {
             fieldGroup: [
                {
                   className: 'col-3',
-                  key: 'pin',
+                  key: 'pincode',
                   type: 'input',
                   templateOptions: {
                      label: 'PIN',
                      placeholder: 'Enter PIN number',
-                     type: 'number',
                      required: true,
                   },
                },
