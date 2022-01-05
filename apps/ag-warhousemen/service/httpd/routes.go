@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/anil8753/onesheds/apps/warehousemen/service/auth"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/profile"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/middlewares"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/profile"
 
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
@@ -38,5 +38,7 @@ func InitRoutes(engine *gin.Engine, dep *HandlerDependency) {
 	protected := api.Group("/v1")
 	protected.Use(middlewares.JwtAuth())
 
+	protected.GET("/identity", r.HProfile.GetIdentityHandler())
 	protected.GET("/profile", r.HProfile.GetProfileHandler())
+	protected.PUT("/profile", r.HProfile.UpdateProfileHandler())
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ConfigService } from 'src/app/services/config.service';
-import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
    selector: 'app-dashboard',
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
    styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-   profileData = {};
+   identityData: any;
 
    constructor(
       private http: HttpClient,
@@ -24,14 +24,14 @@ export class DashboardComponent implements OnInit {
    refresh() {
       this.fetch();
    }
-   
+
    fetch() {
       this.http
-         .get<any>(`${this.configService.baseUrl()}/api/v1/profile`)
+         .get<any>(`${this.configService.baseUrl()}/api/v1/identity`)
          .subscribe({
             next: (v) => {
-               const cert = JSON.parse(v['data']);
-               this.profileData = JSON.stringify(cert, null, 4);
+               const resp = JSON.parse(v['data']);
+               this.identityData = JSON.stringify(resp, null, 2);
             },
             error: (e) => {
                this.toastr.error('Failed to fetch the profile data.', 'Error!');

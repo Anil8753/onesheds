@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <formly-form [form]=" form" [fields]="fields" [model]="model">
+    </formly-form>
+
+    <div class="text-right mt-4">
+        <button type="submit"
+            class="btn btn-success">
+            Update
+        </button>
+    </div>
+</form>

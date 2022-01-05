@@ -21,6 +21,8 @@ func NewRegisterationData(input string) (*RegisterationData, error) {
 		return nil, errors.New("UniqueId is mandatory")
 	}
 
+	regData.DocType = "userRegData"
+
 	return &regData, nil
 }
 

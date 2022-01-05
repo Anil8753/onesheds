@@ -1,0 +1,24 @@
+
+<div class="m-4 bg-light" *ngIf="!!regData">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>General</a>
+        <ng-template ngbNavContent>
+          <div class="w-box">
+              <app-general [data]="regData"></app-general>
+              </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>Documents</a>
+        <ng-template ngbNavContent>
+          <div class="w-box">
+              <app-documents [data]="regData"></app-documents>
+            </div>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>
+
+

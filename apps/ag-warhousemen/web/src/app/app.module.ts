@@ -19,6 +19,12 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ToastrModule } from 'ngx-toastr';
 import { TokenInterceptor } from './intercepters/token.interceptor';
 import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { WarehouseComponent } from './components/warehouse/warehouse.component';
+import { ContainerComponent } from './components/container/container.component';
+import { GeneralComponent } from './components/profile/general/general.component';
+import { DocumentsComponent } from './components/profile/documents/documents.component';
 
 @NgModule({
    declarations: [
@@ -28,6 +34,12 @@ import { VerifyAccountComponent } from './components/verify-account/verify-accou
       PageNotFoundComponent,
       DashboardComponent,
       VerifyAccountComponent,
+      ProfileComponent,
+      SidebarComponent,
+      WarehouseComponent,
+      ContainerComponent,
+      GeneralComponent,
+      DocumentsComponent,
    ],
    imports: [
       BrowserModule,

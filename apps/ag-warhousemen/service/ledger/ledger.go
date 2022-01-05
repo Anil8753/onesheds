@@ -2,6 +2,7 @@ package ledger
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/hyperledger/fabric-gateway/pkg/client"
 	"google.golang.org/grpc"
@@ -59,6 +60,22 @@ func (s *Ledger) GetContract(gateway *client.Gateway, channel string, contractNa
 	contract := network.GetContract(contractName)
 	if contract == nil {
 		return nil, fmt.Errorf("failed tp get contract")
+	}
+
+	return contract, nil
+}
+
+// GetUserContract retuns contract instance
+func (s *Ledger) GetUserContract(ucryp *UserCrpto) (*client.Contract, error) {
+
+	gw, err := s.GetGateway(ucryp)
+	if err != nil {
+		return nil, err
+	}
+
+	contract, err := s.GetContract(gw, os.Getenv("LEDGER_CHANNEL"), os.Getenv("LEDGER_CHAINCODE"))
+	if err != nil {
+		return nil, err
 	}
 
 	return contract, nil
