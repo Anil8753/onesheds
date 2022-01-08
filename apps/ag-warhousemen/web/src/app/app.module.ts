@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
@@ -55,6 +56,7 @@ import { WhInfraComponent } from './components/warehouse/wh-infra/wh-infra.compo
       FormlyBootstrapModule,
       BrowserAnimationsModule, // required animations module
       ToastrModule.forRoot(), // ToastrModule added
+      NgxSpinnerModule,
    ],
    providers: [
       { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

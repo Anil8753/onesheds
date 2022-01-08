@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class WarehouseComponent implements OnInit {
 
    constructor(
       private http: HttpClient,
+      private spinner: NgxSpinnerService,
       private toastr: ToastrService,
       private configService: ConfigService
    ) {}
@@ -31,6 +33,8 @@ export class WarehouseComponent implements OnInit {
    }
 
    onNew() {
+      this.spinner.show();
+
       this.http
          .post<any>(`${this.configService.baseUrl()}/api/v1/warehouse`, {})
          .subscribe({
@@ -47,7 +51,7 @@ export class WarehouseComponent implements OnInit {
                this.toastr.error('Failed to create.', 'Error!');
                console.error(e);
             },
-            complete: () => console.info('complete'),
+            complete: () => this.spinner.hide(),
          });
    }
 
@@ -70,6 +74,8 @@ export class WarehouseComponent implements OnInit {
    }
 
    private fetch() {
+      this.spinner.show();
+
       this.http
          .get<any>(`${this.configService.baseUrl()}/api/v1/warehouse`)
          .subscribe({
@@ -84,7 +90,9 @@ export class WarehouseComponent implements OnInit {
                this.toastr.error('Failed to fetch the profile data.', 'Error!');
                console.error(e);
             },
-            complete: () => {},
+            complete: () => {
+               this.spinner.hide();
+            },
          });
    }
 }

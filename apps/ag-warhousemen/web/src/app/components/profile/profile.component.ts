@@ -3,6 +3,7 @@ import { ConfigService } from 'src/app/services/config.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { UserRegistrationData } from './types';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
    selector: 'app-profile',
@@ -16,6 +17,7 @@ export class ProfileComponent implements OnInit {
    constructor(
       private http: HttpClient,
       private toastr: ToastrService,
+      private spinner: NgxSpinnerService,
       private configService: ConfigService
    ) {}
 
@@ -28,6 +30,8 @@ export class ProfileComponent implements OnInit {
    }
 
    fetch() {
+      this.spinner.show();
+
       this.http
          .get<any>(`${this.configService.baseUrl()}/api/v1/profile`)
          .subscribe({
@@ -39,7 +43,7 @@ export class ProfileComponent implements OnInit {
                this.toastr.error('Failed to fetch the profile data.', 'Error!');
                console.error(e);
             },
-            complete: () => console.info('complete'),
+            complete: () => this.spinner.hide(),
          });
    }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/services/config.service';
 import { DummyRegData, UserRegistrationData } from '../types';
@@ -22,6 +23,7 @@ export class DocumentsComponent implements OnInit {
    constructor(
       private configService: ConfigService,
       private http: HttpClient,
+      private spinner: NgxSpinnerService,
       private toastr: ToastrService
    ) {}
 
@@ -34,6 +36,8 @@ export class DocumentsComponent implements OnInit {
       if (!this.form.valid) {
          return;
       }
+
+      this.spinner.show();
 
       this.http
          .put<any>(`${this.configService.baseUrl()}/api/v1/profile`, this.model)
@@ -48,7 +52,7 @@ export class DocumentsComponent implements OnInit {
                );
                console.error(e);
             },
-            complete: () => console.info('complete'),
+            complete: () => this.spinner.hide(),
          });
    }
 

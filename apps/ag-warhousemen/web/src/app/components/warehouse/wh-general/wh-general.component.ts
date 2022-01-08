@@ -1,4 +1,6 @@
 import { HttpClient } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 import {
    Component,
    EventEmitter,
@@ -31,6 +33,7 @@ export class WhGeneralComponent implements OnChanges, OnInit {
    constructor(
       private http: HttpClient,
       private toastr: ToastrService,
+      private spinner: NgxSpinnerService,
       private configService: ConfigService
    ) {}
 
@@ -61,6 +64,8 @@ export class WhGeneralComponent implements OnChanges, OnInit {
          return;
       }
 
+      this.spinner.show();
+
       this.http
          .put<any>(`${this.configService.baseUrl()}/api/v1/warehouse`, {
             warehouseId: this.data.warehouseId,
@@ -75,7 +80,7 @@ export class WhGeneralComponent implements OnChanges, OnInit {
                this.toastr.error('Failed to update.', 'Error!');
                console.error(e);
             },
-            complete: () => console.info('complete'),
+            complete: () => this.spinner.hide(),
          });
    }
 

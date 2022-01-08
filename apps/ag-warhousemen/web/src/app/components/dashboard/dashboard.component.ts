@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/services/config.service';
 
@@ -13,6 +14,7 @@ export class DashboardComponent implements OnInit {
 
    constructor(
       private http: HttpClient,
+      private spinner: NgxSpinnerService,
       private toastr: ToastrService,
       private configService: ConfigService
    ) {}
@@ -26,6 +28,8 @@ export class DashboardComponent implements OnInit {
    }
 
    fetch() {
+      this.spinner.show();
+
       this.http
          .get<any>(`${this.configService.baseUrl()}/api/v1/identity`)
          .subscribe({
@@ -37,7 +41,7 @@ export class DashboardComponent implements OnInit {
                this.toastr.error('Failed to fetch the profile data.', 'Error!');
                console.error(e);
             },
-            complete: () => console.info('complete'),
+            complete: () => this.spinner.hide(),
          });
    }
 }
