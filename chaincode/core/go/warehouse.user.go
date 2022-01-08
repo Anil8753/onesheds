@@ -15,14 +15,6 @@ func (c *Contract) RegisterWarehouseUser(
 	return whUser.Register(ctx, input)
 }
 
-func (c *Contract) UpdateWarehouseUser(
-	ctx contractapi.TransactionContextInterface,
-	input string,
-) error {
-
-	return whUser.Update(ctx, input)
-}
-
 func (c *Contract) GetWarehouseUser(
 	ctx contractapi.TransactionContextInterface,
 	uniqueId string,
@@ -39,4 +31,12 @@ func (c *Contract) GetWarehouseUser(
 	}
 
 	return string(b), nil
+}
+
+func (c *Contract) UpdateWarehouseUser(
+	ctx contractapi.TransactionContextInterface,
+	input string,
+) error {
+
+	return whUser.Update(ctx, input)
 }

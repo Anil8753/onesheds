@@ -25,6 +25,8 @@ import { WarehouseComponent } from './components/warehouse/warehouse.component';
 import { ContainerComponent } from './components/container/container.component';
 import { GeneralComponent } from './components/profile/general/general.component';
 import { DocumentsComponent } from './components/profile/documents/documents.component';
+import { WhGeneralComponent } from './components/warehouse/wh-general/wh-general.component';
+import { WhInfraComponent } from './components/warehouse/wh-infra/wh-infra.component';
 
 @NgModule({
    declarations: [
@@ -40,6 +42,8 @@ import { DocumentsComponent } from './components/profile/documents/documents.com
       ContainerComponent,
       GeneralComponent,
       DocumentsComponent,
+      WhGeneralComponent,
+      WhInfraComponent,
    ],
    imports: [
       BrowserModule,

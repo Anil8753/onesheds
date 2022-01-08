@@ -1,4 +1,18 @@
-.w-box {
-   background-color: olivedrab;
-   height: 100vh;
+.nav > li > a {
+   color: rgb(71, 112, 194);
+}
+
+.nav > li > a.active,
+.nav > li > a:hover,
+.nav > li > a:focus {
+   color: rgb(2, 57, 168);
+   background-color: rgba(170, 190, 235, 0.63);
+}
+
+.options {
+   margin: 2px;
+   padding: 2px;
+   min-width: 224px;
+   border-right: 1px solid lightgrey;
+   height: 80vh;
 }

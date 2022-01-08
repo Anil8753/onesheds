@@ -1,5 +1,12 @@
 package user
 
+import (
+	"encoding/json"
+	"errors"
+)
+
+const UserDocType = "UserRegData"
+
 type RegisterationData struct {
 	DocType  string `json:"docType,omitempty"`
 	UniqueId string `json:"uniqueId"`
@@ -17,4 +24,22 @@ type RegisterationData struct {
 
 	PANCard string `json:"pancard,omitempty"`
 	Aadhar  string `json:"aadharcard,omitempty"`
+}
+
+func NewRegisterationData(input string) (*RegisterationData, error) {
+
+	rBytes := []byte(input)
+
+	var regData RegisterationData
+	if err := json.Unmarshal(rBytes, &regData); err != nil {
+		return nil, err
+	}
+
+	if regData.UniqueId == "" {
+		return nil, errors.New("UniqueId is mandatory")
+	}
+
+	regData.DocType = UserDocType
+
+	return &regData, nil
 }

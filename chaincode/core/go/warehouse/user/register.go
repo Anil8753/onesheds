@@ -2,31 +2,14 @@ package user
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func NewRegisterationData(input string) (*RegisterationData, error) {
-
-	rBytes := []byte(input)
-
-	var regData RegisterationData
-	if err := json.Unmarshal(rBytes, &regData); err != nil {
-		return nil, err
-	}
-
-	if regData.UniqueId == "" {
-		return nil, errors.New("UniqueId is mandatory")
-	}
-
-	regData.DocType = "userRegData"
-
-	return &regData, nil
-}
-
 func Register(ctx contractapi.TransactionContextInterface, input string) error {
+
+	// Todo: check the valid user x509certificate
 
 	u, err := NewRegisterationData(input)
 	if err != nil {

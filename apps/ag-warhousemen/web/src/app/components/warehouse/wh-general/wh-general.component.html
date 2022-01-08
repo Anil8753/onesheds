@@ -1,0 +1,7 @@
+
+<div class="p-4 m-2">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+        <button type="submit" class="btn btn-success submit-button" [disabled]="!form.valid || !form.dirty">Update</button>
+      </form>
+</div>
