@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/services/config.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import { getDirtyValues } from 'src/app/utils/form';
 
 @Component({
    selector: 'app-wh-general',
@@ -65,11 +66,12 @@ export class WhGeneralComponent implements OnChanges, OnInit {
       }
 
       this.spinner.show();
+      const changes = getDirtyValues(this.form);
 
       this.http
          .put<any>(`${this.configService.baseUrl()}/api/v1/warehouse`, {
             warehouseId: this.data.warehouseId,
-            properties: this.model,
+            properties: changes,
          })
          .subscribe({
             next: (v) => {
@@ -97,12 +99,12 @@ export class WhGeneralComponent implements OnChanges, OnInit {
                      required: true,
                      label: 'Ownership type',
                      options: [
-                        { label: 'Owned', value: 'owned' },
-                        { label: 'Leased', value: 'leased' },
-                        { label: 'Hired', value: 'hired' },
-                        { label: 'Rented', value: 'rented' },
-                        { label: 'Sub Leased', value: 'sub_leased' },
-                        { label: 'Revenue Sharing', value: 'revenue_sharing' },
+                        { label: 'Owned', value: 'Owned' },
+                        { label: 'Leased', value: 'Leased' },
+                        { label: 'Hired', value: 'Hired' },
+                        { label: 'Rented', value: 'Rented' },
+                        { label: 'Sub Leased', value: 'Sub Leased' },
+                        { label: 'Revenue Sharing', value: 'Revenue Sharing' },
                      ],
                   },
                },
@@ -116,13 +118,13 @@ export class WhGeneralComponent implements OnChanges, OnInit {
                      options: [
                         {
                            label: 'Conventional Warehouse',
-                           value: 'conventional_warehouse',
+                           value: 'Conventional Warehouse',
                         },
                         {
                            label: 'Cold Storage Warehouse',
-                           value: 'cold_storage_warehouse',
+                           value: 'Cold Storage Warehouse',
                         },
-                        { label: 'Silos', value: 'silos' },
+                        { label: 'Silos', value: 'Silos' },
                      ],
                   },
                },

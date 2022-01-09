@@ -28,14 +28,26 @@
         <li ngbNavItem="2">
         <a ngbNavLink>Infrastructure details</a>
         <ng-template ngbNavContent>
-            <app-wh-infra></app-wh-infra>
+            <app-wh-infra [data]="curWarehouse" (updateEvent)="onUpdate($event)"></app-wh-infra>
         </ng-template>
         </li>
         <li ngbNavItem="3">
-        <a ngbNavLink>Godown size details</a>
+        <a ngbNavLink>Surroundings</a>
         <ng-template ngbNavContent>
-            <app-wh-infra></app-wh-infra>
+            <app-wh-surrounding [data]="curWarehouse" (updateEvent)="onUpdate($event)"></app-wh-surrounding>
         </ng-template>
+        </li>
+        <li ngbNavItem="4">
+            <a ngbNavLink>Photos Galary</a>
+            <ng-template ngbNavContent>
+                <img src="../../../assets/img/coming-soon-png.png" class="w-50 h-50">
+            </ng-template>
+            </li>
+        <li ngbNavItem="5">
+            <a ngbNavLink>Videos Galary</a>
+            <ng-template ngbNavContent>
+                <img src="../../../assets/img/coming-soon-png.png" class="w-50 h-50">
+            </ng-template>
         </li>
     </ul>
 
