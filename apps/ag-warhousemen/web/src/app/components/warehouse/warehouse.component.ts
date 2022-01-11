@@ -85,14 +85,14 @@ export class WarehouseComponent implements OnInit {
                   this.warehouses = items;
                   this.setCurItem(items[0]);
                }
+               this.spinner.hide();
             },
             error: (e) => {
+               this.spinner.hide();
                this.toastr.error('Failed to fetch the profile data.', 'Error!');
                console.error(e);
             },
-            complete: () => {
-               this.spinner.hide();
-            },
+            complete: () => {},
          });
    }
 }

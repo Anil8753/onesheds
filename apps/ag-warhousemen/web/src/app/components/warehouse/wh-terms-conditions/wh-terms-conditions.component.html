@@ -1,0 +1,33 @@
+
+<div class="p-4">
+    <div [formGroup]="form">
+        <div formArrayName="clauses">
+            <strong>Terms and Conditions</strong>
+        
+            <div class="clauses">
+            <div *ngFor="let clause of list.controls; let i=index">
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                        <small class="text-muted">Clause {{i + 1}}</small>
+                        <div class="d-flex">
+                            <textarea class="form-control" rows="2" [formControlName]="i"></textarea>
+                            <button class="btn btn-sm btn-link btn-delete align-self-center mx-2" (click)="onRemove(i)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            </div>
+            <div class="w-100 mt-3 d-flex">
+                <button class="btn btn-success me-auto" 
+                    [disabled]="!form.dirty"
+                    (click)="submit()">Update
+                </button>
+
+                <button (click)="onAdd()" class="btn btn-sm btn-link add-new-btn">+ Add new clause</button>
+            </div>
+        </div>
+    </div>
+</div>

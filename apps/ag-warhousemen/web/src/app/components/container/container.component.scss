@@ -3,7 +3,9 @@
 }
 
 .box {
+   height: 100vh;
    overflow: scroll;
    scroll-behavior: smooth;
    background-color: rgba(245, 245, 245, 0.562);
+   border: 1px solid rgb(160, 156, 156);
 }

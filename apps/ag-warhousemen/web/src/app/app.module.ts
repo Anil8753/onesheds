@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,9 +29,12 @@ import { DocumentsComponent } from './components/profile/documents/documents.com
 import { WhGeneralComponent } from './components/warehouse/wh-general/wh-general.component';
 import { WhInfraComponent } from './components/warehouse/wh-infra/wh-infra.component';
 import { WhSurroundingComponent } from './components/warehouse/wh-surrounding/wh-surrounding.component';
+import { WhTermsConditionsComponent } from './components/warehouse/wh-terms-conditions/wh-terms-conditions.component';
+import { RepeatTypeComponent } from './formly-types/repeat-section.type';
 
 @NgModule({
    declarations: [
+      RepeatTypeComponent,
       AppComponent,
       SignupComponent,
       SigninComponent,
@@ -47,6 +50,7 @@ import { WhSurroundingComponent } from './components/warehouse/wh-surrounding/wh
       WhGeneralComponent,
       WhInfraComponent,
       WhSurroundingComponent,
+      WhTermsConditionsComponent,
    ],
    imports: [
       BrowserModule,
@@ -54,15 +58,24 @@ import { WhSurroundingComponent } from './components/warehouse/wh-surrounding/wh
       HttpClientModule,
       NgbModule,
       ReactiveFormsModule,
-      FormlyModule.forRoot(),
-      FormlyBootstrapModule,
       BrowserAnimationsModule, // required animations module
       ToastrModule.forRoot(), // ToastrModule added
       NgxSpinnerModule,
+      FormlyBootstrapModule,
+      FormlyModule.forRoot({
+         types: [
+            {
+               name: 'repeat',
+               component: RepeatTypeComponent,
+               wrappers: ['form-field'],
+            },
+         ],
+      }),
    ],
    providers: [
       { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
    ],
+   schemas: [CUSTOM_ELEMENTS_SCHEMA],
    bootstrap: [AppComponent],
 })
 export class AppModule {}

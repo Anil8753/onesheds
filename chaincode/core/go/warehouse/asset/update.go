@@ -53,6 +53,10 @@ func updateRegData(from *AssetData, to *AssetData) (*AssetData, error) {
 		to.OwnerId = from.OwnerId
 	}
 
+	if from.TermsConditions != nil {
+		to.TermsConditions = from.TermsConditions
+	}
+
 	if to.Properties == nil {
 		to.Properties = make(map[string]interface{})
 	}

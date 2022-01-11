@@ -75,6 +75,7 @@ export class WhSurroundingComponent implements OnChanges, OnInit {
          })
          .subscribe({
             next: (v) => {
+               this.form.markAsPristine();
                this.toastr.success('Updated successfully.', 'Success!');
                this.updateEvent.emit(JSON.parse(v.data));
             },
