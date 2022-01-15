@@ -1,9 +1,8 @@
 package ledger
 
-
 type UserCrpto struct {
-	MSP        string
-	UserId     string
-	Cert       string
-	PrivateKey string
+	MSP        string `json:"msp"`
+	UserId     string `json:"userId"`
+	Cert       string `json:"cert"`
+	PrivateKey string `json:"privateKey"`
 }
