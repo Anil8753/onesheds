@@ -2,6 +2,7 @@ package asset
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -9,7 +10,10 @@ import (
 
 func Update(ctx contractapi.TransactionContextInterface, input string) (*AssetData, error) {
 
-	// Todo: check the ownership from the user x509 certificate
+	clientMSP, err := ctx.GetClientIdentity().GetMSPID()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get client msp. %w", err)
+	}
 
 	pData, err := NewAssetData(input)
 	if err != nil {
@@ -19,6 +23,12 @@ func Update(ctx contractapi.TransactionContextInterface, input string) (*AssetDa
 	sData, err := Query(ctx, pData.WarehouseId)
 	if err != nil {
 		return nil, fmt.Errorf("%s warehouse not found in state db. %w", pData.WarehouseId, err)
+	}
+
+	// check the ownership
+	err = ctx.GetClientIdentity().AssertAttributeValue("userId", sData.OwnerId)
+	if err != nil && clientMSP != "regulator-onesheds-com" {
+		return nil, errors.New("unauthrorized client")
 	}
 
 	if pData.WarehouseId != sData.WarehouseId {

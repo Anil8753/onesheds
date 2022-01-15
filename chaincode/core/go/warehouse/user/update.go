@@ -16,13 +16,13 @@ func Update(ctx contractapi.TransactionContextInterface, input string) error {
 		return fmt.Errorf("invalid registeration data. %w", err)
 	}
 
-	sRegData, err := Query(ctx, uRegData.UniqueId)
+	sRegData, err := Query(ctx, uRegData.UserId)
 	if err != nil {
-		return fmt.Errorf("%s user not found in state db. %w", uRegData.UniqueId, err)
+		return fmt.Errorf("%s user not found in state db. %w", uRegData.UserId, err)
 	}
 
-	if uRegData.UniqueId != sRegData.UniqueId {
-		return fmt.Errorf("passed %s UniqueId not same as state UniqueId %s", uRegData.UniqueId, sRegData.UniqueId)
+	if uRegData.UserId != sRegData.UserId {
+		return fmt.Errorf("passed %s UserId not same as state UserId %s", uRegData.UserId, sRegData.UserId)
 	}
 
 	updated, err := updateRegData(uRegData, sRegData)
@@ -35,7 +35,7 @@ func Update(ctx contractapi.TransactionContextInterface, input string) error {
 		return err
 	}
 
-	if err := ctx.GetStub().PutState(updated.UniqueId, b); err != nil {
+	if err := ctx.GetStub().PutState(updated.UserId, b); err != nil {
 		return fmt.Errorf("failed to register warehouse user. %w", err)
 	}
 

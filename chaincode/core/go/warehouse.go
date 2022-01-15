@@ -25,6 +25,24 @@ func (c *Contract) RegisterWarehouse(
 	return string(b), nil
 }
 
+func (c *Contract) GetAllWarehouse(
+	ctx contractapi.TransactionContextInterface,
+) (string, error) {
+
+	r, err := assets.QueryAll(ctx)
+
+	if err != nil {
+		return "", err
+	}
+
+	b, err := json.Marshal(r)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
 func (c *Contract) GetWarehouse(
 	ctx contractapi.TransactionContextInterface,
 	uniqueId string,

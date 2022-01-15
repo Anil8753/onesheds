@@ -8,9 +8,9 @@ import (
 const UserDocType = "UserRegData"
 
 type RegisterationData struct {
-	DocType  string `json:"docType,omitempty"`
-	UniqueId string `json:"uniqueId"`
-	Status   string `json:"status,omitempty"`
+	DocType string `json:"docType,omitempty"`
+	UserId  string `json:"userId"`
+	Status  string `json:"status,omitempty"`
 
 	FirstName string `json:"firstName,omitempty"`
 	LastName  string `json:"lastName,omitempty"`
@@ -35,8 +35,8 @@ func NewRegisterationData(input string) (*RegisterationData, error) {
 		return nil, err
 	}
 
-	if regData.UniqueId == "" {
-		return nil, errors.New("UniqueId is mandatory")
+	if regData.UserId == "" {
+		return nil, errors.New("UserId is mandatory")
 	}
 
 	regData.DocType = UserDocType

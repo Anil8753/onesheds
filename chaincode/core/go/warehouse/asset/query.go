@@ -26,10 +26,22 @@ func Query(ctx contractapi.TransactionContextInterface, warehouseId string) (*As
 	return &data, nil
 }
 
-func QueryByOwnerId(ctx contractapi.TransactionContextInterface, ownerId string) ([]AssetData, error) {
+func QueryAll(ctx contractapi.TransactionContextInterface) ([]*AssetData, error) {
+
+	qFmt := `{ "selector": { "docType": "%s" } }`
+	q := fmt.Sprintf(qFmt, WarehouseDocType)
+	return query(ctx, q)
+}
+
+func QueryByOwnerId(ctx contractapi.TransactionContextInterface, ownerId string) ([]*AssetData, error) {
 
 	qFmt := `{ "selector": { "ownerId": "%s" } }`
 	q := fmt.Sprintf(qFmt, ownerId)
+
+	return query(ctx, q)
+}
+
+func query(ctx contractapi.TransactionContextInterface, q string) ([]*AssetData, error) {
 
 	itr, err := ctx.GetStub().GetQueryResult(q)
 	if err != nil {
@@ -38,7 +50,7 @@ func QueryByOwnerId(ctx contractapi.TransactionContextInterface, ownerId string)
 
 	defer itr.Close()
 
-	var entries []AssetData
+	entries := make([]*AssetData, 0)
 
 	for itr.HasNext() {
 		kv, err := itr.Next()
@@ -51,7 +63,7 @@ func QueryByOwnerId(ctx contractapi.TransactionContextInterface, ownerId string)
 			return nil, err
 		}
 
-		entries = append(entries, entry)
+		entries = append(entries, &entry)
 	}
 
 	return entries, nil
