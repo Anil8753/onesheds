@@ -1,0 +1,13 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/v1/signup            --> github.com/anil8753/onesheds/apps/warehousemen/service/auth.(*Auth).SignupHandler.func1 (4 handlers)
+[GIN-debug] POST   /api/v1/signin            --> github.com/anil8753/onesheds/apps/warehousemen/service/auth.(*Auth).SigninHandler.func1 (4 handlers)
+[GIN-debug] GET    /api/v1/profile           --> github.com/anil8753/onesheds/apps/warehousemen/service/profile.(*Profile).GetProfileHandler.func1 (5 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Environment variable PORT="9000"
+[GIN-debug] Listening and serving HTTP on :9000
