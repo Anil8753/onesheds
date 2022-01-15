@@ -1,6 +1,8 @@
 package warehouse
 
 import (
+	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
@@ -52,7 +54,7 @@ func (s *Asset) CreateWarehouseHandler() gin.HandlerFunc {
 		}
 
 		data.WarehouseId = uuid.New().String()
-		data.OwnerId = udata.UserUniqueId
+		data.OwnerId = udata.UserId
 
 		resp, err := s.Dep.GetLedger().RegisterWarehouse(udata.Crypto, &data)
 		if err != nil {
@@ -89,9 +91,20 @@ func (s *Asset) UpdateWarehouseHandler() gin.HandlerFunc {
 
 		resp, err := s.Dep.GetLedger().UpdateWarehouse(udata.Crypto, &data)
 		if err != nil {
+
+			msg := err.Error()
+			currentErr := err
+
+			for errors.Unwrap(currentErr) != nil {
+				currentErr = errors.Unwrap(currentErr)
+				msg = msg + currentErr.Error()
+			}
+
+			fmt.Println(msg) // "error 1"
+
 			ctx.JSON(
 				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
+				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, msg),
 			)
 			return
 		}

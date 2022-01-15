@@ -14,5 +14,6 @@ type Attribute struct {
 }
 
 type UserRegistrationData struct {
+	UserId     string
 	Attributes []Attribute
 }

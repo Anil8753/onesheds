@@ -14,8 +14,8 @@ import (
 )
 
 type UserData struct {
-	User         string
-	UserUniqueId string
+	User   string
+	UserId string
 }
 
 type TokenPair struct {
@@ -46,7 +46,7 @@ func GenerateTokenPair(u *UserData) (*TokenPair, error) {
 	claims["sub"] = 1
 	claims["authorized"] = true
 	claims["user"] = u.User
-	claims["userUniqueId"] = u.UserUniqueId
+	claims["userId"] = u.UserId
 	claims["exp"] = time.Now().Add(time.Minute * time.Duration(accessTokenTimespan)).Unix()
 
 	// Generate encoded token and send it as response.
@@ -91,12 +91,12 @@ func ExtractUserData(c *gin.Context) (*UserData, error) {
 			return nil, errors.New("user not found")
 		}
 
-		userUniqueId, ok := claims["userUniqueId"]
+		userId, ok := claims["userId"]
 		if !ok {
-			return nil, errors.New("userUniqueId not found")
+			return nil, errors.New("userId not found")
 		}
 
-		return &UserData{User: user.(string), UserUniqueId: userUniqueId.(string)}, nil
+		return &UserData{User: user.(string), UserId: userId.(string)}, nil
 	}
 
 	return nil, errors.New("user token is not valid")

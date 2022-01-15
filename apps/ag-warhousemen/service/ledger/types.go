@@ -1,16 +1,16 @@
 package ledger
 
 type UserCrpto struct {
-	MSP        string
-	UserId     string
-	Cert       string
-	PrivateKey string
+	MSP        string `json:"msp"`
+	UserId     string `json:"userId"`
+	Cert       string `json:"cert"`
+	PrivateKey string `json:"privateKey"`
 }
 
 type RegisterationData struct {
-	DocType  string `json:"docType,omitempty"`
-	UniqueId string `json:"uniqueId"`
-	Status   string `json:"status,omitempty"`
+	DocType string `json:"docType,omitempty"`
+	UserId  string `json:"userId"`
+	Status  string `json:"status,omitempty"`
 
 	FirstName string `json:"firstName,omitempty"`
 	LastName  string `json:"lastName,omitempty"`

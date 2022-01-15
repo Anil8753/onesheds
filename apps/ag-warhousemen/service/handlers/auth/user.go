@@ -10,10 +10,10 @@ import (
 )
 
 type UserData struct {
-	UserUniqueId string
-	User         string
-	Password     string
-	Crypto       *ledger.UserCrpto
+	UserId   string
+	User     string
+	Password string
+	Crypto   *ledger.UserCrpto
 }
 
 func (u *UserData) SaveUser(db interfaces.Database) (*UserData, error) {
