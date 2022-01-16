@@ -18,8 +18,12 @@ type UserData struct {
 
 func (u *UserData) SaveUser(db interfaces.Database) (*UserData, error) {
 
+	if err := u.BeforeSave(); err != nil {
+		return nil, err
+	}
+
 	if err := db.Put(u.User, u); err != nil {
-		return &UserData{}, err
+		return nil, err
 	}
 
 	return u, nil
@@ -32,6 +36,7 @@ func (u *UserData) BeforeSave() error {
 	if err != nil {
 		return err
 	}
+
 	u.Password = string(hashedPassword)
 
 	//remove spaces in username

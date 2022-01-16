@@ -26,8 +26,8 @@ apps/ag-warhousemen/bin/db
 apps/ag-warhousemen/service/bin/db/generic
 apps/ag-depositors/web/node_modules/
 apps/ag-depositors/web/.angular/
-apps/ag-depositors/service/bin
-apps/ag-warhousemen/service/bin
-
+apps/ag-depositors/service/bin/
+apps/ag-warhousemen/service/bin/
 
 *.log
+
