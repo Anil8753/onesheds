@@ -4,6 +4,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"path"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -25,6 +26,9 @@ func Setup() {
 		log.Fatal("Error loading service.env file")
 	}
 
+	// SetupDataDir
+	SetupDataDir()
+
 	//
 	gin.SetMode(gin.DebugMode)
 
@@ -32,7 +36,8 @@ func Setup() {
 	gin.DisableConsoleColor()
 
 	// Logging to a file.
-	f, _ := os.Create("service.log")
+	logFile := path.Join(os.Getenv("DATA_DIR"), "logs", "service.log")
+	f, _ := os.Create(logFile)
 	//gin.DefaultWriter = io.MultiWriter(f)
 
 	// Use the following code if you need to write the logs to file and console at the same time.
@@ -53,4 +58,24 @@ func SetupCORS(engine *gin.Engine) {
 		AllowCredentials: false,
 		MaxAge:           12 * time.Hour,
 	}))
+}
+
+func SetupDataDir() {
+
+	userHomeDir, err := os.UserHomeDir()
+
+	if err != nil {
+		panic(err)
+	}
+
+	dataDir := path.Join(userHomeDir, "onesheds", os.Getenv("NODE_TYPE"))
+
+	_, err = os.Stat(dataDir)
+	if os.IsNotExist(err) {
+		if err := os.Mkdir(dataDir, 0755); err != nil {
+			panic(err)
+		}
+	}
+
+	os.Setenv("DATA_DIR", dataDir)
 }

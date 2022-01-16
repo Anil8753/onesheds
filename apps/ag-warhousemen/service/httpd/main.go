@@ -16,6 +16,8 @@ func main() {
 	hDependencies := NewHandlerDependency()
 	InitRoutes(engine, hDependencies)
 
+	PrintConfig()
+
 	engine.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
@@ -28,5 +30,6 @@ func PrintConfig() {
 	log.Println("LEDGER_CHANNEL:", os.Getenv("LEDGER_CHANNEL"))
 	log.Println("LEDGER_CHAINCODE:", os.Getenv("LEDGER_CHAINCODE"))
 	log.Println("NODE_TYPE:", os.Getenv("NODE_TYPE"))
+	log.Println("DATA_DIR:", os.Getenv("DATA_DIR"))
 	log.Println("-----------------------------------------------------------------------------")
 }
