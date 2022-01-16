@@ -2,7 +2,6 @@ package warehouse
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
@@ -99,8 +98,6 @@ func (s *Asset) UpdateWarehouseHandler() gin.HandlerFunc {
 				currentErr = errors.Unwrap(currentErr)
 				msg = msg + currentErr.Error()
 			}
-
-			fmt.Println(msg) // "error 1"
 
 			ctx.JSON(
 				http.StatusInternalServerError,
