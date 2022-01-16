@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/anil8753/onesheds/apps/warehousemen/service/auth"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/db"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/profile"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/warehouse"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"

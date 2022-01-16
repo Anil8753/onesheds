@@ -5,7 +5,7 @@ import (
 
 	"net/http"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/auth"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
 	"github.com/gin-gonic/gin"

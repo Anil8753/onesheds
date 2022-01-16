@@ -53,7 +53,7 @@ func (s *Auth) refreshTokens(tokenStr string) (*token.TokenPair, error) {
 		return nil, err
 	}
 
-	tokenPair, err := token.GenerateTokenPair(&token.UserData{User: u.User, UserUniqueId: u.UserUniqueId})
+	tokenPair, err := token.GenerateTokenPair(&token.UserData{User: u.User, UserId: u.UserId})
 	if err != nil {
 		return nil, err
 	}

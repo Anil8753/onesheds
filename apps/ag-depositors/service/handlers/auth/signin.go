@@ -48,7 +48,7 @@ func (s *Auth) SigninHandler() gin.HandlerFunc {
 		}
 
 		// generate jwt token
-		tokenPair, err := token.GenerateTokenPair(&token.UserData{User: u.User, UserUniqueId: u.UserUniqueId})
+		tokenPair, err := token.GenerateTokenPair(&token.UserData{User: u.User, UserId: u.UserId})
 		if err != nil {
 			ctx.JSON(
 				http.StatusInternalServerError,

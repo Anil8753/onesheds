@@ -21,7 +21,9 @@
 apps/ag-warhousemen/dbg
 apps/ag-warhousemen/bin
 
+apps/ag-depositors/dbg
+apps/ag-depositors/bin
+
 apps/ag-depositors/web/node_modules/
 apps/ag-depositors/web/.angular/
-
 

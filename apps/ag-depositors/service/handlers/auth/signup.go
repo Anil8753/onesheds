@@ -21,8 +21,8 @@ type SignupReq struct {
 }
 
 type SignupResp struct {
-	UserUniqueId string `json:"userId" binding:"required"`
-	User         string `json:"user" binding:"required"`
+	UserId string `json:"userId" binding:"required"`
+	User   string `json:"user" binding:"required"`
 }
 
 func (s *Auth) SignupHandler() gin.HandlerFunc {
@@ -68,30 +68,31 @@ func (s *Auth) doSignup(ctx *gin.Context, reqData *SignupReq) (*SignupResp, erro
 		return nil, err
 	}
 
-	userUniqueId := fmt.Sprintf("user_%s", uid)
+	userId := fmt.Sprintf("user_%s", uid)
 
-	ucert, err := s.createUserCert(ctx, user, userUniqueId)
+	ucert, err := s.createUserCert(ctx, user, userId)
 	if err != nil {
 		return nil, err
 	}
 
 	u := UserData{
-		UserUniqueId: userUniqueId,
-		User:         user,
-		Password:     reqData.Password,
-		Crypto:       ucert,
+		UserId:   userId,
+		User:     user,
+		Password: reqData.Password,
+		Crypto:   ucert,
 	}
 
-	err = u.BeforeSave()
-	if err != nil {
-		return nil, err
-	}
-	_, err = u.SaveUser(s.Database)
-	if err != nil {
+	// save user on ledger
+	if err := s.registerOnLedger(&u); err != nil {
+		// ideally we should delete the crypto if ledger upadte is failed. But keeping it as todo item at present
 		return nil, err
 	}
 
-	resp := &SignupResp{UserUniqueId: userUniqueId, User: user}
+	if _, err = u.SaveUser(s.Database); err != nil {
+		return nil, err
+	}
+
+	resp := &SignupResp{UserId: userId, User: user}
 	return resp, nil
 }
 
@@ -102,7 +103,7 @@ func (s *Auth) createUserCert(ctx *gin.Context, user string, userId string) (*le
 	urd.UserId = userId
 	urd.Attributes = append(urd.Attributes, Attribute{Key: "userId", Value: userId})
 	urd.Attributes = append(urd.Attributes, Attribute{Key: "user", Value: user})
-	urd.Attributes = append(urd.Attributes, Attribute{Key: "nodetype", Value: NodeType})
+	urd.Attributes = append(urd.Attributes, Attribute{Key: "nodetype", Value: os.Getenv("NODE_TYPE")})
 
 	json_data, err := json.Marshal(urd)
 	if err != nil {
@@ -122,10 +123,22 @@ func (s *Auth) createUserCert(ctx *gin.Context, user string, userId string) (*le
 	}
 
 	var uc ledger.UserCrpto
-
 	if err := json.NewDecoder(resp.Body).Decode(&uc); err != nil {
 		return nil, err
 	}
 
 	return &uc, nil
+}
+
+func (s *Auth) registerOnLedger(u *UserData) error {
+
+	r := &ledger.RegisterationData{}
+	r.UserId = u.UserId
+	r.Email = u.User
+
+	if _, err := s.Ledger.CreateDepositor(u.Crypto, r); err != nil {
+		return err
+	}
+
+	return nil
 }

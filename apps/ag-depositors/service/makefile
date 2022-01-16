@@ -1,16 +1,12 @@
-
-dep:
-	cp ./external/identity/fabric-ca-client ./bin
-	cp ./external/identity/config.json ./bin
-	cp ./service.env ./bin
-	
 dev:
-	cd httpd && go build -o ../bin/service
-	cd bin && ./service
+	mkdir -p ../dbg
+	cp ./service.env ../dbg
+	cd httpd && go build -o ../../dbg/service
+	cd ../dbg && ./service
 
 build:
-	cp ./external/identity/fabric-ca-client ../bin
-	cp ./external/identity/config.json ../bin
+	rm -rf ../bin
+	mkdir ../bin
 	cp ./service.env ../bin
 	cd httpd && go build -o ../../bin/service
 

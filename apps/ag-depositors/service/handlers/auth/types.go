@@ -11,11 +11,11 @@ type Auth struct {
 }
 
 type Attribute struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Key   string
+	Value string
 }
 
 type UserRegistrationData struct {
-	UserId     string      `json:"userId"`
-	Attributes []Attribute `json:"attributes"`
+	UserId     string
+	Attributes []Attribute
 }
