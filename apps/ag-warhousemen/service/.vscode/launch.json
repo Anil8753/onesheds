@@ -7,7 +7,7 @@
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}/httpd",
-            "cwd": "${workspaceFolder}/bin",
+            "cwd": "${workspaceFolder}/../dbg",
         }
     ]
 }

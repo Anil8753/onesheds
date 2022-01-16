@@ -15,19 +15,13 @@
 # vendor/
 
 *.DS_Store
+*.log
 
 /dev/vars/
-apps/ag-warhousemen/service/bin/gin.log
-apps/ag-warhousemen/service/service.log
-apps/ag-warhousemen/service/bin/service.log
-apps/ag-warhousemen/bin/service.log
-apps/ag-warhousemen/bin/db
-apps/ag-warhousemen/bin/db
-apps/ag-warhousemen/service/bin/db/generic
+apps/ag-warhousemen/dbg
+apps/ag-warhousemen/bin
+
 apps/ag-depositors/web/node_modules/
 apps/ag-depositors/web/.angular/
-apps/ag-depositors/service/bin/
-apps/ag-warhousemen/service/bin/
 
-*.log
 
