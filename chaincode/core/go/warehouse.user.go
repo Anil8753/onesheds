@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 
-	whUser "github.com/anil8753/onesheds/chaincode/core/warehouse/user"
+	whUser "github.com/anil8753/onesheds/chaincode/core/user"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 

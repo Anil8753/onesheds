@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	assets "github.com/anil8753/onesheds/chaincode/core/warehouse/asset"
+	assets "github.com/anil8753/onesheds/chaincode/core/asset"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
