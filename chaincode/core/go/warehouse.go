@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"strconv"
 
 	assets "github.com/anil8753/onesheds/chaincode/core/warehouse/asset"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
@@ -67,6 +68,49 @@ func (c *Contract) GetWarehouseByOwnerId(
 ) (string, error) {
 
 	r, err := assets.QueryByOwnerId(ctx, ownerId)
+	if err != nil {
+		return "", err
+	}
+
+	b, err := json.Marshal(r)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
+func (c *Contract) GetWarehousesByRichQuery(
+	ctx contractapi.TransactionContextInterface,
+	query string,
+) (string, error) {
+
+	r, err := assets.RichQuery(ctx, query)
+	if err != nil {
+		return "", err
+	}
+
+	b, err := json.Marshal(r)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
+func (c *Contract) GetWarehousesByRichQueryWithPagination(
+	ctx contractapi.TransactionContextInterface,
+	query string,
+	pageSize string,
+	bookmark string,
+) (string, error) {
+
+	ps, err := strconv.Atoi(pageSize)
+	if err != nil {
+		return "", err
+	}
+
+	r, err := assets.RichQueryWithPagination(ctx, query, ps, bookmark)
 	if err != nil {
 		return "", err
 	}

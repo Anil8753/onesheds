@@ -44,5 +44,8 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 	protected.Use(middlewares.JwtAuth())
 
 	protected.GET("/profile", r.HProfile.GetProfileHandler())
-	protected.GET("/warehouse", r.HWarehouse.GetWarehouseHandler())
+
+	protected.GET("/warehouse", r.HWarehouse.QuaryAllHandler())
+	protected.GET("/warehouse/query", r.HWarehouse.QueryHandler())
+	protected.GET("/warehouse/querypagination", r.HWarehouse.QueryPaginationHandler())
 }

@@ -31,7 +31,7 @@ func QueryAll(ctx contractapi.TransactionContextInterface) ([]*AssetData, error)
 
 	qFmt := `{ "selector": { "docType": "%s" } }`
 	q := fmt.Sprintf(qFmt, WarehouseDocType)
-	return QueryWithParams(ctx, q)
+	return RichQuery(ctx, q)
 }
 
 func QueryByOwnerId(ctx contractapi.TransactionContextInterface, ownerId string) ([]*AssetData, error) {
@@ -39,10 +39,10 @@ func QueryByOwnerId(ctx contractapi.TransactionContextInterface, ownerId string)
 	qFmt := `{ "selector": { "ownerId": "%s" } }`
 	q := fmt.Sprintf(qFmt, ownerId)
 
-	return QueryWithParams(ctx, q)
+	return RichQuery(ctx, q)
 }
 
-func QueryWithParams(ctx contractapi.TransactionContextInterface, q string) ([]*AssetData, error) {
+func RichQuery(ctx contractapi.TransactionContextInterface, q string) ([]*AssetData, error) {
 
 	itr, err := ctx.GetStub().GetQueryResult(q)
 	if err != nil {
@@ -66,7 +66,7 @@ type PaginatedQueryResult struct {
 	Bookmark            string       `json:"bookmark"`
 }
 
-func QueryWithPagination(ctx contractapi.TransactionContextInterface, q string, pageSize int, bookmark string) (*PaginatedQueryResult, error) {
+func RichQueryWithPagination(ctx contractapi.TransactionContextInterface, q string, pageSize int, bookmark string) (*PaginatedQueryResult, error) {
 
 	itr, responseMetadata, err := ctx.GetStub().GetQueryResultWithPagination(q, int32(pageSize), bookmark)
 	if err != nil {

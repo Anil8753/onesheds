@@ -29,6 +29,7 @@ func main() {
 func PrintConfig() {
 
 	log.Println("---------------------------------- Configs ----------------------------------")
+	log.Println("PORT:", os.Getenv("PORT"))
 	log.Println("TLS_CERT_PATH:", os.Getenv("TLS_CERT_PATH"))
 	log.Println("PEER_ENDPOINT:", os.Getenv("PEER_ENDPOINT"))
 	log.Println("PEER_URL:", os.Getenv("PEER_URL"))

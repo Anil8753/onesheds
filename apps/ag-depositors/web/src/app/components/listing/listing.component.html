@@ -1,0 +1,28 @@
+<h5 class="ml-3">Listing</h5>
+<hr />
+
+<button
+   class="btn btn-sm btn-outline-primary ml-2 mb-2"
+   (click)="fetchWarehousePage('')"
+>
+   First
+</button>
+
+<button
+   class="btn btn-sm btn-outline-info ml-2 mb-2"
+   (click)="next()"
+   [disabled]="bookmark === ''"
+>
+   Next
+</button>
+
+<span class="ml-4">Page size: {{ ps }}</span>
+<div class="box">
+   <div *ngFor="let item of items">
+      <button class="btn btn-outline-danger btn-sm" (click)="book(item)">
+         Book
+      </button>
+      <pre>{{ format(item) }}</pre>
+      <hr />
+   </div>
+</div>

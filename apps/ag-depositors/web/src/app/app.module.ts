@@ -19,6 +19,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ToastrModule } from 'ngx-toastr';
 import { TokenInterceptor } from './intercepters/token.interceptor';
 import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
+import { ListingComponent } from './components/listing/listing.component';
+import { BookingComponent } from './components/booking/booking.component';
 
 @NgModule({
    declarations: [
@@ -28,6 +30,8 @@ import { VerifyAccountComponent } from './components/verify-account/verify-accou
       PageNotFoundComponent,
       DashboardComponent,
       VerifyAccountComponent,
+      ListingComponent,
+      BookingComponent,
    ],
    imports: [
       BrowserModule,

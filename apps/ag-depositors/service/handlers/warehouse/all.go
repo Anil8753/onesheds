@@ -1,43 +1,18 @@
 package warehouse
 
 import (
-	"encoding/json"
 	"net/http"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/utils"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Warehouse) GetWarehouseHandler() gin.HandlerFunc {
+func (s *Warehouse) QuaryAllHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		user := ctx.GetString("user")
-
-		iud, err := s.Database.Get(user)
-		if err != nil {
-			ctx.JSON(
-				http.StatusBadRequest,
-				nethttp.NewHttpResponseWithMsg(nethttp.UserNotExist, err.Error()),
-			)
-			return
-		}
-
-		b, err := json.Marshal(iud)
-		if err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
-			return
-		}
-
-		var udata auth.UserData
-		if err := json.Unmarshal(b, &udata); err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
+		udata := utils.GetUserFromContext(ctx, s.Database)
+		if udata == nil {
 			return
 		}
 

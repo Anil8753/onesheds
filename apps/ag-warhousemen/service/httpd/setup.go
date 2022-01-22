@@ -70,7 +70,7 @@ func SetupDataDir() {
 
 	_, err = os.Stat(dataDir)
 	if os.IsNotExist(err) {
-		if err := os.Mkdir(dataDir, 0755); err != nil {
+		if err := os.MkdirAll(dataDir, 0755); err != nil {
 			panic(err)
 		}
 	}

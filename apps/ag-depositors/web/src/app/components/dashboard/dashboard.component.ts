@@ -9,6 +9,7 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
+  active = 1;
   profileData = {};
   warehouses = {};
 
