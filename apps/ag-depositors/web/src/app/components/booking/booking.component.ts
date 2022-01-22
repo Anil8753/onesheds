@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-booking',
-  templateUrl: './booking.component.html',
-  styleUrls: ['./booking.component.scss']
+   selector: 'app-booking',
+   templateUrl: './booking.component.html',
+   styleUrls: ['./booking.component.scss'],
 })
 export class BookingComponent implements OnInit {
+   @Input() item: any;
+   constructor(public activeModal: NgbActiveModal) {}
 
-  constructor() { }
+   ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
+   book() {}
 }

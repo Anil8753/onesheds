@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/services/config.service';
+import { BookingComponent } from '../booking/booking.component';
 
 @Component({
    selector: 'app-listing',
@@ -16,7 +18,8 @@ export class ListingComponent implements OnInit {
    constructor(
       private http: HttpClient,
       private toastr: ToastrService,
-      private configService: ConfigService
+      private configService: ConfigService,
+      private modalService: NgbModal
    ) {}
 
    ngOnInit(): void {
@@ -55,7 +58,11 @@ export class ListingComponent implements OnInit {
    }
 
    book(item: any) {
-      alert(item);
+      const modalRef = this.modalService.open(BookingComponent, {
+         size: 'lg',
+         backdrop: 'static',
+      });
+      modalRef.componentInstance.item = item;
    }
 }
 
