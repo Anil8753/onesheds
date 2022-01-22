@@ -1,38 +1,46 @@
 <div class="background">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" routerLink="/signin">One Sheds</a>
-    </nav>
+   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+      <!-- Navbar Brand-->
+      <a class="navbar-brand ps-3" routerLink="/signin">One Sheds</a>
+   </nav>
 
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-        <li [ngbNavItem]="1">
-            <a ngbNavLink>One</a>
-            <ng-template ngbNavContent class="p-5">
-                <button class="btn btn-sm btn-outline-primary ml-2 mb-2" (click)="fetchProfile()">Refresh Data</button>
-                <div class="box-header">
-                    <pre>{{profileData}}</pre>
-                </div>
-            </ng-template>
-        </li>
-        <li [ngbNavItem]="2">
-          <a ngbNavLink>Fetch All Warehouse</a>
-          <ng-template ngbNavContent class="p-5">
-            <button class="btn btn-sm btn-outline-primary ml-2 mb-2" (click)="fetchWarehouse()">Refresh WH Data</button>
+   <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+      <li [ngbNavItem]="1">
+         <a ngbNavLink>Profile</a>
+         <ng-template ngbNavContent class="p-5">
+            <button
+               class="btn btn-sm btn-outline-primary ml-2 mb-2"
+               (click)="fetchProfile()"
+            >
+               Refresh Data
+            </button>
             <div class="box-header">
-                <pre>{{warehouses}}</pre>
+               <pre>{{ profileData }}</pre>
             </div>
-          </ng-template>
-        </li>
-        <li [ngbNavItem]="3">
-          <a ngbNavLink>Fetch Warehouse with Pagination</a>
-          <ng-template ngbNavContent>
+         </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+         <a ngbNavLink>Fetch All Warehouse</a>
+         <ng-template ngbNavContent class="p-5">
+            <button
+               class="btn btn-sm btn-outline-primary ml-2 mb-2"
+               (click)="fetchWarehouse()"
+            >
+               Refresh WH Data
+            </button>
+            <div class="box-header">
+               <pre>{{ warehouses }}</pre>
+            </div>
+         </ng-template>
+      </li>
+      <li [ngbNavItem]="3">
+         <a ngbNavLink>Fetch Warehouse with Pagination</a>
+         <ng-template ngbNavContent>
             <app-listing></app-listing>
-          </ng-template>
-        </li>
-        
-      </ul>
-      
-      <div [ngbNavOutlet]="nav" class="mt-2"></div>
-    <main>
-    </main>
+         </ng-template>
+      </li>
+   </ul>
+
+   <div [ngbNavOutlet]="nav" class="mt-2"></div>
+   <main></main>
 </div>
