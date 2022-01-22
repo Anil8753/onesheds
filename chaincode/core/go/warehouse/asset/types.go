@@ -5,7 +5,14 @@ import (
 	"errors"
 )
 
-const WarehouseDocType = "WarehouseRegData"
+const regulatorMSP = "regulator-onesheds-com"
+
+const (
+	WarehouseDocType  = "WarehouseRegData"
+	StatusUnpublished = "Unpublished"
+	StatusPublished   = "Published"
+	StatusSuspended   = "Suspended"
+)
 
 type AssetData struct {
 	DocType string `json:"docType,omitempty"`

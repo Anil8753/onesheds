@@ -29,6 +29,9 @@ func Register(ctx contractapi.TransactionContextInterface, input string) (*Asset
 		return nil, fmt.Errorf("WarehouseId (%s) already exist. %w", data.WarehouseId, err)
 	}
 
+	// Set the status unpublished
+	data.Status = StatusUnpublished
+
 	databytes, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
