@@ -7,7 +7,7 @@ import (
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func Put(
+func PutState(
 	ctx contractapi.TransactionContextInterface,
 	key string,
 	value interface{},

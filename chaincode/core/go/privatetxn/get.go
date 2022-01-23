@@ -7,7 +7,7 @@ import (
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func Get(
+func GetState(
 	ctx contractapi.TransactionContextInterface,
 	key string,
 ) ([]byte, error) {
