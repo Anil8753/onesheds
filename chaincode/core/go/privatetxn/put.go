@@ -12,7 +12,7 @@ func PutState(
 	key string,
 	value interface{},
 	mspOrgs []string,
-	pvtData PrivateData,
+	pvtData *PrivateData,
 ) error {
 
 	if pvtData.Secret == "" {

@@ -5,4 +5,6 @@ type PrivateData struct {
 	Secret string
 	// Tags are used for clouch db rich queries
 	Tags interface{}
+	// Endorsing Orgs, private data will be shared between the endorsing orgs
+	MSPOrgs []string
 }
