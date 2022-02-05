@@ -44,7 +44,7 @@ func ParsePayload(input []byte) (*Order, error) {
 	}
 
 	if order.Attr == nil {
-		return nil, errors.New("Attr is mandatory")
+		return nil, errors.New("field Attr is mandatory")
 	}
 
 	return &order, nil
