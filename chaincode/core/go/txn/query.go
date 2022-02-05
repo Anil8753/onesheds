@@ -36,7 +36,27 @@ func QueryOrder(
 	return &order, nil
 }
 
-func QueryAllOrders(
+func QueryDepositorAllOrders(
+	ctx contractapi.TransactionContextInterface,
+	depositorId string,
+) ([]*Order, error) {
+
+	clientMSP, err := ctx.GetClientIdentity().GetMSPID()
+	if err != nil {
+		return nil, err
+	}
+
+	err = ctx.GetClientIdentity().AssertAttributeValue("userId", depositorId)
+	if err != nil && clientMSP != utils.RegulatorMSP {
+		return nil, errors.New("only regulator or actual depositor can access")
+	}
+
+	qFmt := `{ "selector": { "docType": "%s", "depositorId": "%s" } }`
+	q := fmt.Sprintf(qFmt, OrderDocType, depositorId)
+	return richQuery(ctx, q)
+}
+
+func QueryWarehouseAllOrders(
 	ctx contractapi.TransactionContextInterface,
 	warehouseId string,
 ) ([]*Order, error) {
@@ -83,7 +103,7 @@ type PaginatedQueryResult struct {
 	Bookmark            string   `json:"bookmark"`
 }
 
-func QueryAllOrdersWithPagination(
+func QueryWarehouseAllOrdersWithPagination(
 	ctx contractapi.TransactionContextInterface,
 	warehouseId string,
 	pageSize int,
