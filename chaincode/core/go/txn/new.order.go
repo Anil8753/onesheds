@@ -2,87 +2,40 @@ package txn
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+	"strings"
 
-	"github.com/anil8753/onesheds/chaincode/core/privatetxn"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func NewOrder(ctx contractapi.TransactionContextInterface) error {
+func NewOrder(ctx contractapi.TransactionContextInterface, input string) error {
 
-	transient, err := ctx.GetStub().GetTransient()
-	if err != nil {
-		return fmt.Errorf("GetTransient failed. %w", err)
-	}
-
-	dataBytes, ok := transient["data"]
-	if !ok {
-		return errors.New("GetTransient does not have 'data'")
-	}
-
-	pl, err := NewPayload(dataBytes)
+	order, err := ParsePayload([]byte(input))
 	if err != nil {
 		return fmt.Errorf("failed to create NewPayload. %w", err)
 	}
 
-	if _, _, err := privatetxn.GetState(ctx, pl.OrderId); err == nil {
-		return fmt.Errorf("OrderId (%s) already exist", pl.OrderId)
+	if !strings.HasPrefix(order.Id, "order") {
+		return fmt.Errorf("txn id must start with 'order'")
 	}
 
-	if err := privatetxn.PutState(ctx, pl.OrderId, pl.Value, pl.pvtData.MSPOrgs, &pl.pvtData); err != nil {
-		return fmt.Errorf("privatetxn.PutState failed . %w", err)
+	order.DocType = OrderDocType
+	order.Status = OrderStatusNew
+
+	if _, err := ctx.GetStub().GetState(order.Id); err == nil {
+		return fmt.Errorf("OrderId (%s) already exist", order.Id)
 	}
+
+	bytesOrder, err := json.Marshal(order)
+	if err != nil {
+		return err
+	}
+
+	if err := ctx.GetStub().PutState(order.Id, bytesOrder); err != nil {
+		return fmt.Errorf("ctx.PutState failed . %w", err)
+	}
+
+	// todo: warehouse space deduction
 
 	return nil
-}
-
-type PayloadWrapper struct {
-	OrderId string
-	Value   Payload
-	pvtData privatetxn.PrivateData
-}
-
-type Payload struct {
-	WarehouseId string
-	DepositorId string
-	Status      string
-	Attr        interface{}
-}
-
-func NewPayload(input []byte) (*PayloadWrapper, error) {
-
-	var pl PayloadWrapper
-
-	if err := json.Unmarshal([]byte(input), &pl); err != nil {
-		return nil, err
-	}
-
-	if pl.OrderId == "" {
-		return nil, errors.New("PayloadWrapper.OrderId is mandatory")
-	}
-
-	if pl.Value.DepositorId == "" {
-		return nil, errors.New("PayloadWrapper.Value.DepositorId is mandatory")
-	}
-
-	if pl.Value.WarehouseId == "" {
-		return nil, errors.New("PayloadWrapper.Value.WarehouseId is mandatory")
-	}
-
-	if pl.Value.Attr == "" {
-		return nil, errors.New("PayloadWrapper.Value.Attr is mandatory")
-	}
-
-	if pl.pvtData.Secret == "" {
-		return nil, errors.New("PayloadWrapper.PrivateData.Secret is mandatory")
-	}
-
-	if pl.pvtData.MSPOrgs == nil || len(pl.pvtData.MSPOrgs) == 0 {
-		return nil, errors.New("PayloadWrapper.MSPOrgs is mandatory")
-	}
-
-	pl.Value.Status = OrderStatusNew
-
-	return &pl, nil
 }
