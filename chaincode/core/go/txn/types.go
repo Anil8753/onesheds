@@ -15,12 +15,12 @@ const (
 const OrderDocType = "Order"
 
 type Order struct {
-	DocType     string
-	Id          string
-	WarehouseId string
-	DepositorId string
-	Status      string
-	Attr        interface{}
+	DocType     string      `json:"docType"`
+	Id          string      `json:"id"`
+	WarehouseId string      `json:"warehouseId"`
+	DepositorId string      `json:"depositorId"`
+	Status      string      `json:"status"`
+	Attrs       interface{} `json:"attrs"`
 }
 
 func ParsePayload(input []byte) (*Order, error) {
@@ -43,7 +43,7 @@ func ParsePayload(input []byte) (*Order, error) {
 		return nil, errors.New("WarehouseId is mandatory")
 	}
 
-	if order.Attr == nil {
+	if order.Attrs == nil {
 		return nil, errors.New("field Attr is mandatory")
 	}
 
