@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 
@@ -40,6 +40,7 @@ import { OrdersComponent } from './components/orders/orders.component';
       AppRoutingModule,
       HttpClientModule,
       NgbModule,
+      FormsModule,
       ReactiveFormsModule,
       FormlyModule.forRoot(),
       FormlyBootstrapModule,

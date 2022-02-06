@@ -11,6 +11,9 @@ import { ConfigService } from 'src/app/services/config.service';
 })
 export class BookingComponent implements OnInit {
    @Input() item: any;
+
+   space = 1200;
+
    constructor(
       private http: HttpClient,
       private toastr: ToastrService,
@@ -22,7 +25,8 @@ export class BookingComponent implements OnInit {
 
    book() {
       const postData: NewOrderPostData = {
-         WarehouseId: this.item.warehouseId,
+         warehouseId: this.item.warehouseId,
+         attrs: { space: this.space },
       };
 
       this.http
@@ -39,7 +43,8 @@ export class BookingComponent implements OnInit {
 }
 
 interface NewOrderPostData {
-   WarehouseId: string;
+   warehouseId: string;
    // DepositorId: string;
    // FromDate    time.Time `json:"fromDate" binding:"required"`
+   attrs: any;
 }

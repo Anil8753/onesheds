@@ -20,10 +20,10 @@ export class OrdersComponent implements OnInit {
 
    fetchOrders() {
       this.http
-         .get<any>(`${this.configService.baseUrl()}/api/v1/orders`)
+         .get<any>(`${this.configService.baseUrl()}/api/v1/order`)
          .subscribe({
             next: (v) => {
-               this.items = v;
+               this.items = JSON.parse(v.data);
             },
             error: (e) => {
                this.toastr.error('Failed to fetch the profile data.', 'Error!');

@@ -9,4 +9,10 @@
 </button>
 
 <hr />
-<pre>{{ items | json }}</pre>
+<div style="display: flex; justify-content: center">
+   <div class="item-box">
+      <div class="item" *ngFor="let item of items">
+         <pre>{{ item | json }}</pre>
+      </div>
+   </div>
+</div>

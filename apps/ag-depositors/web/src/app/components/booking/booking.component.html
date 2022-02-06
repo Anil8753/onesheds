@@ -10,7 +10,15 @@
    </button>
 </div>
 <div class="modal-body">
+   <input
+      class="mr-2"
+      type="number"
+      [(ngModel)]="space"
+      placeholder="Enter sqft area"
+   />
+
    <button (click)="book()">Place Order</button>
+
    <div class="item">
       <pre> {{ item | json }} </pre>
    </div>
