@@ -1,0 +1,12 @@
+<h5 class="ml-3">Orders</h5>
+<hr />
+
+<button
+   class="btn btn-sm btn-outline-primary ml-2 mb-2"
+   (click)="fetchOrders()"
+>
+   Fetch Orders
+</button>
+
+<hr />
+<pre>{{ items | json }}</pre>

@@ -39,6 +39,13 @@
             <app-listing></app-listing>
          </ng-template>
       </li>
+
+      <li [ngbNavItem]="4">
+         <a ngbNavLink>Orders History</a>
+         <ng-template ngbNavContent>
+            <app-orders></app-orders>
+         </ng-template>
+      </li>
    </ul>
 
    <div [ngbNavOutlet]="nav" class="mt-2"></div>

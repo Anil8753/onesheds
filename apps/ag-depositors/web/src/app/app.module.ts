@@ -21,6 +21,7 @@ import { TokenInterceptor } from './intercepters/token.interceptor';
 import { VerifyAccountComponent } from './components/verify-account/verify-account.component';
 import { ListingComponent } from './components/listing/listing.component';
 import { BookingComponent } from './components/booking/booking.component';
+import { OrdersComponent } from './components/orders/orders.component';
 
 @NgModule({
    declarations: [
@@ -32,6 +33,7 @@ import { BookingComponent } from './components/booking/booking.component';
       VerifyAccountComponent,
       ListingComponent,
       BookingComponent,
+      OrdersComponent,
    ],
    imports: [
       BrowserModule,
