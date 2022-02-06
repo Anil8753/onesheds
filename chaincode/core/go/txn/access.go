@@ -22,18 +22,12 @@ func isReadAllowed(ctx contractapi.TransactionContextInterface, order *Order) er
 	}
 
 	// Warehouse owner can access
-	wh, err := asset.Query(ctx, order.WarehouseId)
-	if err != nil {
-		return fmt.Errorf("asset.Query failed. %w", err)
-	}
-
-	cid := ctx.GetClientIdentity()
-	if err := cid.AssertAttributeValue("userId", wh.OwnerId); err == nil {
+	if err := IsUserWarehouseOwner(ctx, order.WarehouseId); err == nil {
 		return nil
 	}
 
 	// Depositor can access
-	if err := cid.AssertAttributeValue("userId", order.DepositorId); err == nil {
+	if err := ctx.GetClientIdentity().AssertAttributeValue("userId", order.DepositorId); err == nil {
 		return nil
 	}
 
