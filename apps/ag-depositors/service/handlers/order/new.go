@@ -9,8 +9,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Binding from JSON
+type NewOrderPostData struct {
+	WarehouseId string `json:"warehouseId" binding:"required"`
+	// DepositorId string `json:"userId" binding:"required"`
+	// FromDate    time.Time `json:"fromDate" binding:"required"`
+}
+
 func (s *Handler) NewOrder() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+
+		reqData := NewOrderPostData{}
+		if err := ctx.ShouldBindJSON(&reqData); err != nil {
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, err)
+			return
+		}
 
 		udata := utils.GetUserFromContext(ctx, s.Database)
 		if udata == nil {
@@ -23,7 +36,17 @@ func (s *Handler) NewOrder() gin.HandlerFunc {
 			return
 		}
 
+		id, err := utils.GenerateUUID("order")
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+			return
+		}
+
 		d := &OrderData{}
+		d.Id = id
+		d.DepositorId = udata.UserId
+		d.WarehouseId = reqData.WarehouseId
+
 		outBytes, err := json.Marshal(d)
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
