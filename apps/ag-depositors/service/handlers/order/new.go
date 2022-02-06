@@ -14,6 +14,7 @@ type NewOrderPostData struct {
 	WarehouseId string `json:"warehouseId" binding:"required"`
 	// DepositorId string `json:"userId" binding:"required"`
 	// FromDate    time.Time `json:"fromDate" binding:"required"`
+	Attrs interface{} `json:"attrs" binding:"required"`
 }
 
 func (s *Handler) NewOrder() gin.HandlerFunc {
@@ -46,6 +47,7 @@ func (s *Handler) NewOrder() gin.HandlerFunc {
 		d.Id = id
 		d.DepositorId = udata.UserId
 		d.WarehouseId = reqData.WarehouseId
+		d.Attrs = reqData.Attrs
 
 		outBytes, err := json.Marshal(d)
 		if err != nil {

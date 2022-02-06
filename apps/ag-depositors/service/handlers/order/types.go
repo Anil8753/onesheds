@@ -11,9 +11,8 @@ type Handler struct {
 }
 
 type OrderData struct {
-	Id          string
-	WarehouseId string
-	DepositorId string
-	Status      string
-	Attr        interface{}
+	Id          string      `json:"id"`
+	WarehouseId string      `json:"warehouseId"`
+	DepositorId string      `json:"depositorId"`
+	Attrs       interface{} `json:"attrs"`
 }

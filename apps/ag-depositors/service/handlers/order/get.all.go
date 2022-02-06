@@ -22,7 +22,7 @@ func (s *Handler) GetAllOrders() gin.HandlerFunc {
 			return
 		}
 
-		resp, err := contract.EvaluateTransaction("QueryDepositorAllOrders")
+		resp, err := contract.EvaluateTransaction("QueryDepositorAllOrders", udata.UserId)
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
