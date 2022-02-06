@@ -1,6 +1,7 @@
-package warehouse
+package order
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/utils"
@@ -8,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Warehouse) QuaryAllHandler() gin.HandlerFunc {
+func (s *Handler) NewOrder() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		udata := utils.GetUserFromContext(ctx, s.Database)
@@ -22,7 +23,14 @@ func (s *Warehouse) QuaryAllHandler() gin.HandlerFunc {
 			return
 		}
 
-		resp, err := contract.EvaluateTransaction("GetAllWarehouse")
+		d := &OrderData{}
+		outBytes, err := json.Marshal(d)
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+			return
+		}
+
+		resp, err := contract.SubmitTransaction("NewOrder", string(outBytes))
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return

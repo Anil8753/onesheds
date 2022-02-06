@@ -18,44 +18,29 @@ func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 
 		iud, err := s.Database.Get(user)
 		if err != nil {
-			ctx.JSON(
-				http.StatusBadRequest,
-				nethttp.NewHttpResponseWithMsg(nethttp.UserNotExist, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.UserNotExist, err)
 			return
 		}
 
 		b, err := json.Marshal(iud)
 		if err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
 		var udata auth.UserData
 		if err := json.Unmarshal(b, &udata); err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
 		resp, err := s.executeLedger(udata.Crypto, "GetIdentity")
 		if err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
-		ctx.JSON(
-			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, string(resp)),
-		)
+		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Sucess, string(resp))
 	}
 
 }

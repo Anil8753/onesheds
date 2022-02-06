@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/order"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/profile"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/warehouse"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
@@ -17,6 +18,7 @@ type Routes struct {
 	HAuth      *auth.Auth
 	HProfile   *profile.Profile
 	HWarehouse *warehouse.Warehouse
+	HOrder     *order.Handler
 }
 
 func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledger) {
@@ -29,6 +31,7 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 		HAuth:      &auth.Auth{Database: db, Ledger: ledger},
 		HProfile:   &profile.Profile{Database: db, Ledger: ledger},
 		HWarehouse: &warehouse.Warehouse{Database: db, Ledger: ledger},
+		HOrder:  &order.Handler{Database: db, Ledger: ledger},
 	}
 
 	api := r.Engine.Group("/api")

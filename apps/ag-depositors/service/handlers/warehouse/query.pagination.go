@@ -14,11 +14,13 @@ func (s *Warehouse) QueryPaginationHandler() gin.HandlerFunc {
 
 		q := utils.GetQueryStringFromContext(ctx)
 		if q == "" {
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, "query string is missing")
 			return
 		}
 
 		pageSize := utils.GetPageSizeFromContext(ctx)
 		if pageSize == 0 {
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, "page size is missing")
 			return
 		}
 
@@ -26,30 +28,22 @@ func (s *Warehouse) QueryPaginationHandler() gin.HandlerFunc {
 
 		udata := utils.GetUserFromContext(ctx, s.Database)
 		if udata == nil {
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, "user not found")
 			return
 		}
 
 		contract, err := s.Ledger.GetUserContract(udata.Crypto)
 		if err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
 		resp, err := contract.EvaluateTransaction("GetWarehousesByRichQueryWithPagination", q, fmt.Sprintf("%d", pageSize), bookmark)
 		if err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
-		ctx.JSON(
-			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, string(resp)),
-		)
+		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Sucess, string(resp))
 	}
 }

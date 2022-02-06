@@ -21,46 +21,31 @@ func (s *Auth) SigninHandler() gin.HandlerFunc {
 
 		var reqData SigninReq
 		if err := ctx.ShouldBindJSON(&reqData); err != nil {
-			ctx.JSON(
-				http.StatusBadRequest,
-				nethttp.NewHttpResponseWithMsg(nethttp.InvalidRequestData, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, err)
 			return
 		}
 
 		u, err := s.getUserData(reqData.User)
 		if err != nil {
-			ctx.JSON(
-				http.StatusBadRequest,
-				nethttp.NewHttpResponseWithMsg(nethttp.UserNotExist, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.UserNotExist, err)
 			return
 		}
 
 		// check password
 		err = s.loginCheck(u.Password, reqData.Password)
 		if err != nil {
-			ctx.JSON(
-				http.StatusUnauthorized,
-				nethttp.NewHttpResponse(nethttp.WrongCredentials),
-			)
+			nethttp.ServerResponse(ctx, http.StatusUnauthorized, nethttp.WrongCredentials, u.Password)
 			return
 		}
 
 		// generate jwt token
 		tokenPair, err := token.GenerateTokenPair(&token.UserData{User: u.User, UserId: u.UserId})
 		if err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.WrongCredentials, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.WrongCredentials, err)
 			return
 		}
 
-		ctx.JSON(
-			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, tokenPair),
-		)
+		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Sucess, tokenPair)
 	}
 }
 

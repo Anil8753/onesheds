@@ -15,28 +15,19 @@ func GetUserFromSession(ctx *gin.Context, db interfaces.Database) *UserData {
 
 	iud, err := db.Get(user)
 	if err != nil {
-		ctx.JSON(
-			http.StatusBadRequest,
-			nethttp.NewHttpResponseWithMsg(nethttp.UserNotExist, err.Error()),
-		)
+		nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.UserNotExist, err)
 		return nil
 	}
 
 	b, err := json.Marshal(iud)
 	if err != nil {
-		ctx.JSON(
-			http.StatusInternalServerError,
-			nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-		)
+		nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 		return nil
 	}
 
 	var udata UserData
 	if err := json.Unmarshal(b, &udata); err != nil {
-		ctx.JSON(
-			http.StatusInternalServerError,
-			nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-		)
+		nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 		return nil
 	}
 

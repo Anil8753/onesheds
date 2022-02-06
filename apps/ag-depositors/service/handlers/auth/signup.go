@@ -30,27 +30,18 @@ func (s *Auth) SignupHandler() gin.HandlerFunc {
 
 		reqData := SignupReq{}
 		if err := ctx.ShouldBindJSON(&reqData); err != nil {
-			ctx.JSON(
-				http.StatusBadRequest,
-				nethttp.NewHttpResponseWithMsg(nethttp.InvalidRequestData, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, err)
 			return
 		}
 
 		if _, err := s.Database.Get(reqData.User); err == nil {
-			ctx.JSON(
-				http.StatusConflict,
-				nethttp.NewHttpResponse(nethttp.UserAlreadyExist),
-			)
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.UserAlreadyExist, err)
 			return
 		}
 
 		resp, err := s.doSignup(ctx, &reqData)
 		if err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
