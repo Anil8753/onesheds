@@ -30,7 +30,7 @@ func (s *Asset) GetWarehousesHandler() gin.HandlerFunc {
 
 		ctx.JSON(
 			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, string(resp)),
+			nethttp.NewHttpResponseWithMsg(nethttp.Success, string(resp)),
 		)
 	}
 }
@@ -66,7 +66,7 @@ func (s *Asset) CreateWarehouseHandler() gin.HandlerFunc {
 
 		ctx.JSON(
 			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, string(resp)),
+			nethttp.NewHttpResponseWithMsg(nethttp.Success, string(resp)),
 		)
 	}
 }
@@ -108,7 +108,7 @@ func (s *Asset) UpdateWarehouseHandler() gin.HandlerFunc {
 
 		ctx.JSON(
 			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, string(resp)),
+			nethttp.NewHttpResponseWithMsg(nethttp.Success, string(resp)),
 		)
 	}
 }

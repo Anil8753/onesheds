@@ -28,7 +28,7 @@ func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 
 		ctx.JSON(
 			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, string(resp)),
+			nethttp.NewHttpResponseWithMsg(nethttp.Success, string(resp)),
 		)
 	}
 }
@@ -61,7 +61,7 @@ func (s *Profile) UpdateProfileHandler() gin.HandlerFunc {
 
 		ctx.JSON(
 			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, string(resp)),
+			nethttp.NewHttpResponseWithMsg(nethttp.Success, string(resp)),
 		)
 	}
 }

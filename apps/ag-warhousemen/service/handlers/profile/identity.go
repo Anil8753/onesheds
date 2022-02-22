@@ -27,7 +27,7 @@ func (s *Profile) GetIdentityHandler() gin.HandlerFunc {
 
 		ctx.JSON(
 			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, string(resp)),
+			nethttp.NewHttpResponseWithMsg(nethttp.Success, string(resp)),
 		)
 	}
 }

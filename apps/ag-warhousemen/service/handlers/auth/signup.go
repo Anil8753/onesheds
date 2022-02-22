@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hashicorp/go-uuid"
 
 	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
@@ -16,8 +16,9 @@ import (
 
 // Binding from JSON
 type SignupReq struct {
-	User     string `json:"user" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	User       string      `json:"user" binding:"required"`
+	Password   string      `json:"password" binding:"required"`
+	Attributes []Attribute `json:"attributes"`
 }
 
 type SignupResp struct {
@@ -62,48 +63,44 @@ func (s *Auth) doSignup(ctx *gin.Context, reqData *SignupReq) (*SignupResp, erro
 
 	user := reqData.User
 
-	// create unique userId
-	uid, err := uuid.GenerateUUID()
+	ucert, err := s.createUserCert(ctx, reqData)
 	if err != nil {
 		return nil, err
 	}
 
-	userId := fmt.Sprintf("user_%s", uid)
+	// register user on ledger
+	r := &ledger.RegisterationData{}
+	r.UserId = ucert.UserId
+	r.Email = user
 
-	ucert, err := s.createUserCert(ctx, user, userId)
-	if err != nil {
+	if _, err := s.Dep.GetLedger().RegisterWarehouseUser(ucert, r); err != nil {
 		return nil, err
 	}
 
-	u := UserData{
-		UserId:   userId,
+	// save credentials
+	creds := Credentials{
+		UserId:   ucert.UserId,
 		User:     user,
 		Password: reqData.Password,
-		Crypto:   ucert,
 	}
 
-	// save user on ledger
-	if err := s.registerOnLedger(&u); err != nil {
-		// ideally we should delete the crypto if ledger upadte is failed. But keeping it as todo item at present
+	if _, err = creds.SaveUser(s.Dep.GetDB()); err != nil {
 		return nil, err
 	}
 
-	if _, err = u.SaveUser(s.Dep.GetDB()); err != nil {
-		return nil, err
-	}
-
-	resp := &SignupResp{UserId: userId, User: user}
-	return resp, nil
+	return &SignupResp{UserId: ucert.UserId, User: user}, nil
 }
 
-func (s *Auth) createUserCert(ctx *gin.Context, user string, userId string) (*ledger.UserCrpto, error) {
+func (s *Auth) createUserCert(ctx *gin.Context, reqData *SignupReq) (*ledger.UserCrpto, error) {
 
 	// prepare registration data
 	urd := UserRegistrationData{}
-	urd.UserId = userId
-	urd.Attributes = append(urd.Attributes, Attribute{Key: "userId", Value: userId})
-	urd.Attributes = append(urd.Attributes, Attribute{Key: "user", Value: user})
-	urd.Attributes = append(urd.Attributes, Attribute{Key: "nodetype", Value: NodeType})
+	urd.User = reqData.User
+	urd.NodeType = NodeType
+
+	for _, kv := range reqData.Attributes {
+		urd.Attributes = append(urd.Attributes, Attribute{Key: kv.Key, Value: kv.Value})
+	}
 
 	json_data, err := json.Marshal(urd)
 	if err != nil {
@@ -111,7 +108,7 @@ func (s *Auth) createUserCert(ctx *gin.Context, user string, userId string) (*le
 	}
 
 	// post call
-	url := fmt.Sprintf("%s/v1/createidentity", os.Getenv("IDENTITY_SERVICE_ENDPOINT"))
+	url := fmt.Sprintf("%s/api/v1/registeruser", os.Getenv("IDENTITY_SERVICE_ENDPOINT"))
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(json_data))
 
 	if err != nil {
@@ -119,26 +116,19 @@ func (s *Auth) createUserCert(ctx *gin.Context, user string, userId string) (*le
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("failed with http status code: %d", resp.StatusCode)
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			return nil, fmt.Errorf("failed with http status code: %d. error: %w", resp.StatusCode, err)
+		}
+		resp.Body.Close()
+
+		return nil, fmt.Errorf("failed with http status code: %d. response: %s", resp.StatusCode, string(body))
 	}
 
-	var uc ledger.UserCrpto
-	if err := json.NewDecoder(resp.Body).Decode(&uc); err != nil {
+	var certServiceResp struct{ Data ledger.UserCrpto }
+	if err := json.NewDecoder(resp.Body).Decode(&certServiceResp); err != nil {
 		return nil, err
 	}
 
-	return &uc, nil
-}
-
-func (s *Auth) registerOnLedger(u *UserData) error {
-
-	r := &ledger.RegisterationData{}
-	r.UserId = u.UserId
-	r.Email = u.User
-
-	if _, err := s.Dep.GetLedger().RegisterWarehouseUser(u.Crypto, r); err != nil {
-		return err
-	}
-
-	return nil
+	return &certServiceResp.Data, nil
 }

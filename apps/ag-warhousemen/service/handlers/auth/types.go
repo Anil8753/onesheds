@@ -14,6 +14,7 @@ type Attribute struct {
 }
 
 type UserRegistrationData struct {
-	UserId     string
+	User       string
+	NodeType   string
 	Attributes []Attribute
 }

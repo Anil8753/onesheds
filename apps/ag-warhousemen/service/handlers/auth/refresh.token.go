@@ -36,7 +36,7 @@ func (s *Auth) RefreshTokenHandler() gin.HandlerFunc {
 
 		ctx.JSON(
 			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Sucess, tokenPair),
+			nethttp.NewHttpResponseWithMsg(nethttp.Success, tokenPair),
 		)
 	}
 }
@@ -48,12 +48,12 @@ func (s *Auth) refreshTokens(tokenStr string) (*token.TokenPair, error) {
 		return nil, err
 	}
 
-	u, err := s.getUserData(user)
+	creds, err := s.getCredentials(user)
 	if err != nil {
 		return nil, err
 	}
 
-	tokenPair, err := token.GenerateTokenPair(&token.UserData{User: u.User, UserId: u.UserId})
+	tokenPair, err := token.GenerateTokenPair(&token.UserData{User: creds.User, UserId: creds.UserId})
 	if err != nil {
 		return nil, err
 	}
