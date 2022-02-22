@@ -12,7 +12,7 @@ import (
 )
 
 type UserRegistrationData struct {
-	Email      string `json:"email" binding:"required"`
+	User       string `json:"user" binding:"required"`
 	NodeType   string `json:"nodeType" binding:"required"`
 	Attributes []struct {
 		Key   string `json:"key"`
@@ -65,15 +65,16 @@ func RegEnrollUser(regData *UserRegistrationData) (*UserIdentity, error) {
 		return nil, err
 	}
 
+	userId := fmt.Sprintf("user_%s", uuid.New().String())
+
 	attrs := []msp.Attribute{}
 	for _, attr := range regData.Attributes {
 		attrs = append(attrs, msp.Attribute{Name: attr.Key, Value: attr.Value, ECert: true})
 	}
 
-	attrs = append(attrs, msp.Attribute{Name: "email", Value: regData.Email, ECert: true})
+	attrs = append(attrs, msp.Attribute{Name: "userId", Value: userId, ECert: true})
+	attrs = append(attrs, msp.Attribute{Name: "user", Value: regData.User, ECert: true})
 	attrs = append(attrs, msp.Attribute{Name: "nodeType", Value: regData.NodeType, ECert: true})
-
-	userId := fmt.Sprintf("user_%s", uuid.New().String())
 
 	rr := &msp.RegistrationRequest{
 		Name:       userId,
