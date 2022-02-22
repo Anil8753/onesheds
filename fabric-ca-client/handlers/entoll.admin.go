@@ -4,25 +4,27 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/anil8753/fabric-ca-client/utils"
+	"github.com/gin-gonic/gin"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
 )
 
-func EnrollAdminHandler() func(w http.ResponseWriter, r *http.Request) {
+func EnrollAdminHandler() gin.HandlerFunc {
 
-	return func(w http.ResponseWriter, r *http.Request) {
-
-		if r.Method != "POST" {
-			http.Error(w, "Method is not supported.", http.StatusNotFound)
-			return
-		}
+	return func(ctx *gin.Context) {
 
 		if err := EnrollAdmin(); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			ctx.JSON(
+				http.StatusBadRequest,
+				utils.HttpError("StatusBadRequest", err.Error()),
+			)
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("ok"))
+		ctx.JSON(
+			http.StatusOK,
+			utils.HttpSucess("StatusOK", "success"),
+		)
 	}
 }
 
