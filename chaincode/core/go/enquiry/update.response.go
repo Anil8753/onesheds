@@ -5,11 +5,12 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/anil8753/onesheds/chaincode/core/asset"
 	"github.com/anil8753/onesheds/chaincode/core/utils"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func UpdateEnquiry(
+func UpdateResponse(
 	ctx contractapi.TransactionContextInterface,
 	enquiryId string,
 	input []byte,
@@ -33,7 +34,7 @@ func UpdateEnquiry(
 		return nil, err
 	}
 
-	if err := json.Unmarshal(input, &data.Attributes); err != nil {
+	if err := json.Unmarshal(input, &data.Response); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal input. %w", err)
 	}
 
@@ -49,21 +50,26 @@ func UpdateEnquiry(
 	return &data, nil
 }
 
-// Enquiry can be updated by regulator or depositor only
-func CanUpdate(
+// Enquiry response can be updated by warehousemen or regulator
+func CanUpdateResponse(
 	ctx contractapi.TransactionContextInterface,
 	data *EnquiryData,
 ) error {
+
+	wh, err := asset.Query(ctx, data.Warehouse)
+	if err != nil {
+		return fmt.Errorf("asset.Query failed. %w", err)
+	}
 
 	mspId, err := ctx.GetClientIdentity().GetMSPID()
 	if err != nil {
 		return fmt.Errorf("failed to get MSP. %w", err)
 	}
 
-	// If user is depositor
-	if mspId == utils.DepositorMSP {
-		if err := ctx.GetClientIdentity().AssertAttributeValue("userId", data.Depositor); err != nil {
-			return fmt.Errorf("unathourized depositor. %w", err)
+	// If user is warehouse owner
+	if mspId == utils.WarehouseMSP {
+		if err := ctx.GetClientIdentity().AssertAttributeValue("userId", wh.OwnerId); err != nil {
+			return fmt.Errorf("unathourized warehousemen. %w", err)
 		}
 
 		return nil
