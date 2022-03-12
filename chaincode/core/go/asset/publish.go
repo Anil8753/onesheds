@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	utils "github.com/anil8753/onesheds/chaincode/core/utils"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
@@ -15,8 +16,8 @@ func Publish(ctx contractapi.TransactionContextInterface, warehouseId string) (*
 	}
 
 	// check the authority
-	if clientMSP != regulatorMSP {
-		return nil, fmt.Errorf("unauthrorized node. Only %s can publish warehouse", regulatorMSP)
+	if clientMSP != utils.RegulatorMSP {
+		return nil, fmt.Errorf("unauthrorized node. Only %s can publish warehouse", utils.RegulatorMSP)
 	}
 
 	sData, err := Query(ctx, warehouseId)

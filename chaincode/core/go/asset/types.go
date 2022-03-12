@@ -5,8 +5,6 @@ import (
 	"errors"
 )
 
-const regulatorMSP = "regulator-onesheds-com"
-
 const (
 	WarehouseDocType  = "WarehouseRegData"
 	StatusUnpublished = "Unpublished"
