@@ -1,19 +1,19 @@
-package main
+package contract
 
 import (
 	"encoding/json"
+	"strconv"
 
-	txn "github.com/anil8753/onesheds/chaincode/core/txn"
+	assets "github.com/anil8753/onesheds/chaincode/core/asset"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func (c *Contract) NewOrder(
+func (c *Contract) RegisterWarehouse(
 	ctx contractapi.TransactionContextInterface,
 	input string,
 ) (string, error) {
 
-	r, err := txn.NewOrder(ctx, input)
-
+	r, err := assets.Register(ctx, input)
 	if err != nil {
 		return "", err
 	}
@@ -26,40 +26,11 @@ func (c *Contract) NewOrder(
 	return string(b), nil
 }
 
-func (c *Contract) AcceptOrder(
+func (c *Contract) GetAllWarehouse(
 	ctx contractapi.TransactionContextInterface,
-	orderId string,
-) error {
-
-	err := txn.AcceptOrder(ctx, orderId)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (c *Contract) RejectOrder(
-	ctx contractapi.TransactionContextInterface,
-	orderId string,
-) error {
-
-	err := txn.RejectOrder(ctx, orderId)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (c *Contract) QueryDepositorAllOrders(
-	ctx contractapi.TransactionContextInterface,
-	depositorId string,
 ) (string, error) {
 
-	r, err := txn.QueryDepositorAllOrders(ctx, depositorId)
+	r, err := assets.QueryAll(ctx)
 
 	if err != nil {
 		return "", err
@@ -73,13 +44,12 @@ func (c *Contract) QueryDepositorAllOrders(
 	return string(b), nil
 }
 
-func (c *Contract) QueryOrder(
+func (c *Contract) GetWarehouse(
 	ctx contractapi.TransactionContextInterface,
-	orderId string,
+	uniqueId string,
 ) (string, error) {
 
-	r, err := txn.QueryOrder(ctx, orderId)
-
+	r, err := assets.Query(ctx, uniqueId)
 	if err != nil {
 		return "", err
 	}
@@ -92,13 +62,12 @@ func (c *Contract) QueryOrder(
 	return string(b), nil
 }
 
-func (c *Contract) QueryWarehouseAllOrders(
+func (c *Contract) GetWarehouseByOwnerId(
 	ctx contractapi.TransactionContextInterface,
-	warehouseId string,
+	ownerId string,
 ) (string, error) {
 
-	r, err := txn.QueryWarehouseAllOrders(ctx, warehouseId)
-
+	r, err := assets.QueryByOwnerId(ctx, ownerId)
 	if err != nil {
 		return "", err
 	}
@@ -111,15 +80,55 @@ func (c *Contract) QueryWarehouseAllOrders(
 	return string(b), nil
 }
 
-func (c *Contract) QueryWarehouseAllOrdersWithPagination(
+func (c *Contract) GetWarehousesByRichQuery(
 	ctx contractapi.TransactionContextInterface,
-	warehouseId string,
-	pageSize int,
+	query string,
+) (string, error) {
+
+	r, err := assets.RichQuery(ctx, query)
+	if err != nil {
+		return "", err
+	}
+
+	b, err := json.Marshal(r)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
+func (c *Contract) GetWarehousesByRichQueryWithPagination(
+	ctx contractapi.TransactionContextInterface,
+	query string,
+	pageSize string,
 	bookmark string,
 ) (string, error) {
 
-	r, err := txn.QueryWarehouseAllOrdersWithPagination(ctx, warehouseId, pageSize, bookmark)
+	ps, err := strconv.Atoi(pageSize)
+	if err != nil {
+		return "", err
+	}
 
+	r, err := assets.RichQueryWithPagination(ctx, query, ps, bookmark)
+	if err != nil {
+		return "", err
+	}
+
+	b, err := json.Marshal(r)
+	if err != nil {
+		return "", err
+	}
+
+	return string(b), nil
+}
+
+func (c *Contract) UpdateWarehouse(
+	ctx contractapi.TransactionContextInterface,
+	input string,
+) (string, error) {
+
+	r, err := assets.Update(ctx, input)
 	if err != nil {
 		return "", err
 	}
