@@ -60,17 +60,17 @@ func CanUpdate(
 		return fmt.Errorf("failed to get MSP. %w", err)
 	}
 
+	// If user is regulator
+	if mspId == utils.RegulatorMSP {
+		return nil
+	}
+
 	// If user is depositor
 	if mspId == utils.DepositorMSP {
 		if err := ctx.GetClientIdentity().AssertAttributeValue("userId", data.Depositor); err != nil {
 			return fmt.Errorf("unathourized depositor. %w", err)
 		}
 
-		return nil
-	}
-
-	// If user is regulator
-	if mspId == utils.RegulatorMSP {
 		return nil
 	}
 

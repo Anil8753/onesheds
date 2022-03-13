@@ -1,4 +1,4 @@
-package enquiry
+package faq
 
 import (
 	"encoding/json"
@@ -10,53 +10,53 @@ import (
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func UpdateResponse(
+func Add(
 	ctx contractapi.TransactionContextInterface,
-	enquiryId string,
-	input []byte,
-) (*EnquiryData, error) {
+	warehouseId string,
+	question string,
+	input string,
+) (*Entry, error) {
 
-	outBytes, err := ctx.GetStub().GetState(enquiryId)
+	id, err := ctx.GetStub().CreateCompositeKey(IDPrefix, []string{warehouseId})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create composit key. %w", err)
+	}
+
+	entry, err := Get(ctx, id)
+	if err != nil {
+		entry = &Entry{Id: id, WarehouseId: warehouseId}
+	}
+
+	if err := CanAdd(ctx, entry); err != nil {
+		return nil, err
+	}
+
+	var answer Answer
+	if err := json.Unmarshal([]byte(input), &answer); err != nil {
+		return nil, fmt.Errorf("invalid input data. %w", err)
+	}
+
+	entry.FAQs = append(entry.FAQs, FAQ{Question: question, Answer: answer})
+
+	outBytes, err := json.Marshal(entry)
 	if err != nil {
 		return nil, err
 	}
 
-	if len(outBytes) == 0 {
-		return nil, fmt.Errorf("%s enquiryId not found", enquiryId)
+	if err := ctx.GetStub().PutState(id, outBytes); err != nil {
+		return nil, fmt.Errorf("failed to put data. %w", err)
 	}
 
-	var data EnquiryData
-	if err := json.Unmarshal(outBytes, &data); err != nil {
-		return nil, err
-	}
-
-	if err := CanUpdate(ctx, &data); err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal(input, &data.Response); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal input. %w", err)
-	}
-
-	dataBytes, err := json.Marshal(data)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := ctx.GetStub().PutState(enquiryId, dataBytes); err != nil {
-		return nil, fmt.Errorf("failed to put state for the key: %s", enquiryId)
-	}
-
-	return &data, nil
+	return entry, nil
 }
 
-// Enquiry response can be updated by warehousemen or regulator
-func CanUpdateResponse(
+// can be updated by regulator or warehousemen only
+func CanAdd(
 	ctx contractapi.TransactionContextInterface,
-	data *EnquiryData,
+	data *Entry,
 ) error {
 
-	wh, err := asset.Query(ctx, data.Warehouse)
+	wh, err := asset.Query(ctx, data.WarehouseId)
 	if err != nil {
 		return fmt.Errorf("asset.Query failed. %w", err)
 	}
