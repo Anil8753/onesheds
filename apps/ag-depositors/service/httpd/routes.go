@@ -4,6 +4,7 @@ import (
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/order"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/profile"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/review"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/warehouse"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
@@ -19,6 +20,7 @@ type Routes struct {
 	HandlerProfile   *profile.Profile
 	HandlerWarehouse *warehouse.Warehouse
 	HandlerOrder     *order.Handler
+	HandlerReview    *review.Handler
 }
 
 func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledger) {
@@ -32,6 +34,7 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 		HandlerProfile:   &profile.Profile{Database: db, Ledger: ledger},
 		HandlerWarehouse: &warehouse.Warehouse{Database: db, Ledger: ledger},
 		HandlerOrder:     &order.Handler{Database: db, Ledger: ledger},
+		HandlerReview:    &review.Handler{Database: db, Ledger: ledger},
 	}
 
 	api := r.Engine.Group("/api")
@@ -54,4 +57,9 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 
 	protected.POST("/order", r.HandlerOrder.NewOrder())
 	protected.GET("/order", r.HandlerOrder.GetAllOrders())
+
+	protected.GET("/review/warehouse/:warehouse_id", r.HandlerReview.GetAllWarehouseReviews())
+	protected.GET("/review/:review_id", r.HandlerReview.GetReview())
+	protected.POST("/review", r.HandlerReview.AddUserRating())
+	protected.POST("/review_reply", r.HandlerReview.AddReply())
 }
