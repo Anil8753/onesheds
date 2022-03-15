@@ -56,11 +56,6 @@ func CanAdd(
 	data *Entry,
 ) error {
 
-	wh, err := asset.Query(ctx, data.WarehouseId)
-	if err != nil {
-		return fmt.Errorf("asset.Query failed. %w", err)
-	}
-
 	mspId, err := ctx.GetClientIdentity().GetMSPID()
 	if err != nil {
 		return fmt.Errorf("failed to get MSP. %w", err)
@@ -69,6 +64,11 @@ func CanAdd(
 	// If user is regulator
 	if mspId == utils.RegulatorMSP {
 		return nil
+	}
+
+	wh, err := asset.Query(ctx, data.WarehouseId)
+	if err != nil {
+		return fmt.Errorf("asset.Query failed. %w", err)
 	}
 
 	// If user is warehouse owner

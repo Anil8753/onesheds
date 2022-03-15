@@ -13,7 +13,6 @@ type FAQ struct {
 type Entry struct {
 	Id          string `json:"id"`
 	WarehouseId string `json:"warehouseId"`
-	Question    string `json:"question"`
 	FAQs        []FAQ  `json:"faqs"`
 }
 
