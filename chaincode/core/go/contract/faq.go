@@ -8,7 +8,7 @@ import (
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func (c *Contract) GetByWarehouseId(
+func (c *Contract) GetAllFAQ(
 	ctx contractapi.TransactionContextInterface,
 	warehouseId string,
 ) (string, error) {
