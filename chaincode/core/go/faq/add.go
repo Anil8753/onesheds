@@ -22,7 +22,7 @@ func Add(
 		return nil, fmt.Errorf("failed to create composit key. %w", err)
 	}
 
-	entry, err := Get(ctx, id)
+	entry, err := get(ctx, id)
 	if err != nil {
 		entry = &Entry{Id: id, WarehouseId: warehouseId}
 	}

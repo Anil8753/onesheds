@@ -7,10 +7,15 @@ import (
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func Get(
+func GetByWarehouseId(
 	ctx contractapi.TransactionContextInterface,
-	key string,
+	warehouseId string,
 ) (*Entry, error) {
+
+	key, err := ctx.GetStub().CreateCompositeKey(IDPrefix, []string{warehouseId})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create composit key. %w", err)
+	}
 
 	outBytes, err := ctx.GetStub().GetState(key)
 	if err != nil {
@@ -25,15 +30,10 @@ func Get(
 	return &data, nil
 }
 
-func GetByWarehouseId(
+func get(
 	ctx contractapi.TransactionContextInterface,
-	warehouseId string,
+	key string,
 ) (*Entry, error) {
-
-	key, err := ctx.GetStub().CreateCompositeKey(IDPrefix, []string{warehouseId})
-	if err != nil {
-		return nil, fmt.Errorf("failed to create composit key. %w", err)
-	}
 
 	outBytes, err := ctx.GetStub().GetState(key)
 	if err != nil {
