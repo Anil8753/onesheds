@@ -1,12 +1,14 @@
 package contract
 
 import (
+	"encoding/json"
+
 	"github.com/anil8753/onesheds/chaincode/core/faq"
 	"github.com/anil8753/onesheds/chaincode/core/utils"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func GetByWarehouseId(
+func (c *Contract) GetByWarehouseId(
 	ctx contractapi.TransactionContextInterface,
 	warehouseId string,
 ) (string, error) {
@@ -18,14 +20,23 @@ func GetByWarehouseId(
 	return utils.ToJSON(r)
 }
 
-func Add(
+type AddFAQData struct {
+	WarehouseId string `json:"warehouseId"`
+	Question    string `json:"question"`
+	Input       string `json:"input"`
+}
+
+func (c *Contract) AddFAQ(
 	ctx contractapi.TransactionContextInterface,
-	warehouseId string,
-	question string,
 	input string,
 ) (string, error) {
 
-	r, err := faq.Add(ctx, warehouseId, question, input)
+	var in AddFAQData
+	if err := json.Unmarshal([]byte(input), &in); err != nil {
+		return "", err
+	}
+
+	r, err := faq.Add(ctx, in.WarehouseId, in.Question, in.Input)
 	if err != nil {
 		return "", err
 	}
@@ -33,15 +44,47 @@ func Add(
 	return utils.ToJSON(r)
 }
 
-func Update(
+type UpdateQuestionData struct {
+	WarehouseId string `json:"warehouseId"`
+	Index       int    `json:"index"`
+	Question    string `json:"question"`
+}
+
+func (c *Contract) UpdateFAQQuestion(
 	ctx contractapi.TransactionContextInterface,
-	warehouseId string,
-	index int,
-	question string,
 	input string,
 ) (string, error) {
 
-	r, err := faq.Update(ctx, warehouseId, index, question, input)
+	var in UpdateQuestionData
+	if err := json.Unmarshal([]byte(input), &in); err != nil {
+		return "", err
+	}
+
+	r, err := faq.UpdateQuestion(ctx, in.WarehouseId, in.Index, in.Question)
+	if err != nil {
+		return "", err
+	}
+
+	return utils.ToJSON(r)
+}
+
+type UpdateAnswerData struct {
+	WarehouseId string `json:"warehouseId"`
+	Index       int    `json:"index"`
+	Input       string `json:"input"`
+}
+
+func (c *Contract) UpdateFAQAnswer(
+	ctx contractapi.TransactionContextInterface,
+	input string,
+) (string, error) {
+
+	var in UpdateAnswerData
+	if err := json.Unmarshal([]byte(input), &in); err != nil {
+		return "", err
+	}
+
+	r, err := faq.UpdateAnswer(ctx, in.WarehouseId, in.Index, in.Input)
 	if err != nil {
 		return "", err
 	}

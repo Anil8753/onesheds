@@ -9,7 +9,7 @@ import (
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func GetAllReviews(
+func (c *Contract) GetAllReviews(
 	ctx contractapi.TransactionContextInterface,
 	warehouseId string,
 ) (string, error) {
@@ -23,7 +23,7 @@ func GetAllReviews(
 	return utils.ToJSON(r)
 }
 
-func GetReview(
+func (c *Contract) GetReview(
 	ctx contractapi.TransactionContextInterface,
 	reviewId string,
 ) (string, error) {
@@ -42,7 +42,7 @@ type AddReviewData struct {
 	ReviewText  string  `json:"reviewText"`
 }
 
-func AddUserRating(
+func (c *Contract) AddUserRating(
 	ctx contractapi.TransactionContextInterface,
 	input string,
 ) (string, error) {
@@ -66,7 +66,7 @@ type AddReplyData struct {
 	ReplyText string `json:"replyText"`
 }
 
-func AddReply(
+func (c *Contract) AddReply(
 	ctx contractapi.TransactionContextInterface,
 	input string,
 ) (string, error) {
