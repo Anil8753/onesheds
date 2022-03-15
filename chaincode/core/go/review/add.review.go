@@ -11,19 +11,19 @@ import (
 
 func AddUserRating(
 	ctx contractapi.TransactionContextInterface,
-	userId string,
 	warehouseId string,
 	userRating float32,
 	reviewText string,
-) error {
+) (*Entry, error) {
 
-	if userId == "" {
-		return errors.New("userId is mandatory")
+	userId, found, err := ctx.GetClientIdentity().GetAttributeValue("userId")
+	if err != nil || !found {
+		return nil, errors.New("failed to get user from certificate")
 	}
 
-	_, err := asset.Query(ctx, warehouseId)
+	_, err = asset.Query(ctx, warehouseId)
 	if err != nil {
-		return fmt.Errorf("warehouse %s not found. Error: %w", warehouseId, err)
+		return nil, fmt.Errorf("warehouse %s not found. Error: %w", warehouseId, err)
 	}
 
 	txnId := ctx.GetStub().GetTxID()
@@ -40,12 +40,12 @@ func AddUserRating(
 
 	dataBytes, err := json.Marshal(data)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err := ctx.GetStub().PutState(txnId, dataBytes); err != nil {
-		return fmt.Errorf("failed to put state for the txnId: %s", txnId)
+		return nil, fmt.Errorf("failed to put state for the txnId: %s", txnId)
 	}
 
-	return nil
+	return &data, nil
 }

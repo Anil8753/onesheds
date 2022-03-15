@@ -10,66 +10,55 @@ import (
 
 func AddReply(
 	ctx contractapi.TransactionContextInterface,
-	id string,
-	userId string,
+	reviewId string,
 	targetId string,
 	text string,
-) error {
+) (*Entry, error) {
 
-	if id == "" {
-		return errors.New("id is mandatory")
-	}
-
-	if userId == "" {
-		return errors.New("userId is mandatory")
+	userId, found, err := ctx.GetClientIdentity().GetAttributeValue("userId")
+	if err != nil || !found {
+		return nil, errors.New("failed to get user from certificate")
 	}
 
 	if targetId == "" {
-		return errors.New("targetId is mandatory")
+		return nil, errors.New("targetId is mandatory")
 	}
 
-	data, err := Get(ctx, id)
+	data, err := Get(ctx, reviewId)
 	if err != nil {
-		return fmt.Errorf("review %s not found. Error: %w", id, err)
+		return nil, fmt.Errorf("review %s not found. Error: %w", reviewId, err)
+	}
+
+	newReply := Reply{
+		Id:     ctx.GetStub().GetTxID(),
+		UserId: userId,
+		Text:   text,
 	}
 
 	// First check at root level
 	if data.UserReview.Id == targetId {
+		data.UserReview.Replies = append(data.UserReview.Replies, newReply)
 
-		data.UserReview.Replies = append(
-			data.UserReview.Replies,
-			Reply{
-				Id:     ctx.GetStub().GetTxID(),
-				UserId: userId,
-				Text:   text,
-			},
-		)
+	} else {
+		// check at replies
+		r := find(data.UserReview.Replies, targetId)
+		if r == nil {
+			return nil, fmt.Errorf("targetId %s not found and there are no reply", targetId)
+		}
 
-		return nil
+		r.Replies = append(r.Replies, newReply)
 	}
-
-	// check at replies
-	r := find(data.UserReview.Replies, targetId)
-	if r == nil {
-		return fmt.Errorf("targetId %s not found and there are no reply", targetId)
-	}
-
-	r.Replies = append(r.Replies, Reply{
-		Id:     ctx.GetStub().GetTxID(),
-		UserId: userId,
-		Text:   text,
-	})
 
 	dataBytes, err := json.Marshal(data)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	if err := ctx.GetStub().PutState(id, dataBytes); err != nil {
-		return fmt.Errorf("failed to put state for the id: %s", id)
+	if err := ctx.GetStub().PutState(reviewId, dataBytes); err != nil {
+		return nil, fmt.Errorf("failed to put state for the reviewId: %s", reviewId)
 	}
 
-	return nil
+	return data, nil
 }
 
 func find(replies []Reply, targetId string) *Reply {
