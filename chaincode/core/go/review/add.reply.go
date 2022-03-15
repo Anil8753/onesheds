@@ -12,7 +12,7 @@ func AddReply(
 	ctx contractapi.TransactionContextInterface,
 	reviewId string,
 	targetId string,
-	text string,
+	replyText string,
 ) (*Entry, error) {
 
 	userId, found, err := ctx.GetClientIdentity().GetAttributeValue("userId")
@@ -32,7 +32,7 @@ func AddReply(
 	newReply := Reply{
 		Id:     ctx.GetStub().GetTxID(),
 		UserId: userId,
-		Text:   text,
+		Text:   replyText,
 	}
 
 	// First check at root level

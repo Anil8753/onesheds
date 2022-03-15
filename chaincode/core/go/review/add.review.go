@@ -15,7 +15,6 @@ func AddUserRating(
 	userRating float32,
 	reviewText string,
 ) (*Entry, error) {
-
 	userId, found, err := ctx.GetClientIdentity().GetAttributeValue("userId")
 	if err != nil || !found {
 		return nil, errors.New("failed to get user from certificate")
