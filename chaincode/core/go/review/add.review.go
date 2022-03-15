@@ -28,6 +28,7 @@ func AddUserRating(
 	txnId := ctx.GetStub().GetTxID()
 
 	data := Entry{
+		DocType:     ReviewDocType,
 		Id:          txnId,
 		WarehouseId: warehouseId,
 		UserReview: UserReview{

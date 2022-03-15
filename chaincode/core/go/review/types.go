@@ -1,5 +1,9 @@
 package review
 
+const (
+	ReviewDocType = "WarehouseReview"
+)
+
 type Reply struct {
 	Id      string      `json:"id"`
 	UserId  string      `json:"userId"`
@@ -19,6 +23,7 @@ type UserReview struct {
 }
 
 type Entry struct {
+	DocType     string     `json:"docType,omitempty"`
 	Id          string     `json:"id"`
 	WarehouseId string     `json:"warehouseId"`
 	AdminRating float32    `json:"adminRating"`
