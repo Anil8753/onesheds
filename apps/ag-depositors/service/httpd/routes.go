@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/faq"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/order"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/profile"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/review"
@@ -21,6 +22,7 @@ type Routes struct {
 	HandlerWarehouse *warehouse.Warehouse
 	HandlerOrder     *order.Handler
 	HandlerReview    *review.Handler
+	HandlerFAQ       *faq.Handler
 }
 
 func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledger) {
@@ -35,6 +37,7 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 		HandlerWarehouse: &warehouse.Warehouse{Database: db, Ledger: ledger},
 		HandlerOrder:     &order.Handler{Database: db, Ledger: ledger},
 		HandlerReview:    &review.Handler{Database: db, Ledger: ledger},
+		HandlerFAQ:       &faq.Handler{Database: db, Ledger: ledger},
 	}
 
 	api := r.Engine.Group("/api")
@@ -62,4 +65,9 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 	protected.GET("/review/:review_id", r.HandlerReview.GetReview())
 	protected.POST("/review", r.HandlerReview.AddUserRating())
 	protected.POST("/review_reply", r.HandlerReview.AddReply())
+
+	protected.GET("/faq/warehouse/:warehouse_id", r.HandlerFAQ.GetAllFAQ())
+	protected.POST("/faq", r.HandlerFAQ.AddFAQ())
+	protected.PUT("/faq/question", r.HandlerFAQ.UpdateFAQQuestion())
+	protected.PUT("/faq/answer", r.HandlerFAQ.UpdateFAQAnswer())
 }
