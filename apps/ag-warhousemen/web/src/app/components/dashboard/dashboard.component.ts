@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
       this.spinner.show();
 
       this.http
-         .get<any>(`${this.configService.baseUrl()}/api/v1/identity`)
+         .get<any>(`${this.configService.baseUrl()}/api/v1/profile`)
          .subscribe({
             next: (v) => {
                const resp = JSON.parse(v['data']);
