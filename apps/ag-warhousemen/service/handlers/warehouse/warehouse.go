@@ -15,6 +15,7 @@ func (s *Asset) GetWarehousesHandler() gin.HandlerFunc {
 
 		udata := utils.GetUserFromContext(ctx, s.Database)
 		if udata == nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, "failed to get user from gin context")
 			return
 		}
 

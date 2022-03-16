@@ -1,12 +1,9 @@
 package profile
 
 import (
-	"encoding/json"
-
 	"net/http"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/utils"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
 	"github.com/gin-gonic/gin"
 )
@@ -14,27 +11,19 @@ import (
 func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		user := ctx.GetString("user")
-
-		iud, err := s.Database.Get(user)
-		if err != nil {
-			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.UserNotExist, err)
+		udata := utils.GetUserFromContext(ctx, s.Database)
+		if udata == nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, "failed to get user from gin context")
 			return
 		}
 
-		b, err := json.Marshal(iud)
+		contract, err := s.Ledger.GetUserContract(udata.Crypto)
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
-		var udata auth.UserData
-		if err := json.Unmarshal(b, &udata); err != nil {
-			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
-			return
-		}
-
-		resp, err := s.executeLedger(udata.Crypto, "GetIdentity")
+		resp, err := contract.EvaluateTransaction("GetWarehouseUser", udata.UserId)
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
@@ -42,27 +31,4 @@ func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 
 		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Success, string(resp))
 	}
-
-}
-
-func (s *Profile) executeLedger(crypt *ledger.UserCrpto, fn string) ([]byte, error) {
-	le := ledger.Ledger{}
-	le.Init()
-	gw, err := le.GetGateway(crypt)
-	if err != nil {
-		return nil, err
-	}
-
-	contract, err := le.GetContract(gw, "mychannel", "core")
-	if err != nil {
-		return nil, err
-	}
-
-	data, err := contract.EvaluateTransaction(fn)
-	if err != nil {
-		return nil, err
-	}
-
-	return data, nil
-
 }

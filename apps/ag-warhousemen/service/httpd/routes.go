@@ -52,7 +52,7 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 	// user
 	//protected.GET("/identity", r.HProfile.GetIdentityHandler())
 	protected.GET("/profile", r.HProfile.GetProfileHandler())
-	//protected.PUT("/profile", r.HProfile.UpdateProfileHandler())
+	protected.PUT("/profile", r.HProfile.UpdateProfileHandler())
 
 	// warehouse
 	protected.POST("/warehouse", r.HWarehouse.CreateWarehouseHandler())
