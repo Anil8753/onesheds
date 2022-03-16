@@ -61,13 +61,11 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 	protected.POST("/order", r.HandlerOrder.NewOrder())
 	protected.GET("/order", r.HandlerOrder.GetAllOrders())
 
+	// reviews
 	protected.GET("/review/warehouse/:warehouse_id", r.HandlerReview.GetAllWarehouseReviews())
-	// protected.GET("/review/:review_id", r.HandlerReview.GetReview())
 	protected.POST("/review", r.HandlerReview.AddUserRating())
 	protected.POST("/review_reply", r.HandlerReview.AddReply())
 
+	// faq
 	protected.GET("/faq/warehouse/:warehouse_id", r.HandlerFAQ.GetAllFAQ())
-	// protected.POST("/faq", r.HandlerFAQ.AddFAQ())
-	// protected.PUT("/faq/question", r.HandlerFAQ.UpdateFAQQuestion())
-	// protected.PUT("/faq/answer", r.HandlerFAQ.UpdateFAQAnswer())
 }

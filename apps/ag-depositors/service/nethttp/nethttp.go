@@ -13,7 +13,7 @@ type HttpResponse struct {
 }
 
 const (
-	Sucess = iota
+	Success = iota
 	WrongCredentials
 	UserAlreadyExist
 	UserNotExist
@@ -27,7 +27,7 @@ var mappings map[int]string
 func init() {
 
 	mappings = map[int]string{
-		Sucess:                         "success",
+		Success:                        "success",
 		WrongCredentials:               "wrong credentials",
 		UserAlreadyExist:               "user already exist",
 		UserNotExist:                   "user not exist",

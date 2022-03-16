@@ -40,7 +40,7 @@ func (s *Profile) GetProfileHandler() gin.HandlerFunc {
 			return
 		}
 
-		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Sucess, string(resp))
+		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Success, string(resp))
 	}
 
 }

@@ -28,7 +28,7 @@ func (s *Auth) RefreshTokenHandler() gin.HandlerFunc {
 			return
 		}
 
-		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Sucess, tokenPair)
+		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Success, tokenPair)
 	}
 }
 
