@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func (s *Ledger) CreateDepositor(ucryp *UserCrpto, r *RegisterationData) ([]byte, error) {
+func (s *Ledger) CreateUser(ucryp *UserCrpto, r *RegisterationData) ([]byte, error) {
 
 	contract, err := s.GetUserContract(ucryp)
 	if err != nil {
@@ -25,7 +25,7 @@ func (s *Ledger) CreateDepositor(ucryp *UserCrpto, r *RegisterationData) ([]byte
 	return data, nil
 }
 
-func (s *Ledger) GetDepositor(ucryp *UserCrpto) ([]byte, error) {
+func (s *Ledger) GetUser(ucryp *UserCrpto) ([]byte, error) {
 
 	contract, err := s.GetUserContract(ucryp)
 	if err != nil {
@@ -40,7 +40,7 @@ func (s *Ledger) GetDepositor(ucryp *UserCrpto) ([]byte, error) {
 	return data, nil
 }
 
-func (s *Ledger) UpdateDepositor(ucryp *UserCrpto, r *RegisterationData) ([]byte, error) {
+func (s *Ledger) UpdateUser(ucryp *UserCrpto, r *RegisterationData) ([]byte, error) {
 
 	contract, err := s.GetUserContract(ucryp)
 	if err != nil {

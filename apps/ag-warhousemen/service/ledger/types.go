@@ -25,15 +25,3 @@ type RegisterationData struct {
 	PANCard string `json:"pancard,omitempty"`
 	Aadhar  string `json:"aadharcard,omitempty"`
 }
-
-type AssetData struct {
-	DocType     string `json:"docType,omitempty"`
-	WarehouseId string `json:"warehouseId"`
-
-	Status          string                 `json:"status,omitempty"`
-	OwnerId         string                 `json:"ownerId,omitempty"`
-	TermsConditions []string               `json:"termsConditions,omitempty"`
-	Properties      map[string]interface{} `json:"properties,omitempty"`
-	Photos          map[string]interface{} `json:"photos,omitempty"`
-	Videos          map[string]interface{} `json:"videos,omitempty"`
-}

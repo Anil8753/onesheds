@@ -1,114 +1,120 @@
 package warehouse
 
 import (
-	"errors"
+	"encoding/json"
 	"net/http"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/utils"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
 func (s *Asset) GetWarehousesHandler() gin.HandlerFunc {
+	//
 	return func(ctx *gin.Context) {
 
-		udata := auth.GetUserFromSession(ctx, s.Dep.GetDB())
+		udata := utils.GetUserFromContext(ctx, s.Database)
 		if udata == nil {
 			return
 		}
 
-		resp, err := s.Dep.GetLedger().GetUserWarehouses(udata.Crypto)
+		contract, err := s.Ledger.GetUserContract(udata.Crypto)
 		if err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
-		ctx.JSON(
-			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Success, string(resp)),
-		)
+		resp, err := contract.EvaluateTransaction("GetWarehouseByOwnerId", udata.UserId)
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+			return
+		}
+
+		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Success, string(resp))
 	}
 }
 
+type AssetData struct {
+	DocType     string `json:"docType,omitempty"`
+	WarehouseId string `json:"warehouseId"`
+
+	Status          string                 `json:"status,omitempty"`
+	OwnerId         string                 `json:"ownerId,omitempty"`
+	TermsConditions []string               `json:"termsConditions,omitempty"`
+	Properties      map[string]interface{} `json:"properties,omitempty"`
+	Photos          map[string]interface{} `json:"photos,omitempty"`
+	Videos          map[string]interface{} `json:"videos,omitempty"`
+}
+
 func (s *Asset) CreateWarehouseHandler() gin.HandlerFunc {
+	//
 	return func(ctx *gin.Context) {
 
-		udata := auth.GetUserFromSession(ctx, s.Dep.GetDB())
+		var data AssetData
+		if err := ctx.BindJSON(&data); err != nil {
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, err)
+			return
+		}
+
+		inBytes, err := json.Marshal(data)
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+			return
+		}
+
+		udata := utils.GetUserFromContext(ctx, s.Database)
 		if udata == nil {
 			return
 		}
 
-		var data ledger.AssetData
-		if err := ctx.BindJSON(&data); err != nil {
-			ctx.JSON(
-				http.StatusBadRequest,
-				nethttp.NewHttpResponseWithMsg(nethttp.InvalidRequestData, err.Error()),
-			)
-			return
-		}
-
-		data.WarehouseId = uuid.New().String()
-		data.OwnerId = udata.UserId
-
-		resp, err := s.Dep.GetLedger().RegisterWarehouse(udata.Crypto, &data)
+		contract, err := s.Ledger.GetUserContract(udata.Crypto)
 		if err != nil {
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
-		ctx.JSON(
-			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Success, string(resp)),
-		)
+		resp, err := contract.EvaluateTransaction("RegisterWarehouse", string(inBytes))
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+			return
+		}
+
+		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Success, string(resp))
 	}
 }
 
 func (s *Asset) UpdateWarehouseHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		udata := auth.GetUserFromSession(ctx, s.Dep.GetDB())
+		var data AssetData
+		if err := ctx.BindJSON(&data); err != nil {
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, err)
+			return
+		}
+
+		inBytes, err := json.Marshal(data)
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+			return
+		}
+
+		udata := utils.GetUserFromContext(ctx, s.Database)
 		if udata == nil {
 			return
 		}
 
-		var data ledger.AssetData
-		if err := ctx.BindJSON(&data); err != nil {
-			ctx.JSON(
-				http.StatusBadRequest,
-				nethttp.NewHttpResponseWithMsg(nethttp.InvalidRequestData, err.Error()),
-			)
-			return
-		}
-
-		resp, err := s.Dep.GetLedger().UpdateWarehouse(udata.Crypto, &data)
+		contract, err := s.Ledger.GetUserContract(udata.Crypto)
 		if err != nil {
-
-			msg := err.Error()
-			currentErr := err
-
-			for errors.Unwrap(currentErr) != nil {
-				currentErr = errors.Unwrap(currentErr)
-				msg = msg + currentErr.Error()
-			}
-
-			ctx.JSON(
-				http.StatusInternalServerError,
-				nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, msg),
-			)
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
-		ctx.JSON(
-			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Success, string(resp)),
-		)
+		resp, err := contract.EvaluateTransaction("UpdateWarehouse", string(inBytes))
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+			return
+		}
+
+		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Success, string(resp))
 	}
 }

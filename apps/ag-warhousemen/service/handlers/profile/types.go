@@ -2,8 +2,10 @@ package profile
 
 import (
 	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 )
 
 type Profile struct {
-	Dep interfaces.HandlerDependency
+	Database interfaces.Database
+	Ledger   *ledger.Ledger
 }

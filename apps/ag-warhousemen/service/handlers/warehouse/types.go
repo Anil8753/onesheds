@@ -1,7 +1,11 @@
 package warehouse
 
-import "github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
+import (
+	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
+)
 
 type Asset struct {
-	Dep interfaces.HandlerDependency
+	Database interfaces.Database
+	Ledger   *ledger.Ledger
 }

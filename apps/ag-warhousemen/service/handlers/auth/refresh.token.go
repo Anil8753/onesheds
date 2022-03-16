@@ -18,26 +18,17 @@ func (s *Auth) RefreshTokenHandler() gin.HandlerFunc {
 
 		var reqData RefreshTokenReq
 		if err := ctx.ShouldBindJSON(&reqData); err != nil {
-			ctx.JSON(
-				http.StatusBadRequest,
-				nethttp.NewHttpResponseWithMsg(nethttp.InvalidRequestData, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, err)
 			return
 		}
 
 		tokenPair, err := s.refreshTokens(reqData.RereshToken)
 		if err != nil {
-			ctx.JSON(
-				http.StatusUnauthorized,
-				nethttp.NewHttpResponseWithMsg(nethttp.UserNotAuthorized, err.Error()),
-			)
+			nethttp.ServerResponse(ctx, http.StatusUnauthorized, nethttp.UserNotAuthorized, err)
 			return
 		}
 
-		ctx.JSON(
-			http.StatusOK,
-			nethttp.NewHttpResponseWithMsg(nethttp.Success, tokenPair),
-		)
+		nethttp.ServerResponse(ctx, http.StatusOK, nethttp.Success, tokenPair)
 	}
 }
 
@@ -48,12 +39,12 @@ func (s *Auth) refreshTokens(tokenStr string) (*token.TokenPair, error) {
 		return nil, err
 	}
 
-	creds, err := s.getCredentials(user)
+	u, err := s.getUserData(user)
 	if err != nil {
 		return nil, err
 	}
 
-	tokenPair, err := token.GenerateTokenPair(&token.UserData{User: creds.User, UserId: creds.UserId})
+	tokenPair, err := token.GenerateTokenPair(&token.UserData{User: u.User, UserId: u.UserId})
 	if err != nil {
 		return nil, err
 	}

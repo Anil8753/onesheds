@@ -1,5 +1,11 @@
 package nethttp
 
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
 type HttpResponse struct {
 	Code     int         `json:"code"`
 	CodeDesc string      `json:"codeDesc"`
@@ -13,7 +19,6 @@ const (
 	UserNotExist
 	UserNotAuthorized
 	InvalidRequestData
-	CryptoRetriveFailed
 	ServerIssue
 )
 
@@ -22,23 +27,23 @@ var mappings map[int]string
 func init() {
 
 	mappings = map[int]string{
-		Success:             "success",
-		WrongCredentials:    "wrong credentials",
-		UserAlreadyExist:    "user already exist",
-		UserNotExist:        "user not exist",
-		UserNotAuthorized:   "user not authorized",
-		InvalidRequestData:  "invalid request data",
-		CryptoRetriveFailed: "crypto retrive failed",
-		ServerIssue:         "server issue",
+		Success:                        "success",
+		WrongCredentials:               "wrong credentials",
+		UserAlreadyExist:               "user already exist",
+		UserNotExist:                   "user not exist",
+		UserNotAuthorized:              "user not authorized",
+		InvalidRequestData:             "invalid request data",
+		http.StatusInternalServerError: "server issue",
 	}
 }
 
-func NewHttpResponse(code int) *HttpResponse {
-	codedesc := mappings[code]
-	return &HttpResponse{Code: code, CodeDesc: codedesc}
-}
+func ServerResponse(ctx *gin.Context, httpCode int, code int, data interface{}) {
 
-func NewHttpResponseWithMsg(code int, msg interface{}) *HttpResponse {
 	codedesc := mappings[code]
-	return &HttpResponse{Code: code, CodeDesc: codedesc, Data: msg}
+	r := &HttpResponse{Code: code, CodeDesc: codedesc, Data: data}
+
+	ctx.JSON(
+		httpCode,
+		r,
+	)
 }

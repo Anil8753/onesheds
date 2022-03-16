@@ -4,6 +4,8 @@ import (
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/profile"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/warehouse"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/middlewares"
 
 	"github.com/gin-contrib/static"
@@ -17,16 +19,16 @@ type Routes struct {
 	HWarehouse *warehouse.Asset
 }
 
-func InitRoutes(engine *gin.Engine, dep *HandlerDependency) {
+func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledger) {
 
 	// server static files (web app)
 	engine.Use(static.Serve("/", static.LocalFile("./www", false)))
 
 	r := &Routes{
 		Engine:     engine,
-		HAuth:      &auth.Auth{Dep: dep},
-		HProfile:   &profile.Profile{Dep: dep},
-		HWarehouse: &warehouse.Asset{Dep: dep},
+		HAuth:      &auth.Auth{Database: db, Ledger: ledger},
+		HProfile:   &profile.Profile{Database: db, Ledger: ledger},
+		HWarehouse: &warehouse.Asset{Database: db, Ledger: ledger},
 	}
 
 	api := r.Engine.Group("/api")
@@ -42,9 +44,9 @@ func InitRoutes(engine *gin.Engine, dep *HandlerDependency) {
 	protected.Use(middlewares.JwtAuth())
 
 	// user
-	protected.GET("/identity", r.HProfile.GetIdentityHandler())
+	//protected.GET("/identity", r.HProfile.GetIdentityHandler())
 	protected.GET("/profile", r.HProfile.GetProfileHandler())
-	protected.PUT("/profile", r.HProfile.UpdateProfileHandler())
+	//protected.PUT("/profile", r.HProfile.UpdateProfileHandler())
 
 	// warehouse
 	protected.POST("/warehouse", r.HWarehouse.CreateWarehouseHandler())

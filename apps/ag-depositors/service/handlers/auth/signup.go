@@ -127,7 +127,7 @@ func (s *Auth) registerOnLedger(u *UserData) error {
 	r.UserId = u.UserId
 	r.Email = u.User
 
-	if _, err := s.Ledger.CreateDepositor(u.Crypto, r); err != nil {
+	if _, err := s.Ledger.CreateUser(u.Crypto, r); err != nil {
 		return err
 	}
 

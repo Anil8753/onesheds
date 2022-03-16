@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func (s *Ledger) RegisterWarehouseUser(ucryp *UserCrpto, r *RegisterationData) ([]byte, error) {
+func (s *Ledger) CreateUser(ucryp *UserCrpto, r *RegisterationData) ([]byte, error) {
 
 	contract, err := s.GetUserContract(ucryp)
 	if err != nil {
@@ -25,7 +25,7 @@ func (s *Ledger) RegisterWarehouseUser(ucryp *UserCrpto, r *RegisterationData) (
 	return data, nil
 }
 
-func (s *Ledger) GetWarehouseUser(ucryp *UserCrpto) ([]byte, error) {
+func (s *Ledger) GetUser(ucryp *UserCrpto) ([]byte, error) {
 
 	contract, err := s.GetUserContract(ucryp)
 	if err != nil {
@@ -40,7 +40,7 @@ func (s *Ledger) GetWarehouseUser(ucryp *UserCrpto) ([]byte, error) {
 	return data, nil
 }
 
-func (s *Ledger) UpdateWarehouseUser(ucryp *UserCrpto, r *RegisterationData) ([]byte, error) {
+func (s *Ledger) UpdateUser(ucryp *UserCrpto, r *RegisterationData) ([]byte, error) {
 
 	contract, err := s.GetUserContract(ucryp)
 	if err != nil {

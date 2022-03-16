@@ -2,10 +2,12 @@ package auth
 
 import (
 	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 )
 
 type Auth struct {
-	Dep interfaces.HandlerDependency
+	Database interfaces.Database
+	Ledger   *ledger.Ledger
 }
 
 type Attribute struct {
@@ -14,7 +16,6 @@ type Attribute struct {
 }
 
 type UserRegistrationData struct {
-	User       string
-	NodeType   string
+	UserId     string
 	Attributes []Attribute
 }

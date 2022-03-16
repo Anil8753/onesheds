@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/anil8753/onesheds/apps/warehousemen/service/db"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,8 +15,12 @@ func main() {
 
 	engine := gin.Default()
 	SetupCORS(engine)
-	hDependencies := NewHandlerDependency()
-	InitRoutes(engine, hDependencies)
+
+	db := db.NewLevelDB("generic")
+	ledger := ledger.Ledger{}
+	ledger.Init()
+
+	InitRoutes(engine, db, &ledger)
 
 	PrintConfig()
 

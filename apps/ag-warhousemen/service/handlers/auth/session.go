@@ -1,53 +1,35 @@
 package auth
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
 
 	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
 	"github.com/gin-gonic/gin"
 )
 
-type SessionData struct {
-	UserId string
-	Crypto *ledger.UserCrpto
-}
+func GetUserFromSession(ctx *gin.Context, db interfaces.Database) *UserData {
 
-var usersCrypto map[string]*ledger.UserCrpto
+	user := ctx.GetString("user")
 
-func GetUserFromSession(ctx *gin.Context, db interfaces.Database) *SessionData {
-
-	userId := ctx.GetString("userId")
-
-	crypto, err := RetriveCrypto(userId)
+	iud, err := db.Get(user)
 	if err != nil {
-		ctx.JSON(
-			http.StatusInternalServerError,
-			nethttp.NewHttpResponseWithMsg(nethttp.ServerIssue, err.Error()),
-		)
+		nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.UserNotExist, err)
 		return nil
 	}
 
-	return &SessionData{UserId: userId, Crypto: crypto}
-}
-
-func StoreCrypto(userId string, crypto *ledger.UserCrpto) {
-
-	if usersCrypto == nil {
-		usersCrypto = make(map[string]*ledger.UserCrpto)
+	b, err := json.Marshal(iud)
+	if err != nil {
+		nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+		return nil
 	}
 
-	usersCrypto[userId] = crypto
-}
-
-func RetriveCrypto(userId string) (*ledger.UserCrpto, error) {
-
-	crypto, ok := usersCrypto[userId]
-	if !ok {
-		return nil, fmt.Errorf("failed to get crypto for user: %s", userId)
+	var udata UserData
+	if err := json.Unmarshal(b, &udata); err != nil {
+		nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+		return nil
 	}
 
-	return crypto, nil
+	return &udata
 }
