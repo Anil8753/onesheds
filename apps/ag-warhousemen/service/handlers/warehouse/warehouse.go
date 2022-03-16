@@ -56,14 +56,24 @@ func (s *Asset) CreateWarehouseHandler() gin.HandlerFunc {
 			return
 		}
 
-		inBytes, err := json.Marshal(data)
+		udata := utils.GetUserFromContext(ctx, s.Database)
+		if udata == nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, "failed to get user from context")
+			return
+		}
+
+		warehouseId, err := utils.GenerateUUID("warehouse")
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
-		udata := utils.GetUserFromContext(ctx, s.Database)
-		if udata == nil {
+		data.WarehouseId = warehouseId
+		data.OwnerId = udata.UserId
+
+		inBytes, err := json.Marshal(data)
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
 		}
 
@@ -73,7 +83,7 @@ func (s *Asset) CreateWarehouseHandler() gin.HandlerFunc {
 			return
 		}
 
-		resp, err := contract.EvaluateTransaction("RegisterWarehouse", string(inBytes))
+		resp, err := contract.SubmitTransaction("RegisterWarehouse", string(inBytes))
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
@@ -109,7 +119,7 @@ func (s *Asset) UpdateWarehouseHandler() gin.HandlerFunc {
 			return
 		}
 
-		resp, err := contract.EvaluateTransaction("UpdateWarehouse", string(inBytes))
+		resp, err := contract.SubmitTransaction("UpdateWarehouse", string(inBytes))
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
