@@ -1,8 +1,6 @@
 package nethttp
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,13 +25,13 @@ var mappings map[int]string
 func init() {
 
 	mappings = map[int]string{
-		Success:                        "success",
-		WrongCredentials:               "wrong credentials",
-		UserAlreadyExist:               "user already exist",
-		UserNotExist:                   "user not exist",
-		UserNotAuthorized:              "user not authorized",
-		InvalidRequestData:             "invalid request data",
-		http.StatusInternalServerError: "server issue",
+		Success:            "success",
+		WrongCredentials:   "wrong credentials",
+		UserAlreadyExist:   "user already exist",
+		UserNotExist:       "user not exist",
+		UserNotAuthorized:  "user not authorized",
+		InvalidRequestData: "invalid request data",
+		ServerIssue:        "server issue",
 	}
 }
 

@@ -16,6 +16,7 @@ type Attribute struct {
 }
 
 type UserRegistrationData struct {
-	UserId     string
+	User       string `json:"user"`
+	NodeType   string `json:"nodeType"`
 	Attributes []Attribute
 }

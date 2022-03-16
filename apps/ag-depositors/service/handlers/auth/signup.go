@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hashicorp/go-uuid"
 
 	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
@@ -53,21 +52,13 @@ func (s *Auth) doSignup(ctx *gin.Context, reqData *SignupReq) (*SignupResp, erro
 
 	user := reqData.User
 
-	// create unique userId
-	uid, err := uuid.GenerateUUID()
-	if err != nil {
-		return nil, err
-	}
-
-	userId := fmt.Sprintf("user_%s", uid)
-
-	ucert, err := s.createUserCert(ctx, user, userId)
+	ucert, err := s.createUserCert(ctx, user)
 	if err != nil {
 		return nil, err
 	}
 
 	u := UserData{
-		UserId:   userId,
+		UserId:   ucert.UserId,
 		User:     user,
 		Password: reqData.Password,
 		Crypto:   ucert,
@@ -83,18 +74,15 @@ func (s *Auth) doSignup(ctx *gin.Context, reqData *SignupReq) (*SignupResp, erro
 		return nil, err
 	}
 
-	resp := &SignupResp{UserId: userId, User: user}
+	resp := &SignupResp{UserId: u.UserId, User: user}
 	return resp, nil
 }
 
-func (s *Auth) createUserCert(ctx *gin.Context, user string, userId string) (*ledger.UserCrpto, error) {
+func (s *Auth) createUserCert(ctx *gin.Context, user string) (*ledger.UserCrpto, error) {
 
 	// prepare registration data
-	urd := UserRegistrationData{}
-	urd.UserId = userId
-	urd.Attributes = append(urd.Attributes, Attribute{Key: "userId", Value: userId})
+	urd := UserRegistrationData{User: user, NodeType: os.Getenv("NODE_TYPE")}
 	urd.Attributes = append(urd.Attributes, Attribute{Key: "user", Value: user})
-	urd.Attributes = append(urd.Attributes, Attribute{Key: "nodetype", Value: os.Getenv("NODE_TYPE")})
 
 	json_data, err := json.Marshal(urd)
 	if err != nil {
@@ -102,7 +90,7 @@ func (s *Auth) createUserCert(ctx *gin.Context, user string, userId string) (*le
 	}
 
 	// post call
-	url := fmt.Sprintf("%s/v1/createidentity", os.Getenv("IDENTITY_SERVICE_ENDPOINT"))
+	url := fmt.Sprintf("%s/api/v1/registeruser", os.Getenv("IDENTITY_SERVICE_ENDPOINT"))
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(json_data))
 
 	if err != nil {
@@ -113,12 +101,16 @@ func (s *Auth) createUserCert(ctx *gin.Context, user string, userId string) (*le
 		return nil, fmt.Errorf("failed with http status code: %d", resp.StatusCode)
 	}
 
-	var uc ledger.UserCrpto
-	if err := json.NewDecoder(resp.Body).Decode(&uc); err != nil {
+	var out struct {
+		Data   ledger.UserCrpto
+		Status string
+	}
+
+	if err := json.NewDecoder(resp.Body).Decode(&out); err != nil {
 		return nil, err
 	}
 
-	return &uc, nil
+	return &out.Data, nil
 }
 
 func (s *Auth) registerOnLedger(u *UserData) error {
