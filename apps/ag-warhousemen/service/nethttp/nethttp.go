@@ -37,6 +37,7 @@ func init() {
 
 func ServerResponse(ctx *gin.Context, httpCode int, code int, data interface{}) {
 
+
 	codedesc := mappings[code]
 	r := &HttpResponse{Code: code, CodeDesc: codedesc, Data: data}
 

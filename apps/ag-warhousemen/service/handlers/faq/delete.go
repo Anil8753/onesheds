@@ -1,6 +1,7 @@
 package faq
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/utils"
@@ -8,12 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Handler) GetAllFAQ() gin.HandlerFunc {
+type DeleteFAQDataPostData struct {
+	WarehouseId string `json:"warehouseId" binding:"required"`
+	Index       int    `json:"index"`
+}
+
+func (s *Handler) DeleteFAQ() gin.HandlerFunc {
+	//
 	return func(ctx *gin.Context) {
 
-		warehouse_id, found := ctx.Params.Get("warehouse_id")
-		if !found || warehouse_id == "" {
-			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, "warehouse_id is missing")
+		reqData := DeleteFAQDataPostData{}
+		if err := ctx.ShouldBindJSON(&reqData); err != nil {
+			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, err)
 			return
 		}
 
@@ -28,7 +35,13 @@ func (s *Handler) GetAllFAQ() gin.HandlerFunc {
 			return
 		}
 
-		resp, err := contract.EvaluateTransaction("GetAllFAQ", warehouse_id)
+		outBytes, err := json.Marshal(reqData)
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+			return
+		}
+
+		resp, err := contract.SubmitTransaction("DeleteFAQ", string(outBytes))
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return

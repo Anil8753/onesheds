@@ -56,6 +56,12 @@
                 <img src="../../../assets/img/coming-soon-png.png" class="w-50 h-50">
             </ng-template>
         </li>
+        <li ngbNavItem="7">
+            <a ngbNavLink>FAQ</a>
+            <ng-template ngbNavContent>
+                <app-wh-faq [data]="curWarehouse" ></app-wh-faq>
+            </ng-template>
+        </li>
     </ul>
 
     <div [ngbNavOutlet]="nav" class="w-100"></div>

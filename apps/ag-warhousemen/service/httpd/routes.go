@@ -66,7 +66,8 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 
 	// faq
 	protected.GET("/faq/warehouse/:warehouse_id", r.HandlerFAQ.GetAllFAQ())
-	protected.POST("/faq", r.HandlerFAQ.AddFAQ())
+	protected.POST("/faq/add", r.HandlerFAQ.AddFAQ())
 	protected.PUT("/faq/question", r.HandlerFAQ.UpdateFAQQuestion())
 	protected.PUT("/faq/answer", r.HandlerFAQ.UpdateFAQAnswer())
+	protected.PUT("/faq/delete", r.HandlerFAQ.DeleteFAQ())
 }

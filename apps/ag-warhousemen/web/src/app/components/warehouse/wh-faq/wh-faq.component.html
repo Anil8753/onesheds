@@ -1,0 +1,47 @@
+<div class="d-flex">
+    <div class="mr-5">{{name}} ({{data.warehouseId}})</div>
+    <div lass="ml-5"><button class="btn btn-sm btn-primary" (click)="openDlg(content)">Add new FAQ</button></div>
+</div>
+
+<hr>
+
+<div>
+    <div *ngFor="let faq of faqs; let i=index">
+        <div class="m-3 p-3" style="font-size: smaller;">
+            <pre>{{faq | json}}</pre>
+            <button class="btn btn-sm btn-danger" (click)="onDelete(i)">Delete</button>
+            <hr>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<!---->
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">FAQ</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            
+          <label for="question">Question</label>
+          <div class="input-group">
+            <input type="text" [(ngModel)]="faq.question" class="form-control">
+          </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="answer">Answer</label>
+            <div class="input-group">
+                <input class="form-control1" [(ngModel)]="faq.answer" class="form-control">
+            </div>
+          </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="onAdd()">Save</button>
+    </div>
+  </ng-template>
+

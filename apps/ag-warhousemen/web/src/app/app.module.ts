@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,6 +32,7 @@ import { WhInfraComponent } from './components/warehouse/wh-infra/wh-infra.compo
 import { WhSurroundingComponent } from './components/warehouse/wh-surrounding/wh-surrounding.component';
 import { WhTermsConditionsComponent } from './components/warehouse/wh-terms-conditions/wh-terms-conditions.component';
 import { RepeatTypeComponent } from './formly-types/repeat-section.type';
+import { WhFaqComponent } from './components/warehouse/wh-faq/wh-faq.component';
 
 @NgModule({
    declarations: [
@@ -51,9 +53,11 @@ import { RepeatTypeComponent } from './formly-types/repeat-section.type';
       WhInfraComponent,
       WhSurroundingComponent,
       WhTermsConditionsComponent,
+      WhFaqComponent,
    ],
    imports: [
       BrowserModule,
+      FormsModule,
       AppRoutingModule,
       HttpClientModule,
       NgbModule,
