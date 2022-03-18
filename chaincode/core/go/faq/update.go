@@ -24,7 +24,7 @@ func UpdateQuestion(
 		return nil, fmt.Errorf("failed to get FAQ for the warehouse. %s. Error: %w", id, err)
 	}
 
-	if len(entry.FAQs) >= index {
+	if len(entry.FAQs) <= index {
 		return nil, fmt.Errorf("invalid index: %d", index)
 	}
 
@@ -64,7 +64,7 @@ func UpdateAnswer(
 		return nil, fmt.Errorf("failed to get FAQ for the warehouse. %s. Error: %w", id, err)
 	}
 
-	if len(entry.FAQs) >= index {
+	if len(entry.FAQs) <= index {
 		return nil, fmt.Errorf("invalid index: %d", index)
 	}
 

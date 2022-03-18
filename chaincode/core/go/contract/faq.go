@@ -91,3 +91,26 @@ func (c *Contract) UpdateFAQAnswer(
 
 	return utils.ToJSON(r)
 }
+
+type DeleteData struct {
+	WarehouseId string `json:"warehouseId"`
+	Index       int    `json:"index"`
+}
+
+func (c *Contract) DeleteFAQ(
+	ctx contractapi.TransactionContextInterface,
+	input string,
+) (string, error) {
+
+	var in DeleteData
+	if err := json.Unmarshal([]byte(input), &in); err != nil {
+		return "", err
+	}
+
+	r, err := faq.Delete(ctx, in.WarehouseId, in.Index)
+	if err != nil {
+		return "", err
+	}
+
+	return utils.ToJSON(r)
+}
