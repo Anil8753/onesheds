@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/services/config.service';
 import { BookingComponent } from '../booking/booking.component';
+import { FaqComponent } from '../faq/faq.component';
 
 @Component({
    selector: 'app-listing',
@@ -59,6 +60,14 @@ export class ListingComponent implements OnInit {
 
    book(item: any) {
       const modalRef = this.modalService.open(BookingComponent, {
+         size: 'lg',
+         backdrop: 'static',
+      });
+      modalRef.componentInstance.item = item;
+   }
+
+   faq(item: any) {
+      const modalRef = this.modalService.open(FaqComponent, {
          size: 'lg',
          backdrop: 'static',
       });

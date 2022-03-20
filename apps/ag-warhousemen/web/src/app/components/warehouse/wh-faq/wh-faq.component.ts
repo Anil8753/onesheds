@@ -106,7 +106,7 @@ export class WhFaqComponent implements OnInit, OnChanges {
       const postData: AddFAQDataPostData = {
          warehouseId: this.whId,
          question: this.faq.question,
-         input: `{ "text":"${this.faq.answer}" }`,
+         input: `{ "text":"${this.faq.answer}", "extra":"https://google.com" }`,
       };
 
       this.spinner.show();

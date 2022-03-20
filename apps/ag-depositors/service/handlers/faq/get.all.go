@@ -28,7 +28,7 @@ func (s *Handler) GetAllFAQ() gin.HandlerFunc {
 			return
 		}
 
-		resp, err := contract.EvaluateTransaction("GetAllFAQ", udata.UserId)
+		resp, err := contract.EvaluateTransaction("GetAllFAQ", warehouse_id)
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return

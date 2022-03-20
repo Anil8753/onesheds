@@ -22,6 +22,7 @@ import { VerifyAccountComponent } from './components/verify-account/verify-accou
 import { ListingComponent } from './components/listing/listing.component';
 import { BookingComponent } from './components/booking/booking.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { FaqComponent } from './components/faq/faq.component';
 
 @NgModule({
    declarations: [
@@ -34,6 +35,7 @@ import { OrdersComponent } from './components/orders/orders.component';
       ListingComponent,
       BookingComponent,
       OrdersComponent,
+      FaqComponent,
    ],
    imports: [
       BrowserModule,
