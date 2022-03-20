@@ -19,12 +19,17 @@
 <span class="ml-4">Page size: {{ ps }}</span>
 <div class="box">
    <div *ngFor="let item of items">
-      <button class="btn btn-outline-danger btn-sm ml-1" (click)="book(item)">
+      <button class="btn btn-outline-danger btn-sm mr-1" (click)="book(item)">
          Book
       </button>
-      <button class="btn btn-outline-danger btn-sm ml-1" (click)="faq(item)">
+      <button class="btn btn-outline-danger btn-sm mr-1" (click)="faq(item)">
          FAQs
       </button>
+
+      <button class="btn btn-outline-danger btn-sm mr-1" (click)="review(item)">
+         Reviews
+      </button>
+
       <pre>{{ format(item) }}</pre>
       <hr />
    </div>

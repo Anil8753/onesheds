@@ -23,6 +23,7 @@ import { ListingComponent } from './components/listing/listing.component';
 import { BookingComponent } from './components/booking/booking.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { FaqComponent } from './components/faq/faq.component';
+import { ReviewComponent } from './components/review/review.component';
 
 @NgModule({
    declarations: [
@@ -36,6 +37,7 @@ import { FaqComponent } from './components/faq/faq.component';
       BookingComponent,
       OrdersComponent,
       FaqComponent,
+      ReviewComponent,
    ],
    imports: [
       BrowserModule,
