@@ -38,14 +38,27 @@ export class ReviewComponent implements OnInit {
    async postReview() {
       const url = `${this.configService.baseUrl()}/api/v1/review`;
 
+      const testReview = this.getTestReview();
       const postData = {
          warehouseId: this.warehouseId,
-         userRating: 4.5,
-         reviewText: 'This is test review',
+         userRating: testReview.userRating,
+         reviewText: testReview.reviewText,
       };
 
       await this.http.post(url, postData).toPromise();
       await this.fetchReview();
+   }
+
+   getTestReview() {
+      const reviews = [
+         { userRating: 4.5, reviewText: 'This is very good' },
+         { userRating: 1.0, reviewText: 'This is very bad' },
+         { userRating: 2.0, reviewText: 'front road is is narrow' },
+         { userRating: 3.0, reviewText: 'This is ok, need improvements' },
+      ];
+
+      const i = Math.floor(Math.random() * 4 + 1);
+      return reviews[i];
    }
 }
 

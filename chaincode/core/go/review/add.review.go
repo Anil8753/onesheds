@@ -34,6 +34,7 @@ func AddUserRating(
 		UserReview: UserReview{
 			Id:     txnId,
 			UserId: userId,
+			Rating: userRating,
 			Text:   reviewText,
 		},
 	}
