@@ -9,15 +9,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AddReviewPostData struct {
-	WarehouseId string  `json:"warehouseId" binding:"required"`
-	UserRating  float32 `json:"userRating" binding:"required"`
-	ReviewText  string  `json:"reviewText" binding:"required"`
-}
-
 func (s *Handler) AddUserRating() gin.HandlerFunc {
 	//
 	return func(ctx *gin.Context) {
+
+		type AddReviewPostData struct {
+			WarehouseId string  `json:"warehouseId" binding:"required"`
+			UserRating  float32 `json:"userRating" binding:"required"`
+			ReviewText  string  `json:"reviewText" binding:"required"`
+		}
 
 		reqData := AddReviewPostData{}
 		if err := ctx.ShouldBindJSON(&reqData); err != nil {

@@ -9,17 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Handler) AddReply() gin.HandlerFunc {
+func (s *Handler) EditReply() gin.HandlerFunc {
 	//
 	return func(ctx *gin.Context) {
 
-		type AddReplyData struct {
+		type EditReplyData struct {
 			ReviewId  string `json:"reviewId" binding:"required"`
 			TargetId  string `json:"targetId" binding:"required"`
 			ReplyText string `json:"replyText" binding:"required"`
 		}
 
-		reqData := AddReplyData{}
+		reqData := EditReplyData{}
 		if err := ctx.ShouldBindJSON(&reqData); err != nil {
 			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, err)
 			return
@@ -42,7 +42,7 @@ func (s *Handler) AddReply() gin.HandlerFunc {
 			return
 		}
 
-		resp, err := contract.SubmitTransaction("AddReply", string(outBytes))
+		resp, err := contract.SubmitTransaction("EditReply", string(outBytes))
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return
