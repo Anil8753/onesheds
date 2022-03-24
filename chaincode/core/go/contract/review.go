@@ -60,6 +60,30 @@ func (c *Contract) AddUserRating(
 	return utils.ToJSON(r)
 }
 
+type EditReviewData struct {
+	ReviewId   string  `json:"reviewId"`
+	UserRating float32 `json:"userRating"`
+	ReviewText string  `json:"reviewText"`
+}
+
+func (c *Contract) EditUserReview(
+	ctx contractapi.TransactionContextInterface,
+	input string,
+) (string, error) {
+
+	var in EditReviewData
+	if err := json.Unmarshal([]byte(input), &in); err != nil {
+		return "", err
+	}
+
+	r, err := review.EditUserReview(ctx, in.ReviewId, in.UserRating, in.ReviewText)
+	if err != nil {
+		return "", err
+	}
+
+	return utils.ToJSON(r)
+}
+
 type AddReplyData struct {
 	ReviewId  string `json:"reviewId"`
 	TargetId  string `json:"targetId"`
@@ -77,6 +101,30 @@ func (c *Contract) AddReply(
 	}
 
 	r, err := review.AddReply(ctx, in.ReviewId, in.TargetId, in.ReplyText)
+	if err != nil {
+		return "", err
+	}
+
+	return utils.ToJSON(r)
+}
+
+type EditReplyData struct {
+	ReviewId  string `json:"reviewId"`
+	TargetId  string `json:"targetId"`
+	ReplyText string `json:"replyText"`
+}
+
+func (c *Contract) EditReply(
+	ctx contractapi.TransactionContextInterface,
+	input string,
+) (string, error) {
+
+	var in EditReplyData
+	if err := json.Unmarshal([]byte(input), &in); err != nil {
+		return "", err
+	}
+
+	r, err := review.EditReply(ctx, in.ReviewId, in.TargetId, in.ReplyText)
 	if err != nil {
 		return "", err
 	}
