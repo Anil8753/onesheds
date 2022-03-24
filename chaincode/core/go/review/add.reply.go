@@ -63,14 +63,14 @@ func AddReply(
 
 func find(replies []Reply, targetId string) *Reply {
 
-	for _, reply := range replies {
+	for i := range replies {
 
-		if r := find(reply.Replies, targetId); r != nil {
+		if r := find(replies[i].Replies, targetId); r != nil {
 			return r
 		}
 
-		if reply.Id == targetId {
-			return &reply
+		if replies[i].Id == targetId {
+			return &replies[i]
 		}
 	}
 

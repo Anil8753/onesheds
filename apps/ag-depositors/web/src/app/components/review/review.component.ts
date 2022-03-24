@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class ReviewComponent implements OnInit {
 
    constructor(
       public http: HttpClient,
+      private toastr: ToastrService,
       public configService: ConfigService,
       public activeModal: NgbActiveModal
    ) {}
@@ -36,17 +38,42 @@ export class ReviewComponent implements OnInit {
    }
 
    async postReview() {
-      const url = `${this.configService.baseUrl()}/api/v1/review`;
+      try {
+         const url = `${this.configService.baseUrl()}/api/v1/review`;
 
-      const testReview = this.getTestReview();
-      const postData = {
-         warehouseId: this.warehouseId,
-         userRating: testReview.userRating,
-         reviewText: testReview.reviewText,
-      };
+         const testReview = this.getTestReview();
+         const postData = {
+            warehouseId: this.warehouseId,
+            userRating: testReview.userRating,
+            reviewText: testReview.reviewText,
+         };
 
-      await this.http.post(url, postData).toPromise();
-      await this.fetchReview();
+         await this.http.post(url, postData).toPromise();
+         await this.fetchReview();
+         this.toastr.success('review added successfully.', 'Success!');
+      } catch (e) {
+         this.toastr.error('Failed to add review.', 'Error!');
+      }
+   }
+
+   async onAddReply(reviewId: string, targetId: string) {
+      try {
+         const url = `${this.configService.baseUrl()}/api/v1/review_reply`;
+
+         const postData = {
+            reviewId: reviewId,
+            targetId: targetId,
+            replyText: `this is test reply (${Math.floor(
+               Math.random() * 100 + 1
+            )})`,
+         };
+
+         await this.http.post(url, postData).toPromise();
+         await this.fetchReview();
+         this.toastr.success('review reply added successfully.', 'Success!');
+      } catch (e) {
+         this.toastr.error('Failed to add review reply.', 'Error!');
+      }
    }
 
    getTestReview() {
