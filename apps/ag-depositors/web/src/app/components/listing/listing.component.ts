@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from 'src/app/services/config.service';
 import { BookingComponent } from '../booking/booking.component';
 import { FaqComponent } from '../faq/faq.component';
+import { QuestionComponent } from '../question/question.component';
 import { ReviewComponent } from '../review/review.component';
 
 @Component({
@@ -77,6 +78,14 @@ export class ListingComponent implements OnInit {
 
    review(item: any) {
       const modalRef = this.modalService.open(ReviewComponent, {
+         size: 'lg',
+         backdrop: 'static',
+      });
+      modalRef.componentInstance.item = item;
+   }
+
+   ques(item: any) {
+      const modalRef = this.modalService.open(QuestionComponent, {
          size: 'lg',
          backdrop: 'static',
       });

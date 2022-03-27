@@ -28,7 +28,7 @@ export class ReviewComponent implements OnInit {
    }
 
    async fetchReview() {
-      const url = `${this.configService.baseUrl()}/api/v1/review/warehouse/${
+      const url = `${this.configService.baseUrl()}/api/v1/review/${
          this.item.warehouseId
       }`;
 

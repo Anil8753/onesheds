@@ -26,7 +26,7 @@ export class FaqComponent implements OnInit {
    }
 
    async fetchFAQ() {
-      const url = `${this.configService.baseUrl()}/api/v1/faq/warehouse/${
+      const url = `${this.configService.baseUrl()}/api/v1/faq/${
          this.item.warehouseId
       }`;
 

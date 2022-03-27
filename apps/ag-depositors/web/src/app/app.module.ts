@@ -24,6 +24,7 @@ import { BookingComponent } from './components/booking/booking.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { ReviewComponent } from './components/review/review.component';
+import { QuestionComponent } from './components/question/question.component';
 
 @NgModule({
    declarations: [
@@ -38,6 +39,7 @@ import { ReviewComponent } from './components/review/review.component';
       OrdersComponent,
       FaqComponent,
       ReviewComponent,
+      QuestionComponent,
    ],
    imports: [
       BrowserModule,

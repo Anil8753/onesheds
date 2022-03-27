@@ -38,7 +38,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/syndtr/goleveldb v1.0.0
 	github.com/ugorji/go/codec v1.1.7 // indirect
-	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a // indirect
+	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 	golang.org/x/sys v0.0.0-20211110154304-99a53858aa08 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
