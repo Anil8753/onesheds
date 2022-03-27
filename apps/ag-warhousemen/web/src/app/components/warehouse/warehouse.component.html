@@ -62,6 +62,13 @@
                 <app-wh-faq [data]="curWarehouse" ></app-wh-faq>
             </ng-template>
         </li>
+
+        <li ngbNavItem="8">
+            <a ngbNavLink>Knowledge Base</a>
+            <ng-template ngbNavContent>
+                <app-wh-knowledgebase [data]="curWarehouse" ></app-wh-knowledgebase>
+            </ng-template>
+        </li>
     </ul>
 
     <div [ngbNavOutlet]="nav" class="w-100"></div>

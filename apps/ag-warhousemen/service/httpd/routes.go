@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/faq"
+	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/knowledgebase"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/profile"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/review"
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/warehouse"
@@ -15,12 +16,13 @@ import (
 )
 
 type Routes struct {
-	Engine        *gin.Engine
-	HAuth         *auth.Auth
-	HProfile      *profile.Profile
-	HWarehouse    *warehouse.Asset
-	HandlerReview *review.Handler
-	HandlerFAQ    *faq.Handler
+	Engine               *gin.Engine
+	HAuth                *auth.Auth
+	HProfile             *profile.Profile
+	HWarehouse           *warehouse.Asset
+	HandlerReview        *review.Handler
+	HandlerFAQ           *faq.Handler
+	HandlerKnowledgeBase *knowledgebase.Handler
 }
 
 func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledger) {
@@ -29,12 +31,13 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 	engine.Use(static.Serve("/", static.LocalFile("./www", false)))
 
 	r := &Routes{
-		Engine:        engine,
-		HAuth:         &auth.Auth{Database: db, Ledger: ledger},
-		HProfile:      &profile.Profile{Database: db, Ledger: ledger},
-		HWarehouse:    &warehouse.Asset{Database: db, Ledger: ledger},
-		HandlerReview: &review.Handler{Database: db, Ledger: ledger},
-		HandlerFAQ:    &faq.Handler{Database: db, Ledger: ledger},
+		Engine:               engine,
+		HAuth:                &auth.Auth{Database: db, Ledger: ledger},
+		HProfile:             &profile.Profile{Database: db, Ledger: ledger},
+		HWarehouse:           &warehouse.Asset{Database: db, Ledger: ledger},
+		HandlerReview:        &review.Handler{Database: db, Ledger: ledger},
+		HandlerFAQ:           &faq.Handler{Database: db, Ledger: ledger},
+		HandlerKnowledgeBase: &knowledgebase.Handler{Database: db, Ledger: ledger},
 	}
 
 	api := r.Engine.Group("/api")
@@ -70,4 +73,8 @@ func InitRoutes(engine *gin.Engine, db interfaces.Database, ledger *ledger.Ledge
 	protected.PUT("/faq/question", r.HandlerFAQ.UpdateFAQQuestion())
 	protected.PUT("/faq/answer", r.HandlerFAQ.UpdateFAQAnswer())
 	protected.PUT("/faq/delete", r.HandlerFAQ.DeleteFAQ())
+
+	// knowledgebase
+	protected.GET("/knowledgebase/:warehouse_id", r.HandlerKnowledgeBase.GetAll())
+	protected.POST("/knowledgebase", r.HandlerKnowledgeBase.AddAnswer())
 }

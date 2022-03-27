@@ -1,7 +1,7 @@
 package knowledgebase
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
 
 	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/utils"
@@ -9,22 +9,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Handler) Add() gin.HandlerFunc {
-	//
+func (s *Handler) AddAnswer() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		type PostData struct {
 			WarehouseId string `json:"warehouseId" binding:"required"`
-			Question    string `json:"question" binding:"required"`
+			Index       int    `json:"index"`
+			Input       string `json:"input" binding:"required"`
 		}
 
-		var postData PostData
-		if err := ctx.ShouldBindJSON(&postData); err != nil {
+		reqData := PostData{}
+		if err := ctx.ShouldBindJSON(&reqData); err != nil {
 			nethttp.ServerResponse(ctx, http.StatusBadRequest, nethttp.InvalidRequestData, err)
 			return
 		}
-
-		fmt.Println(postData)
 
 		udata := utils.GetUserFromContext(ctx, s.Database)
 		if udata == nil {
@@ -37,7 +35,13 @@ func (s *Handler) Add() gin.HandlerFunc {
 			return
 		}
 
-		resp, err := contract.SubmitTransaction("AddWarehouseQuestion", postData.WarehouseId, postData.Question)
+		outBytes, err := json.Marshal(reqData)
+		if err != nil {
+			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
+			return
+		}
+
+		resp, err := contract.SubmitTransaction("AddWarehouseAnswer", string(outBytes))
 		if err != nil {
 			nethttp.ServerResponse(ctx, http.StatusInternalServerError, nethttp.ServerIssue, err)
 			return

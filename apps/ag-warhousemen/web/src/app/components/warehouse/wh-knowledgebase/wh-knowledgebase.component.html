@@ -1,0 +1,15 @@
+<div>
+    <div *ngFor="let faq of knowledgebase; let i=index">
+
+        <div class="m-3 p-3" style="font-size: smaller;">
+            <pre>{{faq | json}}</pre>
+          
+            <div>
+                <input [(ngModel)]="answerText" placeholder="Enter your answer" class="w-75">
+                <button style="margin-left: 5px;" class="btn btn-sm btn-info" (click)="onAddAnswer(i)">Answer</button>
+            </div>
+            <hr>
+        </div>
+        
+    </div>
+</div>
