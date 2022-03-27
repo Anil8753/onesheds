@@ -34,6 +34,7 @@ import { WhTermsConditionsComponent } from './components/warehouse/wh-terms-cond
 import { RepeatTypeComponent } from './formly-types/repeat-section.type';
 import { WhFaqComponent } from './components/warehouse/wh-faq/wh-faq.component';
 import { WhKnowledgebaseComponent } from './components/warehouse/wh-knowledgebase/wh-knowledgebase.component';
+import { WhReviewComponent } from './components/warehouse/wh-review/wh-review.component';
 
 @NgModule({
    declarations: [
@@ -56,6 +57,7 @@ import { WhKnowledgebaseComponent } from './components/warehouse/wh-knowledgebas
       WhTermsConditionsComponent,
       WhFaqComponent,
       WhKnowledgebaseComponent,
+      WhReviewComponent,
    ],
    imports: [
       BrowserModule,

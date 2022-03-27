@@ -69,6 +69,13 @@
                 <app-wh-knowledgebase [data]="curWarehouse" ></app-wh-knowledgebase>
             </ng-template>
         </li>
+
+        <li ngbNavItem="9">
+            <a ngbNavLink>User Review and Rating</a>
+            <ng-template ngbNavContent>
+                <app-wh-review [data]="curWarehouse" ></app-wh-review>
+            </ng-template>
+        </li>
     </ul>
 
     <div [ngbNavOutlet]="nav" class="w-100"></div>

@@ -1,0 +1,48 @@
+
+   <div class="box">
+    <div *ngFor="let review of reviews" class="review-box">
+       <div>
+          <div><b>Review Id: </b>{{ review.id }}</div>
+          <div><b>User: </b>{{ review.userReview.userId }}</div>
+          <!-- <div><b>adminRating: </b> {{ review.adminRating }}</div> -->
+          <div><b>text: </b> {{ review.userReview.text }}</div>
+          <div><b>userRating: </b> {{ review.userReview.userRating }}</div>
+       </div>
+
+       <div>
+          <button
+             class="btn btn-sm btn-link"
+             (click)="onAddReply(review.id, review.userReview.id)"
+          >
+             Add Reply
+          </button>
+       </div>
+
+       <div class="reply-box">
+          <div *ngFor="let reply of review.userReview.replies; let i = index">
+             <hr />
+             <div>
+                <div>Id: {{ reply.id }}</div>
+                <div>User: {{ reply.userId }}</div>
+                <div>Reply: {{ reply.text }}</div>
+             </div>
+
+             <button
+                class="btn btn-sm btn-link"
+                (click)="onAddReply(review.id, reply.id)"
+             >
+                Add Reply
+             </button>
+             <div *ngFor="let rr of reply.replies" class="reply-box">
+                <hr />
+                <div>
+                   <div>Id: {{ rr.id }}</div>
+                   <div>User: {{ rr.userId }}</div>
+                   <div>Reply: {{ rr.text }}</div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>
+
