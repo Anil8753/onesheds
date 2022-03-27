@@ -15,7 +15,20 @@
       <div *ngFor="let entry of knowledgebase">
          <hr />
          <div><b>Question: </b> {{ entry.question }}</div>
-         <div><b>Answer: </b> {{ entry.answer.text }}</div>
+         <span>
+            <i> - {{ entry.questioner }}</i>
+         </span>
+
+         <div *ngIf="entry.answer.text !== ''">
+            <div><b>Answer: </b> {{ entry.answer.text }}</div>
+            <div>
+               <i> - {{ entry.answerer }}</i>
+            </div>
+         </div>
+
+         <div *ngIf="entry.answer.text === ''">
+            <span>Not answered yet</span>
+         </div>
       </div>
    </div>
 
