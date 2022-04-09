@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Warehousemen Service",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/httpd",
+            "cwd": "${workspaceFolder}/dbg/ware",
+        },
+
+        {
+            "name": "Depositor Service",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/httpd",
+            "cwd": "${workspaceFolder}/dbg/dep",
+        }
+    ]
+}
