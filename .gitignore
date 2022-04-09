@@ -28,3 +28,5 @@ apps/ag-depositors/web/node_modules/
 apps/ag-depositors/web/.angular/
 
 apps/ag-depositors/web/dist
+
+apps/bin
