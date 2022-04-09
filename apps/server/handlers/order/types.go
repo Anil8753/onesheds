@@ -1,8 +1,8 @@
 package order
 
 import (
-	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
+	"github.com/anil8753/onesheds/interfaces"
+	"github.com/anil8753/onesheds/ledger"
 )
 
 type Handler struct {

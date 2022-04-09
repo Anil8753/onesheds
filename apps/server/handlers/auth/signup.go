@@ -9,8 +9,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
+	"github.com/anil8753/onesheds/ledger"
+	"github.com/anil8753/onesheds/nethttp"
 )
 
 // Binding from JSON
@@ -79,9 +79,10 @@ func (s *Auth) doSignup(ctx *gin.Context, reqData *SignupReq) (*SignupResp, erro
 }
 
 func (s *Auth) createUserCert(ctx *gin.Context, user string) (*ledger.UserCrpto, error) {
-
+	//
+	nodeType := os.Getenv("NODE_TYPE")
 	// prepare registration data
-	urd := UserRegistrationData{User: user, NodeType: os.Getenv("NODE_TYPE")}
+	urd := UserRegistrationData{User: user, NodeType: nodeType}
 	urd.Attributes = append(urd.Attributes, Attribute{Key: "user", Value: user})
 
 	json_data, err := json.Marshal(urd)
@@ -90,9 +91,8 @@ func (s *Auth) createUserCert(ctx *gin.Context, user string) (*ledger.UserCrpto,
 	}
 
 	// post call
-	url := fmt.Sprintf("%s/api/v1/registeruser", os.Getenv("IDENTITY_SERVICE_ENDPOINT"))
+	url := fmt.Sprintf("%s/api/v1/registeruser/%s", os.Getenv("IDENTITY_SERVICE_ENDPOINT"), nodeType)
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(json_data))
-
 	if err != nil {
 		return nil, err
 	}
@@ -112,6 +112,27 @@ func (s *Auth) createUserCert(ctx *gin.Context, user string) (*ledger.UserCrpto,
 
 	return &out.Data, nil
 }
+
+// func (s *Auth) createUserCert(ctx *gin.Context, user string) (*ledger.UserCrpto, error) {
+
+// 	// prepare registration data
+// 	urd := ca.UserRegistrationData{User: user, NodeType: os.Getenv("NODE_TYPE")}
+// 	urd.Attributes = append(urd.Attributes, ca.Attribute{Key: "user", Value: user})
+
+// 	ui, err := ca.RegEnrollUser(&urd)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("failed to register user: %s. error: %w", user, err)
+// 	}
+
+// 	resp := &ledger.UserCrpto{
+// 		MSP:        ui.MSP,
+// 		UserId:     ui.UserId,
+// 		Cert:       ui.Cert,
+// 		PrivateKey: ui.PrivateKey,
+// 	}
+
+// 	return resp, nil
+// }
 
 func (s *Auth) registerOnLedger(u *UserData) error {
 

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/token"
+	"github.com/anil8753/onesheds/nethttp"
+	"github.com/anil8753/onesheds/token"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )

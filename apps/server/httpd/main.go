@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/db"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
+	"github.com/anil8753/onesheds/db"
+	"github.com/anil8753/onesheds/ledger"
 	"github.com/gin-gonic/gin"
 )
 

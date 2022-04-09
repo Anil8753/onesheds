@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
+	"github.com/anil8753/onesheds/handlers/auth"
+	"github.com/anil8753/onesheds/interfaces"
+	"github.com/anil8753/onesheds/nethttp"
 	"github.com/gin-gonic/gin"
 )
 

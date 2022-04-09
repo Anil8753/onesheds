@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/utils"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/nethttp"
+	"github.com/anil8753/onesheds/handlers/utils"
+	"github.com/anil8753/onesheds/nethttp"
 	"github.com/gin-gonic/gin"
 )
 

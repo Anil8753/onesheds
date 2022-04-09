@@ -3,7 +3,7 @@ package middlewares
 import (
 	"net/http"
 
-	"github.com/anil8753/onesheds/apps/warehousemen/service/token"
+	"github.com/anil8753/onesheds/token"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,16 +1,16 @@
 package main
 
 import (
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/auth"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/faq"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/knowledgebase"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/order"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/profile"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/review"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/handlers/warehouse"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/interfaces"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
-	"github.com/anil8753/onesheds/apps/warehousemen/service/middlewares"
+	"github.com/anil8753/onesheds/handlers/auth"
+	"github.com/anil8753/onesheds/handlers/faq"
+	"github.com/anil8753/onesheds/handlers/knowledgebase"
+	"github.com/anil8753/onesheds/handlers/order"
+	"github.com/anil8753/onesheds/handlers/profile"
+	"github.com/anil8753/onesheds/handlers/review"
+	"github.com/anil8753/onesheds/handlers/warehouse"
+	"github.com/anil8753/onesheds/interfaces"
+	"github.com/anil8753/onesheds/ledger"
+	"github.com/anil8753/onesheds/middlewares"
 
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"

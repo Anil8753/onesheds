@@ -1,6 +1,6 @@
 package interfaces
 
-import "github.com/anil8753/onesheds/apps/warehousemen/service/ledger"
+import "github.com/anil8753/onesheds/ledger"
 
 type HandlerDependency interface {
 	GetDB() Database
