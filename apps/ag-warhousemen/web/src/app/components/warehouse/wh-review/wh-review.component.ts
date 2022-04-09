@@ -39,9 +39,7 @@ export class WhReviewComponent implements OnInit {
    }
 
    async fetchReviews() {
-      const url = `${this.configService.baseUrl()}/api/v1/review/warehouse/${
-         this.whId
-      }`;
+      const url = `${this.configService.baseUrl()}/api/v1/review/${this.whId}`;
 
       const resp = await this.http.get<ReviewResp>(url).toPromise();
       const data = JSON.parse(resp?.data as string);

@@ -71,9 +71,7 @@ export class WhFaqComponent implements OnInit, OnChanges {
 
    fetchFAQs() {
       this.http
-         .get<any>(
-            `${this.configService.baseUrl()}/api/v1/faq/warehouse/${this.whId}`
-         )
+         .get<any>(`${this.configService.baseUrl()}/api/v1/faq/${this.whId}`)
          .subscribe({
             next: (v) => {
                const items = JSON.parse(v.data);

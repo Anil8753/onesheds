@@ -85,7 +85,7 @@ export class WhKnowledgebaseComponent implements OnInit {
 
       this.http
          .post<any>(
-            `${this.configService.baseUrl()}/api/v1/knowledgebase`,
+            `${this.configService.baseUrl()}/api/v1/knowledgebase/answer`,
             postData
          )
          .subscribe({

@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
 
    fetchWarehouse() {
       this.http
-         .get<any>(`${this.configService.baseUrl()}/api/v1/warehouse`)
+         .get<any>(`${this.configService.baseUrl()}/api/v1/warehouse/queryall`)
          .subscribe({
             next: (v) => {
                const cert = JSON.parse(v['data']);

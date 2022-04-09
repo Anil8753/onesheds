@@ -44,7 +44,7 @@ export class QuestionComponent implements OnInit {
          return;
       }
 
-      const url = `${this.configService.baseUrl()}/api/v1/knowledgebase`;
+      const url = `${this.configService.baseUrl()}/api/v1/knowledgebase/question`;
       const postData = {
          warehouseId: this.item.warehouseId,
          question: this.asked,
