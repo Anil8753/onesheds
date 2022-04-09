@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/anil8753/fabric-ca-client/utils"
@@ -12,8 +13,11 @@ import (
 func UserHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
+		nodeType := ctx.Param("node_type")
+		log.Println("nodeType: ", nodeType)
+
 		userId := ctx.Param("id")
-		resp, err := GetSigningIdentity(userId)
+		resp, err := GetSigningIdentity(nodeType, userId)
 
 		if err != nil {
 			ctx.JSON(
@@ -27,9 +31,9 @@ func UserHandler() gin.HandlerFunc {
 	}
 }
 
-func GetSigningIdentity(userId string) (*UserIdentity, error) {
+func GetSigningIdentity(nodeType string, userId string) (*UserIdentity, error) {
 
-	mspClient, err := GetMSPClient()
+	mspClient, err := GetMSPClient(nodeType)
 	if err != nil {
 		return nil, err
 	}

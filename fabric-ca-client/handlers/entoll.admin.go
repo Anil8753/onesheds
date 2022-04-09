@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/anil8753/fabric-ca-client/utils"
@@ -13,7 +14,10 @@ func EnrollAdminHandler() gin.HandlerFunc {
 
 	return func(ctx *gin.Context) {
 
-		if err := EnrollAdmin(); err != nil {
+		nodeType := ctx.Param("node_type")
+		log.Println("nodeType: ", nodeType)
+
+		if err := EnrollAdmin(nodeType); err != nil {
 			ctx.JSON(
 				http.StatusBadRequest,
 				utils.HttpError("StatusBadRequest", err.Error()),
@@ -28,9 +32,9 @@ func EnrollAdminHandler() gin.HandlerFunc {
 	}
 }
 
-func EnrollAdmin() error {
+func EnrollAdmin(nodeType string) error {
 
-	mspClient, caconfig, err := GetMSPClientWithCAConfig()
+	mspClient, caconfig, err := GetMSPClientWithCAConfig(nodeType)
 	if err != nil {
 		return err
 	}

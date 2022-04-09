@@ -31,6 +31,9 @@ func RegisterUserHandler() gin.HandlerFunc {
 
 	return func(ctx *gin.Context) {
 
+		nodeType := ctx.Param("node_type")
+		log.Println("nodeType: ", nodeType)
+
 		var urd UserRegistrationData
 		if err := ctx.ShouldBindJSON(&urd); err != nil {
 			ctx.JSON(
@@ -40,9 +43,9 @@ func RegisterUserHandler() gin.HandlerFunc {
 			return
 		}
 
-		log.Println("UserRegistrationData", urd)
+		log.Println("UserRegistrationData: ", urd)
 
-		ui, err := RegEnrollUser(&urd)
+		ui, err := RegEnrollUser(nodeType, &urd)
 		if err != nil {
 			ctx.JSON(
 				http.StatusInternalServerError,
@@ -58,9 +61,9 @@ func RegisterUserHandler() gin.HandlerFunc {
 	}
 }
 
-func RegEnrollUser(regData *UserRegistrationData) (*UserIdentity, error) {
+func RegEnrollUser(nodeType string, regData *UserRegistrationData) (*UserIdentity, error) {
 
-	mspClient, err := GetMSPClient()
+	mspClient, err := GetMSPClient(nodeType)
 	if err != nil {
 		return nil, err
 	}

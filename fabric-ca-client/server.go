@@ -21,12 +21,12 @@ func StartServer() {
 
 	v1 := r.Group("/api/v1")
 	{
-		v1.POST("/enrolladmin", handlers.EnrollAdminHandler())
-		v1.POST("/registeruser", handlers.RegisterUserHandler())
-		v1.POST("/revoke", handlers.RevokeUserHandler())
+		v1.POST("/enrolladmin/:node_type", handlers.EnrollAdminHandler())
+		v1.POST("/registeruser/:node_type", handlers.RegisterUserHandler())
+		v1.POST("/revoke/:node_type", handlers.RevokeUserHandler())
 
-		v1.GET("/users/:id", handlers.UserHandler())
-		v1.GET("/users", handlers.AllUsersHandler())
+		v1.GET("/users/:node_type/:id", handlers.UserHandler())
+		v1.GET("/users/:node_type", handlers.AllUsersHandler())
 	}
 
 	r.Run()
@@ -34,7 +34,7 @@ func StartServer() {
 
 func Setup() *gin.Engine {
 
-	f, _ := os.Create("gin.log")
+	f, _ := os.Create("app.log")
 	gin.DefaultWriter = io.MultiWriter(f)
 
 	r := gin.New()

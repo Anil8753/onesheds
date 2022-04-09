@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/anil8753/fabric-ca-client/utils"
@@ -11,7 +12,10 @@ import (
 func AllUsersHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		resp, err := GetAllIdentities()
+		nodeType := ctx.Param("node_type")
+		log.Println("nodeType: ", nodeType)
+
+		resp, err := GetAllIdentities(nodeType)
 		if err != nil {
 			ctx.JSON(
 				http.StatusInternalServerError,
@@ -24,9 +28,9 @@ func AllUsersHandler() gin.HandlerFunc {
 	}
 }
 
-func GetAllIdentities() ([]*msp.IdentityResponse, error) {
+func GetAllIdentities(nodeType string) ([]*msp.IdentityResponse, error) {
 
-	mspClient, err := GetMSPClient()
+	mspClient, err := GetMSPClient(nodeType)
 	if err != nil {
 		return nil, err
 	}

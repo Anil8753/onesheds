@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/anil8753/fabric-ca-client/utils"
@@ -19,6 +20,9 @@ func RevokeUserHandler() gin.HandlerFunc {
 
 	return func(ctx *gin.Context) {
 
+		nodeType := ctx.Param("node_type")
+		log.Println("nodeType: ", nodeType)
+
 		var r RevokeReq
 		if err := ctx.ShouldBindJSON(&r); err != nil {
 			ctx.JSON(
@@ -28,7 +32,7 @@ func RevokeUserHandler() gin.HandlerFunc {
 			return
 		}
 
-		mspClient, err := GetMSPClient()
+		mspClient, err := GetMSPClient(nodeType)
 		if err != nil {
 			ctx.JSON(
 				http.StatusInternalServerError,
