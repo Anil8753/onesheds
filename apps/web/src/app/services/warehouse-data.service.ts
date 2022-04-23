@@ -25,6 +25,7 @@ export class WarehouseDataService {
           'https://navata.com/cms/wp-content/uploads/2021/08/warehousing.jpg',
         usersRating: 5,
         userReviews: 18,
+        localityRating: 5,
         verified: true,
         securityDeposit: 150000,
         warehouseType: 'Cold Storage',
@@ -56,6 +57,7 @@ export class WarehouseDataService {
           'https://navata.com/cms/wp-content/uploads/2021/08/AW-Blog-What-Is-Public-Warehousing.jpg',
         usersRating: 3,
         userReviews: 9,
+        localityRating: 4,
         verified: true,
         warehouseType: 'Private Warehouses',
         rate: 32,
@@ -86,6 +88,7 @@ export class WarehouseDataService {
           'https://navata.com/cms/wp-content/uploads/2021/08/Tins-row-2048x1153.jpg',
         usersRating: 1,
         userReviews: 0,
+        localityRating: 2,
         verified: false,
         warehouseType: 'Bonded Storage',
         rate: 22,
@@ -115,6 +118,7 @@ export interface WarehouseItem {
   description: string;
   usersRating: number;
   userReviews: number;
+  localityRating: number;
   verified: boolean;
   thumbUrl: string;
   warehouseType: string;
