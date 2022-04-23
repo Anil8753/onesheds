@@ -56,22 +56,21 @@
       <div class="card-center-content-col">
         <div>Prohibitted items:</div>
         <div *ngIf="data.prohibittedItems.length == 0">
-          <span>- No restriction</span>
+          <span>-- No restriction</span>
         </div>
         <div *ngFor="let item of data.prohibittedItems">
-          <span>- {{ item }}</span>
+          <span>-- {{ item }}</span>
+        </div>
+        <div>
+          <span>Car parking: </span>
+          <span *ngIf="data.carParking > 0">{{ data.carParking }}</span>
+          <span *ngIf="data.carParking == 0">Not available</span>
         </div>
       </div>
 
       <div class="v-divier"></div>
 
       <div class="card-center-content-action-col">
-        <button class="action-button" mat-raised-button color="primary">
-          Add to favorite
-        </button>
-        <button class="action-button" mat-raised-button color="primary">
-          Schedule a call
-        </button>
         <button
           class="action-button"
           mat-raised-button
@@ -80,6 +79,15 @@
         >
           View more details
         </button>
+
+        <button class="action-button" mat-raised-button color="primary">
+          Add to favorite
+        </button>
+
+        <button class="action-button" mat-raised-button color="primary">
+          Schedule a call
+        </button>
+
         <button class="action-button" mat-raised-button color="accent">
           Book warehouse
         </button>

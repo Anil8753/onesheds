@@ -44,6 +44,7 @@ export class WarehouseDataService {
           'Transport city 3 km',
         ],
         hasVideo: true,
+        carParking: 2,
       },
       {
         name: 'Goodluck Warehouses',
@@ -73,6 +74,7 @@ export class WarehouseDataService {
           'Weighingbridge',
         ],
         hasVideo: false,
+        carParking: 5,
       },
       {
         name: 'Rayman logistics and warehouses',
@@ -97,6 +99,7 @@ export class WarehouseDataService {
         prohibittedItems: [],
         keyAttractions: ['Fire station 5 km', 'NH-21 6 km', 'KIAB 2 km'],
         hasVideo: true,
+        carParking: 0,
       },
     ];
   }
@@ -126,4 +129,5 @@ export interface WarehouseItem {
   prohibittedItems: string[];
   keyAttractions: string[];
   hasVideo: boolean;
+  carParking: number;
 }
