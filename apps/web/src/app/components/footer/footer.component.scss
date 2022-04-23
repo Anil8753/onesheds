@@ -1,0 +1,15 @@
+@import 'src/theme.scss';
+
+footer {
+	width: 100vw;
+    height: 100px;
+	left: 0;
+	bottom: 0;
+	background-color: map-get($_primary, 500);;
+	color: white;
+	text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

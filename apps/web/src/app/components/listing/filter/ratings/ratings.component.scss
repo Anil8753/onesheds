@@ -1,0 +1,21 @@
+.header {
+    font-size: small;
+    color: gray;
+    font-weight: bold;
+}
+
+.star-on{
+    color: goldenrod;
+}
+
+.star-off{
+    color: silver;
+}
+
+.star-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    font-size: small;
+}

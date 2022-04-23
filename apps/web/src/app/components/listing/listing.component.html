@@ -1,0 +1,20 @@
+<div class="loader-container" *ngIf="!data">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!!data">
+  <app-search-results-header
+    [resultsCount]="data.length"
+    [distance]="5"
+    [address]="locality"
+  ></app-search-results-header>
+
+  <div class="page-container">
+    <div class="sidebar">
+      <app-filter></app-filter>
+    </div>
+    <div class="list-container">
+      <app-list-item [data]="item" *ngFor="let item of data"></app-list-item>
+    </div>
+  </div>
+</div>

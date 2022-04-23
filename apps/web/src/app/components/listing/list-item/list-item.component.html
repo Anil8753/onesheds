@@ -1,0 +1,99 @@
+<mat-card class="card-box" *ngIf="data">
+  <mat-card-title-group>
+    <mat-card-title class="card-title"> {{ data.name }}</mat-card-title>
+    <mat-card-subtitle>
+      <span> {{ data.address }}</span>
+      <button mat-icon-button color="warn" aria-label="google map">
+        <mat-icon>place</mat-icon>
+      </button>
+    </mat-card-subtitle>
+  </mat-card-title-group>
+
+  <mat-card-content>
+    <div class="card-center-content">
+      <img mat-card-md-image src="{{ data.thumbUrl }}" />
+
+      <div class="card-center-content-col">
+        <div class="wh-type test" color="accent">{{ data.warehouseType }}</div>
+        <app-star-rating
+          [stars]="data.usersRating"
+          [reviews]="data.userReviews"
+        ></app-star-rating>
+
+        <button mat-icon-button aria-label="photo">
+          <mat-icon>photo_camera</mat-icon>
+        </button>
+
+        <button mat-icon-button aria-label="video" *ngIf="data.hasVideo">
+          <mat-icon>smart_display</mat-icon>
+        </button>
+      </div>
+
+      <div class="v-divier"></div>
+
+      <div class="card-center-content-col">
+        <div>Rate: {{ data.rate }} ₹/sqft</div>
+        <div *ngIf="data.brokerage > 0">
+          Brokerage: {{ data.brokerage }} days
+        </div>
+        <div *ngIf="data.brokerage == 0">Brokerage: No</div>
+        <div>Available: {{ data.totalSize - data.blockedSize }} sqft</div>
+        <div>Total: {{ data.totalSize }} sqft</div>
+        <div>Min tenure: {{ data.minTenure }} years</div>
+      </div>
+
+      <div class="v-divier"></div>
+
+      <div class="card-center-content-col">
+        <div>WDRA reg: {{ data.wdraReg ? "Yes" : "No" }}</div>
+        <div>OneShedS verified: {{ data.verified ? "Yes" : "No" }}</div>
+        <div>Operating since: {{ data.ageYear }}</div>
+        <div>Property documents: Yes</div>
+      </div>
+
+      <div class="v-divier"></div>
+
+      <div class="card-center-content-col">
+        <div>Prohibitted items:</div>
+        <div *ngIf="data.prohibittedItems.length == 0">
+          <span>- No restriction</span>
+        </div>
+        <div *ngFor="let item of data.prohibittedItems">
+          <span>- {{ item }}</span>
+        </div>
+      </div>
+
+      <div class="v-divier"></div>
+
+      <div class="card-center-content-action-col">
+        <button class="action-button" mat-raised-button color="primary">
+          Add to favorite
+        </button>
+        <button class="action-button" mat-raised-button color="primary">
+          Schedule a call
+        </button>
+        <button
+          class="action-button"
+          mat-raised-button
+          color="primary"
+          (click)="openDetailsDialog()"
+        >
+          View more details
+        </button>
+        <button class="action-button" mat-raised-button color="accent">
+          Book warehouse
+        </button>
+      </div>
+    </div>
+
+    <div style="width: 80%">
+      <mat-chip-list>
+        <mat-chip
+          class="key-attaction"
+          *ngFor="let item of data.keyAttractions"
+          >{{ item }}</mat-chip
+        >
+      </mat-chip-list>
+    </div>
+  </mat-card-content>
+</mat-card>

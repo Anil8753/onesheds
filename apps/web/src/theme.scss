@@ -1,0 +1,23 @@
+@import '~@angular/material/theming';
+
+$app-primary: mat-palette($mat-indigo);
+$app-accent: mat-palette($mat-amber, A200, A100, A400);
+$theme: mat-light-theme((
+  color: (
+    primary: $app-primary,
+    accent: $app-accent,
+  )
+));
+$color: mat-get-color-config($theme);
+
+$_primary: map-get($color, primary);
+$_accent: map-get($color, accent);
+$_warn: map-get($color, warn);
+
+// .class1 {
+//   color: map-get($primary, 400);
+// }
+
+// .class2 {
+//   color: mat-color($accent, 100);
+// }

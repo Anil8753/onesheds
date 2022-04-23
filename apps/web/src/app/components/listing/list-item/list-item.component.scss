@@ -1,0 +1,62 @@
+@import 'src/theme.scss';
+
+.card-box {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 20px;
+}
+
+.v-divier{
+    border-right: 1px solid rgba(65, 105, 225, 0.141);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.card-center-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card-center-content-col {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    color: gray;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.card-center-content-action-col{
+    padding-top: 0.8rem;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.action-button {
+    margin: 4px;
+    font-size: 12px !important;
+    line-height: 20px; //;
+    height: 20px;
+}
+
+.key-attaction {
+    font-weight: normal;
+    font-size: 0.8rem;
+    min-height: 1.5rem;
+    height: 1.5rem;
+    padding: 10px;
+}
+
+.wh-type{
+    margin-bottom: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: map-get($app-accent, 600);;
+    color: rgb(57, 52, 52);
+    text-align: center;
+    font-size: 0.8rem;
+}

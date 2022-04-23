@@ -1,0 +1,12 @@
+<div>
+  <mat-icon class="{{ class }}" *ngFor="let class of starsClass">star</mat-icon>
+  <div style="margin-top: -2px">
+    <button *ngIf="reviews > 0" mat-button color="primary" class="link-btn">
+      {{ reviews }} users reviews
+    </button>
+    <!-- <a *ngIf="reviews > 0" href="javascript:void(0)" color="accent">
+      {{ reviews }} users reviews
+    </a> -->
+    <span *ngIf="reviews == 0">No user reviews</span>
+  </div>
+</div>

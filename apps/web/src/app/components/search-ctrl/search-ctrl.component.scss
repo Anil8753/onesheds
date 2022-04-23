@@ -1,0 +1,53 @@
+@import 'src/theme.scss';
+
+.search-banner {
+    width: 100vw;
+    padding-top:20px;
+    padding-bottom: 60px;
+    background-color: map-get($_primary, 500);
+    // background-color: #3f51b5;
+}
+
+.search-c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 700px;
+    border-left: 1px solid map-get($_primary, 500);
+    border-top: 1px solid rgba(65, 105, 225, 0.302);
+}
+
+.serach-ctrl {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    background-color: white;
+    border-radius: 10px;
+}
+
+.search-lbl {
+    color: whitesmoke;
+    font-size: x-large;
+    margin: 10px;
+}
+.city-ctrl {
+    width: 150px;
+    margin-left: 6px;
+    margin-right: 6px;
+    flex-grow: 1;
+}
+
+.locality-ctrl {
+    width: 350px;
+    margin-left: 6px;
+    margin-right: 6px;
+    flex-grow: 5;
+}

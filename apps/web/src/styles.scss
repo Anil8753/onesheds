@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+h2 {
+    color: rgb(68, 73, 130);
+}
+
+.col-center {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.row-center {
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+}
+
+.link-btn{
+    height: 1.2rem !important;
+    padding: 1px !important;
+    margin: 1px !important;
+    line-height: 1.2rem !important;
+}
+
+

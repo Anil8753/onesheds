@@ -1,0 +1,27 @@
+@import 'src/theme.scss';
+
+.s-border {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.s-item {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 10px solid map-get($_primary, 500);;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: rgb(25, 34, 64);
+    // color: whitesmoke;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+}
