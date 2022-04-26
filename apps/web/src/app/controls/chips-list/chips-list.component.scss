@@ -1,0 +1,24 @@
+.ctrl {
+    margin: 5px;
+}
+
+.heading {
+    margin-left: 5px;
+    color: gray;
+    font-weight: bold;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80%;
+}
+
+.chips {
+    font-weight: normal;
+    font-size: 0.8rem;
+    min-height: 1.5rem;
+    height: 1.5rem;
+    padding: 10px;
+}

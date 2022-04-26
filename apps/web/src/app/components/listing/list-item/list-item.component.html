@@ -6,12 +6,16 @@
       <button mat-icon-button color="warn" aria-label="google map">
         <mat-icon>place</mat-icon>
       </button>
+
+      <button mat-icon-button color="primary" aria-label="social media share">
+        <mat-icon>share</mat-icon>
+      </button>
     </mat-card-subtitle>
   </mat-card-title-group>
 
   <mat-card-content>
     <div class="card-center-content">
-      <img mat-card-md-image src="{{ data.thumbUrl }}" />
+      <div><img mat-card-lg-image src="{{ data.thumbUrl }}" /></div>
 
       <div class="card-center-content-col">
         <div class="wh-type test" color="accent">{{ data.warehouseType }}</div>
@@ -20,55 +24,59 @@
           [reviews]="data.userReviews"
         ></app-star-rating>
 
+        <button mat-button color="primary" class="link-btn">
+          {{ data.localityRating }}/5 Locality rating
+        </button>
+        <br />
+
+        <app-verification [verified]="data.verified"></app-verification>
+
+        <!-- <br />
         <button mat-icon-button aria-label="photo">
           <mat-icon>photo_camera</mat-icon>
         </button>
 
         <button mat-icon-button aria-label="video" *ngIf="data.hasVideo">
           <mat-icon>smart_display</mat-icon>
-        </button>
+        </button> -->
       </div>
 
       <div class="v-divier"></div>
 
       <div class="card-center-content-col">
-        <div>Rate: {{ data.rate }} ₹/sqft</div>
-        <div *ngIf="data.brokerage > 0">
-          Brokerage: {{ data.brokerage }} days
-        </div>
-        <div *ngIf="data.brokerage == 0">Brokerage: No</div>
-        <div>Available: {{ data.totalSize - data.blockedSize }} sqft</div>
-        <div>Total: {{ data.totalSize }} sqft</div>
-        <div>Min tenure: {{ data.minTenure }} years</div>
-      </div>
-
-      <div class="v-divier"></div>
-
-      <div class="card-center-content-col">
-        <div>WDRA reg: {{ data.wdraReg ? "Yes" : "No" }}</div>
-        <div>OneShedS verified: {{ data.verified ? "Yes" : "No" }}</div>
-        <div>Operating since: {{ data.ageYear }}</div>
-        <div>Property documents: Yes</div>
-
-        <button mat-button color="primary" class="link-btn">
-          Locality Rating {{ data.localityRating }}/5
-        </button>
-      </div>
-
-      <div class="v-divier"></div>
-
-      <div class="card-center-content-col">
-        <div>Prohibitted items:</div>
-        <div *ngIf="data.prohibittedItems.length == 0">
-          <span>-- No restriction</span>
-        </div>
-        <div *ngFor="let item of data.prohibittedItems">
-          <span>-- {{ item }}</span>
+        <div>
+          <span
+            >Rate: <b style="font-size: large">{{ data.rate }} ₹/sqft</b></span
+          >
+          <span *ngIf="data.rateNegotiable"> (Negotiable)</span>
+          <span *ngIf="!data.rateNegotiable"> (Non-negotiable)</span>
         </div>
         <div>
-          <span>Car parking: </span>
-          <span *ngIf="data.carParking > 0">{{ data.carParking }}</span>
-          <span *ngIf="data.carParking == 0">Not available</span>
+          Security deposit: {{ data.securityDeposit | currency: "INR" }}
+        </div>
+        <div>Available: {{ data.totalSize - data.blockedSize }} sqft</div>
+        <div>Total: {{ data.totalSize }} sqft</div>
+        <div>Minimum tenure: {{ data.minTenure }} years</div>
+        <div>Shared: {{ data.shared | yesNo }}</div>
+        <div>Insured: {{ data.shared | yesNo }}</div>
+      </div>
+
+      <div class="v-divier"></div>
+
+      <div class="card-center-content-col">
+        <div>WDRA reg: {{ data.wdraReg | yesNo }}</div>
+        <div>OneShedS verified: {{ data.verified | yesNo }}</div>
+        <div>Operating since: {{ data.operatingSince }}</div>
+        <div>Property documents: Yes</div>
+        <div>Green warehouse: {{ data.greenWarehouse | yesNo }}</div>
+
+        <div>
+          <div>On road: {{ data.onRoad | yesNo }}</div>
+          <div>
+            <span>Parking available: </span>
+            <span *ngIf="data.parking > 0">{{ data.parking }}</span>
+            <span *ngIf="data.parking == 0">Not available</span>
+          </div>
         </div>
       </div>
 
@@ -85,7 +93,11 @@
         </button>
 
         <button class="action-button" mat-raised-button color="primary">
-          Add to favorite
+          Click to shortlist
+        </button>
+
+        <button class="action-button" mat-raised-button color="primary">
+          Click to compare
         </button>
 
         <button class="action-button" mat-raised-button color="primary">
@@ -98,14 +110,13 @@
       </div>
     </div>
 
-    <div style="width: 80%">
-      <mat-chip-list>
-        <mat-chip
-          class="key-attaction"
-          *ngFor="let item of data.keyAttractions"
-          >{{ item }}</mat-chip
-        >
-      </mat-chip-list>
-    </div>
+    <app-chips-list
+      [heading]="'Amenities'"
+      [items]="data.amenities"
+    ></app-chips-list>
   </mat-card-content>
+
+  <div class="wh-desc">
+    <p class="text-muted">{{ data.description }}</p>
+  </div>
 </mat-card>

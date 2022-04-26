@@ -21,12 +21,13 @@
 
 .sidebar {
     padding: 10px;
-    height: calc(100% - 90px);
+    height: calc(100%-90px);
     width: 256px;
 }
 
 
 .list-container {
+    width: calc(100%-270px);
     padding-top: 5px;
     display: flex;
     flex-direction: column;

@@ -25,10 +25,10 @@ export class ListItemComponent implements OnInit {
 
   openDetailsDialog(): void {
     const dialogRef = this._dialog.open(DetailsComponent, {
-      width: '90vw',
-      maxWidth: '90vw',
-      height: '90vh',
-      maxHeight: '90vh',
+      width: '100vw',
+      maxWidth: '100vw',
+      height: '100vh',
+      maxHeight: '100vh',
       data: { data: this.data },
     });
 

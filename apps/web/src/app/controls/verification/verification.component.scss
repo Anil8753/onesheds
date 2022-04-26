@@ -1,0 +1,15 @@
+.verified {
+    margin-top: 2px;
+    display: flex; 
+    flex-direction: row; 
+    align-items: center;
+    color: rgb(21, 131, 21);
+}
+
+.not-verified {
+    margin-top: 2px;
+    display: flex; 
+    flex-direction: row; 
+    align-items: center;
+    color: rgb(185, 30, 30);
+}

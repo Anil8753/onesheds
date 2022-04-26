@@ -1,0 +1,13 @@
+<div *ngIf="verified" class="verified">
+  <mat-icon>
+    <span class="material-symbols-outlined"> verified_user </span>
+  </mat-icon>
+  <span>OneShedS verified</span>
+</div>
+
+<div *ngIf="!verified" class="not-verified">
+  <mat-icon>
+    <span class="material-symbols-outlined"> gpp_bad </span>
+  </mat-icon>
+  <span>Not Verified</span>
+</div>

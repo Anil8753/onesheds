@@ -1,0 +1,9 @@
+<div class="ctrl">
+  <span *ngIf="heading !== ''" class="heading">{{ heading }}</span>
+
+  <mat-chip-list class="wrapper">
+    <mat-chip class="chips" *ngFor="let item of items">
+      {{ item }}
+    </mat-chip>
+  </mat-chip-list>
+</div>

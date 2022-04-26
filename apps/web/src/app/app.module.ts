@@ -28,6 +28,9 @@ import { ListItemComponent } from './components/listing/list-item/list-item.comp
 import { StarRatingComponent } from './controls/star-rating/star-rating.component';
 import { SearchResultsHeaderComponent } from './components/listing/search-results-header/search-results-header.component';
 import { DetailsComponent } from './components/details/details.component';
+import { VerificationComponent } from './controls/verification/verification.component';
+import { ChipsListComponent } from './controls/chips-list/chips-list.component';
+import { YesNoPipe } from './pipes/yes-no.pipe';
 // import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
@@ -50,6 +53,9 @@ import { DetailsComponent } from './components/details/details.component';
     StarRatingComponent,
     SearchResultsHeaderComponent,
     DetailsComponent,
+    VerificationComponent,
+    ChipsListComponent,
+    YesNoPipe,
   ],
   imports: [
     BrowserModule,
