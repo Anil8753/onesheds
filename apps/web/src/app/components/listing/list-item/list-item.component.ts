@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { WarehouseItem } from 'src/app/services/warehouse-data.service';
+import { ListItem } from 'src/app/services/interfaces/list';
+
 import { DetailsComponent } from '../../details/details.component';
 
 @Component({
@@ -9,7 +10,7 @@ import { DetailsComponent } from '../../details/details.component';
   styleUrls: ['./list-item.component.scss'],
 })
 export class ListItemComponent implements OnInit {
-  @Input() data: WarehouseItem | undefined;
+  @Input() data: ListItem | undefined;
 
   starsClass: string[] = [];
   constructor(private _dialog: MatDialog) {}
@@ -29,7 +30,7 @@ export class ListItemComponent implements OnInit {
       maxWidth: '100vw',
       height: '100vh',
       maxHeight: '100vh',
-      data: { data: this.data },
+      data: { whId: this.data?.id },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

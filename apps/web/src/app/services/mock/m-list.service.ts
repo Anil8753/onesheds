@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
+import { IItemListService, ListItem } from '../interfaces/list';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WarehouseDataService {
-  items: WarehouseItem[] = [];
+export class MListService implements IItemListService {
+  //
+  items: ListItem[] = [];
+
   constructor() {
     this.initTestData();
   }
 
-  async getWareHouses(params: any): Promise<WarehouseItem[]> {
+  async get(locaton: string, km: number): Promise<ListItem[]> {
     return this.items;
   }
 
   private initTestData() {
     this.items = [
       {
+        id: '1236',
         name: 'Navata Warehouses',
         address:
           '18, 3rd Cross Road, NS Palya, BTM Layout Stage 2, Bengaluru, 560076, Karnataka, India',
@@ -35,11 +39,13 @@ export class WarehouseDataService {
         totalSize: 2000,
         blockedSize: 500,
         minTenure: 3,
-        // brokerage: 30,
         wdraReg: false,
         operatingSince: '2006',
         shared: false,
         insured: true,
+
+        location: { latitude: 37.6153, longitude: -122.39 },
+
         greenWarehouse: true,
         onRoad: true,
         parking: 2,
@@ -56,6 +62,7 @@ export class WarehouseDataService {
         hasVideo: true,
       },
       {
+        id: '1235',
         name: 'Goodluck Warehouses',
         address:
           '76, Thavarekere Main Road, BTM Layout Stage 1, Bengaluru, 560029, Karnataka, India',
@@ -74,11 +81,13 @@ export class WarehouseDataService {
         totalSize: 5000,
         blockedSize: 1000,
         minTenure: 1,
-        // brokerage: 0,
         wdraReg: true,
         operatingSince: '1966',
         shared: true,
         insured: true,
+
+        location: { latitude: 37.4289, longitude: -122.1697 },
+
         greenWarehouse: false,
         onRoad: true,
         parking: 5,
@@ -94,6 +103,7 @@ export class WarehouseDataService {
         hasVideo: false,
       },
       {
+        id: '1234',
         name: 'Rayman logistics and warehouses',
         address:
           '403-13A, 13th Cross Road, Sri Venkateshwara Layout, Bengaluru, 560068, Karnataka, India',
@@ -116,6 +126,9 @@ export class WarehouseDataService {
         operatingSince: '1986',
         shared: false,
         insured: true,
+
+        location: { latitude: 37.4232, longitude: -122.0853 },
+
         greenWarehouse: true,
         onRoad: true,
         parking: 0,
@@ -130,38 +143,4 @@ export class WarehouseDataService {
       },
     ];
   }
-
-  randomNumber(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min) + min);
-  }
-}
-
-export interface WarehouseItem {
-  name: string;
-  address: string;
-  description: string;
-  usersRating: number;
-  userReviews: number;
-  localityRating: number;
-  verified: boolean;
-  thumbUrl: string;
-  warehouseType: string;
-  rate: number;
-  rateNegotiable: boolean;
-  securityDeposit: number;
-  totalSize: number;
-  blockedSize: number;
-  minTenure: number;
-  // brokerage: number;
-  wdraReg: boolean;
-  operatingSince: string;
-  shared: boolean;
-  insured: boolean;
-
-  greenWarehouse: boolean;
-  onRoad: boolean;
-  parking: number;
-
-  amenities: string[];
-  hasVideo: boolean;
 }

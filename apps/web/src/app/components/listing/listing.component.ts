@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  WarehouseDataService,
-  WarehouseItem,
-} from 'src/app/services/warehouse-data.service';
+import { DataService } from 'src/app/services/data.service';
+import { ListItem } from 'src/app/services/interfaces/list';
 
 @Component({
   selector: 'app-listing',
@@ -13,11 +11,11 @@ import {
 export class ListingComponent implements OnInit {
   //
   locality = '';
-  data: WarehouseItem[] | undefined;
+  data: ListItem[] | undefined;
 
   constructor(
     private _route: ActivatedRoute,
-    private _whDataService: WarehouseDataService
+    private _dataservice: DataService
   ) {}
 
   ngOnInit(): void {
@@ -25,9 +23,11 @@ export class ListingComponent implements OnInit {
       this.locality = _params['locality'];
 
       setTimeout(() => {
-        this._whDataService.getWareHouses(this.locality).then((items) => {
-          this.data = items;
-        });
+        this._dataservice.listItemService
+          .get(this.locality, 10)
+          .then((items) => {
+            this.data = items;
+          });
       }, 1000);
     });
   }
