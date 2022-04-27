@@ -83,14 +83,14 @@
       <div class="v-divier"></div>
 
       <div class="card-center-content-action-col">
-        <button
+        <a
           class="action-button"
           mat-raised-button
           color="primary"
-          (click)="openDetailsDialog()"
+          target="_blank"
+          [routerLink]="['/detail', data.id]"
+          >View more details</a
         >
-          View more details
-        </button>
 
         <button class="action-button" mat-raised-button color="primary">
           Click to shortlist
