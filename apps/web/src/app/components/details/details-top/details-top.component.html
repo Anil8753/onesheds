@@ -1,0 +1,47 @@
+<div class="box" *ngIf="data">
+  <div class="box-item grow-1">
+    <div>
+      <span style="font-size: x-large">{{
+        data.cost.price | currency: "INR"
+      }}</span>
+      per sqft
+    </div>
+
+    <div>
+      <a href="javascript:void()">Check cost breakup</a>
+    </div>
+    <div>
+      <a href="javascript:void()">See facility charges</a>
+    </div>
+  </div>
+
+  <div class="box-item grow-2 flex-col">
+    <div>{{ data.name }}</div>
+    <div>{{ data.address }}</div>
+    <div style="flex-grow: 2"></div>
+    <div class="flex-row attractions-box">
+      <div *ngFor="let item of attractions" class="attration">
+        <span> {{ item }} </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-item grow-1">
+    <app-star-rating [reviews]="4" [stars]="4"></app-star-rating>
+
+    <div><a href="javascript:void()">booking history</a></div>
+  </div>
+  <div class="box-item" style="display: flex; flex-direction: column">
+    <button class="action-button" mat-raised-button color="primary">
+      Save for later
+    </button>
+
+    <button class="action-button" mat-raised-button color="primary">
+      Add to compare
+    </button>
+
+    <button class="action-button" mat-raised-button color="primary">
+      Share with friends
+    </button>
+  </div>
+</div>

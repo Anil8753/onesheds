@@ -3,6 +3,7 @@ html, body { height: 100%; }
 body { 
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
+    color: rgb(92, 89, 89)
 }
 
 h2 {
@@ -31,4 +32,24 @@ h2 {
 
 .text-muted {
     color: gray;
+}
+
+.btn-row button,
+.btn-row a {
+  margin-right: 4px;
+}
+
+a {
+    color: royalblue
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
 }

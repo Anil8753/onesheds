@@ -10,6 +10,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.modules';
+import { NgxGalleryModule } from 'ngx-gallery-9';
+
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SearchCtrlComponent } from './components/search-ctrl/search-ctrl.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
@@ -31,6 +33,14 @@ import { DetailsComponent } from './components/details/details.component';
 import { VerificationComponent } from './controls/verification/verification.component';
 import { ChipsListComponent } from './controls/chips-list/chips-list.component';
 import { YesNoPipe } from './pipes/yes-no.pipe';
+import { DetailsTopComponent } from './components/details/details-top/details-top.component';
+import { GalleryComponent } from './components/details/gallery/gallery.component';
+import { TextFieldComponent } from './controls/text-field/text-field.component';
+import { DetailsMidComponent } from './components/details/details-mid/details-mid.component';
+import { SliceStringPipe } from './pipes/slice-string.pipe';
+import { TextListComponent } from './controls/text-list/text-list.component';
+import { DetailsMidActionsComponent } from './components/details/details-mid-actions/details-mid-actions.component';
+import { DetailsBriefComponent } from './components/details/details-brief/details-brief.component';
 // import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
@@ -56,6 +66,14 @@ import { YesNoPipe } from './pipes/yes-no.pipe';
     VerificationComponent,
     ChipsListComponent,
     YesNoPipe,
+    DetailsTopComponent,
+    GalleryComponent,
+    TextFieldComponent,
+    DetailsMidComponent,
+    SliceStringPipe,
+    TextListComponent,
+    DetailsMidActionsComponent,
+    DetailsBriefComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +86,7 @@ import { YesNoPipe } from './pipes/yes-no.pipe';
 
     HttpClientModule,
     NgxSliderModule,
+    NgxGalleryModule,
     GooglePlaceModule,
     // GoogleMapsModule,
   ],

@@ -1,0 +1,44 @@
+.box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    // color: rgb(54, 48, 48);
+    // background-color: aliceblue;
+    background-color: white;
+}
+
+.box-item {
+    border-right: 1px solid rgba(128, 128, 128, 0.401);
+    padding: 10px;
+}
+
+.grow-1 {
+    flex-grow: 1;
+}
+
+.grow-2 {
+    flex-grow: 2;
+}
+
+.action-button {
+    margin: 4px;
+    font-size: 12px !important;
+    line-height: 20px; //;
+    height: 20px;
+}
+
+.attractions-box {
+    align-content: center;
+}
+
+.attration{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 16px;
+    padding-right: 16px;
+
+    margin-right: 5px;
+    color: gray;
+    background-color: aliceblue;
+}

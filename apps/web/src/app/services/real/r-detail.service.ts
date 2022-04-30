@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Detail, IDetailService } from '../interfaces/detail';
+import { WarehouseDetail, IDetailService } from '../interfaces/detail';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +7,7 @@ import { Detail, IDetailService } from '../interfaces/detail';
 export class RDetailService implements IDetailService {
   //
   constructor() {}
-  get(id: string): Promise<Detail> {
+  get(id: string): Promise<WarehouseDetail> {
     throw new Error('Method not implemented.');
   }
 }

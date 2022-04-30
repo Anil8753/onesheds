@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
+import { WarehouseDetail } from 'src/app/services/interfaces/detail';
 
 @Component({
   selector: 'app-details',
@@ -9,8 +10,8 @@ import { DataService } from 'src/app/services/data.service';
 export class DetailsComponent implements OnInit {
   //
   whId: any;
-  data: any;
-
+  data: WarehouseDetail | undefined;
+  panelOpenState = false;
   constructor(private _dataservice: DataService) {}
 
   ngOnInit(): void {

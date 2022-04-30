@@ -1,0 +1,12 @@
+
+.mid-box-detail-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.mid-box {
+    padding: 22px;
+    border-left: 1px solid rgba(128, 128, 128, 0.161);
+}

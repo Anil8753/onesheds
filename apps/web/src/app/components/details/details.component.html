@@ -1,16 +1,55 @@
-<h4>
-  Warehouse details
-  <button
-    mat-mini-fab
-    color="accent"
-    aria-label="close"
-    style="display: block; position: fixed"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
-</h4>
+<div style="padding: 12px; background-color: whitesmoke">
+  <app-details-top [data]="data"></app-details-top>
 
-<hr />
-<pre>
-    {{ data | json }}
-</pre>
+  <div class="mid-box-container">
+    <app-gallery></app-gallery>
+    <app-details-mid [data]="data"></app-details-mid>
+  </div>
+
+  <div class="desc">
+    <div><strong>Description:</strong></div>
+    <p>
+      Industrial shed available for lease on prime location good connectivity
+      from the main Dadari road. The shed is located on wide road, Its good for
+      all industrial use like logistic, and other industry. The surrounded area
+      is occupied with all MNC like TCS, Samsung mother diary etc. Interested
+      client can contact us for more details and option all across Noida.
+    </p>
+  </div>
+
+  <div
+    style="padding: 10px; background-color: white; margin-top: 10px"
+    *ngIf="data"
+  >
+    <h1>Details</h1>
+    <hr />
+
+    <app-details-brief
+      [heading]="'Amenities'"
+      [data]="data.amenities"
+    ></app-details-brief>
+    <hr />
+    <app-details-brief
+      [heading]="'Equipments'"
+      [data]="data.equipments"
+    ></app-details-brief>
+    <hr />
+    <app-details-brief
+      [heading]="'Accreditation'"
+      [dataStr]="data.accrediatation"
+    ></app-details-brief>
+    <hr />
+    <h3>Documents</h3>
+    <div style="padding-left: 20px">
+      <app-details-brief
+        [heading]="'Before construction'"
+        [dataStr]="data.documents.before"
+      ></app-details-brief>
+
+      <app-details-brief
+        [heading]="'After construction'"
+        [dataStr]="data.documents.after"
+      ></app-details-brief>
+    </div>
+  </div>
+</div>

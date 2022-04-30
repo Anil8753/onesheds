@@ -1,0 +1,17 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-left: 30px;
+    // justify-content: center;
+    margin-bottom: 20px;
+}
+
+
+.item {
+    width: 300px; align-items: center; display: flex; flex-direction: row;
+}
+
+.itemStr {
+    width: 400px;   align-items: center; display: flex; flex-direction: row;
+}

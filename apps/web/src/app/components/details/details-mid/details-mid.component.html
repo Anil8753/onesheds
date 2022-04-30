@@ -1,0 +1,67 @@
+<div>
+  <div class="mid-box-detail-container" *ngIf="data">
+    <!-- 1 -->
+    <div class="mid-box">
+      <app-text-field
+        [label]="'Flooring type'"
+        [text]="data.finedDetails.flooringType"
+      ></app-text-field>
+      <app-text-field
+        [label]="'Available from'"
+        [text]="data.dates.availableFrom"
+      ></app-text-field>
+      <app-text-field
+        [label]="'Registration office'"
+        [text]="data.registeration.registrationOffice"
+      ></app-text-field>
+
+      <app-text-list
+        [label]="'Amenities'"
+        [items]="amenities"
+        [max]="5"
+      ></app-text-list>
+    </div>
+    <!-- 2 -->
+    <div class="mid-box">
+      <app-text-field
+        [label]="'Number of Floor(s)'"
+        [text]="data.finedDetails.floor | json"
+      ></app-text-field>
+
+      <app-text-field
+        [label]="'Furnished state'"
+        [text]="data.finedDetails.furnishedStatus"
+      ></app-text-field>
+
+      <app-text-field
+        [label]="'Commence on'"
+        [text]="data.dates.commencedOn"
+      ></app-text-field>
+
+      <app-text-list
+        [label]="'Storage Options'"
+        [items]="storageOptions"
+        [max]="5"
+      ></app-text-list>
+    </div>
+    <!-- 3 -->
+    <div class="mid-box">
+      <app-text-field [label]="'On road'" [text]="'Yes'"></app-text-field>
+      <app-text-field
+        [label]="'Age of construction'"
+        [text]="data.dates.ageofConstruction | json"
+      ></app-text-field>
+
+      <app-text-field [label]="'Locality rating'" [text]="'4'"></app-text-field>
+
+      <app-text-list
+        [label]="'Accreditation'"
+        [items]="accreditation"
+        [max]="5"
+      ></app-text-list>
+    </div>
+
+    <!-- 4 -->
+    <app-details-mid-actions class="mid-box"></app-details-mid-actions>
+  </div>
+</div>
