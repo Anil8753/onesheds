@@ -1,0 +1,26 @@
+<div *ngIf="data" style="background-color: white; padding: 10px">
+  <strong>Near by</strong>
+  <div class="items-box">
+    <app-text-list
+      [label]="'Shopping malls'"
+      [items]="data.shoppingMall"
+    ></app-text-list>
+
+    <app-text-list
+      [label]="'Residential areas'"
+      [items]="data.ResidentialArea"
+    ></app-text-list>
+
+    <app-text-list
+      [label]="'Commercial areas'"
+      [items]="data.commercialArea"
+    ></app-text-list>
+
+    <app-text-list
+      [label]="'Landmarks'"
+      [items]="data.landmarks"
+    ></app-text-list>
+
+    <div></div>
+  </div>
+</div>

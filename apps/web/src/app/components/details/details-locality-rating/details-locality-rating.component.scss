@@ -1,0 +1,21 @@
+.items-box{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.header {
+    font-size: x-small;
+    margin: 5px;
+}
+
+.title {
+    margin-right: 10px;
+}
+.rating{
+    padding-left: 5px;
+    display: flex;
+    flex-direction: row;
+}
+

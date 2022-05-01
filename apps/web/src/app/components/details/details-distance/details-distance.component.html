@@ -1,0 +1,30 @@
+<div *ngIf="data" style="background-color: white; padding: 10px">
+  <strong>Distance from</strong>
+  <div class="items-box">
+    <app-text-field
+      class="item"
+      [label]="'Police Station'"
+      [text]="data.important.policeStation + ' Km'"
+    ></app-text-field>
+
+    <app-text-field
+      class="item"
+      [label]="'Fire Station'"
+      [text]="data.important.fireStation + ' Km'"
+    ></app-text-field>
+
+    <app-text-field
+      class="item"
+      [label]="'Weighbridge'"
+      [text]="data.important.weighbridge + ' Km'"
+    ></app-text-field>
+
+    <app-text-field
+      class="item"
+      [label]="'Highway'"
+      [text]="data.important.highway + ' Km'"
+    ></app-text-field>
+
+    <div></div>
+  </div>
+</div>

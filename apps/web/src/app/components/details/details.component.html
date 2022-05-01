@@ -1,4 +1,4 @@
-<div style="padding: 10px; background-color: whitesmoke">
+<div style="padding: 10px; background-color: whitesmoke" *ngIf="data">
   <app-details-top [data]="data"></app-details-top>
 
   <div class="mid-box-container">
@@ -17,7 +17,27 @@
     </p>
   </div>
 
-  <div class="details" *ngIf="data">
+  <div style="margin-top: 5px">
+    <app-details-surronding [data]="data.surroundings"></app-details-surronding>
+  </div>
+
+  <div style="margin-top: 5px">
+    <app-details-distance [data]="data.distanceFrom"></app-details-distance>
+  </div>
+
+  <div class="locality-card">
+    <app-details-distance
+      class="box-item"
+      [data]="data.distanceFrom"
+    ></app-details-distance>
+
+    <app-details-locality-rating
+      style="flex-grow: 3"
+      [data]="data.localityRatings"
+    ></app-details-locality-rating>
+  </div>
+
+  <div class="details">
     <div><strong>Other details</strong></div>
 
     <app-details-brief
@@ -28,6 +48,26 @@
     <app-details-brief
       [heading]="'Equipments'"
       [data]="data.equipments"
+    ></app-details-brief>
+
+    <app-details-brief
+      [heading]="'Safety equipments'"
+      [data]="data.safetyEquipments"
+    ></app-details-brief>
+
+    <app-details-brief
+      [heading]="'Storage options'"
+      [data]="data.storageOptions"
+    ></app-details-brief>
+
+    <app-details-brief
+      [heading]="'Value added services'"
+      [data]="data.vas"
+    ></app-details-brief>
+
+    <app-details-brief
+      [heading]="'Industries served'"
+      [data]="data.industrieServed"
     ></app-details-brief>
 
     <app-details-brief
@@ -43,6 +83,11 @@
     <app-details-brief
       [heading]="'Documents- After construction'"
       [dataStr]="data.documents.after"
+    ></app-details-brief>
+
+    <app-details-brief
+      [heading]="'Prohibbited items'"
+      [dataArray]="data.prohibbited"
     ></app-details-brief>
   </div>
 </div>

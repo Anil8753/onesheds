@@ -32,6 +32,8 @@ export class DetailsBriefComponent implements OnInit {
     value: string;
   }[] = [];
 
+  @Input() dataArray: string[] = [];
+
   isOpen = false;
   arrowIcon = 'chevron_right';
 

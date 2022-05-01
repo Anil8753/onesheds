@@ -6,29 +6,32 @@
     background-color: whitesmoke;
 }
 
-.wrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding-left: 30px;
-    margin-bottom: 20px;
-}
 
 .heading {
-    font-size: medium;
-    font-weight: bold;
-    margin-bottom: 5px;
     align-items: center;
     display: flex;
     padding: 5px;
 }
+
+.h-select{
+    font-weight: bold;
+    border: none;
+}
+
 .heading:hover{
     cursor: pointer;
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: whitesmoke;
+}
+
 .item {
     width: 300px; 
-    align-items: center;
     display: flex; 
     flex-direction:row;
     padding: 2px;

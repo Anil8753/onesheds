@@ -19,10 +19,8 @@
 
       <div class="card-center-content-col">
         <div class="wh-type test" color="accent">{{ data.warehouseType }}</div>
-        <app-star-rating
-          [stars]="data.usersRating"
-          [reviews]="data.userReviews"
-        ></app-star-rating>
+        <app-star-rating [stars]="data.usersRating"></app-star-rating>
+        <app-user-review [reviews]="data.userReviews"></app-user-review>
 
         <button mat-button color="primary" class="link-btn">
           {{ data.localityRating }}/5 Locality rating

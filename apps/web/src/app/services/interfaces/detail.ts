@@ -80,8 +80,6 @@ export interface WarehouseDetail {
     CIN: string;
   };
 
-  accrediatation: { item: string; value: boolean }[];
-
   surroundings: {
     shoppingMall: string[];
     commercialArea: string[];
@@ -104,8 +102,6 @@ export interface WarehouseDetail {
     taxiStation: string[];
   };
 
-  amenities: { item: string; value: boolean }[];
-
   dates: {
     commencedOn: string;
     availableFrom: string;
@@ -122,6 +118,10 @@ export interface WarehouseDetail {
     feedback: string;
     date: string;
   }[];
+
+  accrediatation: { item: string; value: boolean }[];
+
+  amenities: { item: string; value: boolean }[];
 
   equipments: { item: string; value: boolean }[];
 

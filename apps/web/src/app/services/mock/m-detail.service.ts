@@ -128,7 +128,7 @@ export class MDetailService implements IDetailService {
         shoppingMall: ['GGN Central Mall', 'Spencer Ciry Mall'],
         commercialArea: ['Hoskote Industrial Area'],
         ResidentialArea: ['Chanasandara', 'Kadugodi'],
-        landmarks: ['Amazon warehouse Hoskote'],
+        landmarks: ['Amazon warehouse Hoskote', 'Hoskote police station'],
       },
 
       distanceFrom: {
