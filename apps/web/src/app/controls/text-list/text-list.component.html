@@ -7,7 +7,10 @@
 
   <div *ngFor="let item of items; let i = index">
     <div class="txt" *ngIf="i < max">
-      <span class="material-icons"> arrow_right </span> {{ item }}
+      <mat-icon aria-hidden="false" aria-label="dot" [inline]="true"
+        >noise_control_off</mat-icon
+      >
+      {{ item }}
     </div>
   </div>
 </div>
