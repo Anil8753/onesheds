@@ -80,7 +80,7 @@ export interface WarehouseDetail {
     CIN: string;
   };
 
-  accrediatation: { item: string; value: string }[];
+  accrediatation: { item: string; value: boolean }[];
 
   surroundings: {
     shoppingMall: string[];

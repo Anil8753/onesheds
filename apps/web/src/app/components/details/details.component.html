@@ -1,4 +1,4 @@
-<div style="padding: 12px; background-color: whitesmoke">
+<div style="padding: 10px; background-color: whitesmoke">
   <app-details-top [data]="data"></app-details-top>
 
   <div class="mid-box-container">
@@ -7,7 +7,7 @@
   </div>
 
   <div class="desc">
-    <div><strong>Description:</strong></div>
+    <div><strong>Description</strong></div>
     <p>
       Industrial shed available for lease on prime location good connectivity
       from the main Dadari road. The shed is located on wide road, Its good for
@@ -17,39 +17,32 @@
     </p>
   </div>
 
-  <div
-    style="padding: 10px; background-color: white; margin-top: 10px"
-    *ngIf="data"
-  >
-    <h1>Details</h1>
-    <hr />
+  <div class="details" *ngIf="data">
+    <div><strong>Other details</strong></div>
 
     <app-details-brief
       [heading]="'Amenities'"
       [data]="data.amenities"
     ></app-details-brief>
-    <hr />
+
     <app-details-brief
       [heading]="'Equipments'"
       [data]="data.equipments"
     ></app-details-brief>
-    <hr />
+
     <app-details-brief
       [heading]="'Accreditation'"
-      [dataStr]="data.accrediatation"
+      [data]="data.accrediatation"
     ></app-details-brief>
-    <hr />
-    <h3>Documents</h3>
-    <div style="padding-left: 20px">
-      <app-details-brief
-        [heading]="'Before construction'"
-        [dataStr]="data.documents.before"
-      ></app-details-brief>
 
-      <app-details-brief
-        [heading]="'After construction'"
-        [dataStr]="data.documents.after"
-      ></app-details-brief>
-    </div>
+    <app-details-brief
+      [heading]="'Documents- Before construction'"
+      [dataStr]="data.documents.before"
+    ></app-details-brief>
+
+    <app-details-brief
+      [heading]="'Documents- After construction'"
+      [dataStr]="data.documents.after"
+    ></app-details-brief>
   </div>
 </div>

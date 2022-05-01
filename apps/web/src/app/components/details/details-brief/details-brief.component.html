@@ -1,18 +1,21 @@
-<h3>{{ heading }}</h3>
-
-<div class="wrapper">
-  <div *ngFor="let item of data" class="item">
-    <mat-icon aria-hidden="false" aria-label="check" *ngIf="item.value"
-      >check</mat-icon
-    >
-    <mat-icon aria-hidden="false" aria-label="close" *ngIf="!item.value"
-      >close</mat-icon
-    >
-    {{ item.item }}
+<div class="box">
+  <div class="heading" (click)="toggle()">
+    <mat-icon aria-hidden="false" aria-label="check">{{ arrowIcon }}</mat-icon>
+    {{ heading }}
   </div>
 
-  <div *ngFor="let item of dataStr">
-    <div class="itemStr">
+  <div class="wrapper" *ngIf="isOpen" [@enterAnimation]>
+    <div *ngFor="let item of data" class="item">
+      <mat-icon aria-hidden="false" aria-label="check" *ngIf="item.value"
+        >check</mat-icon
+      >
+      <mat-icon aria-hidden="false" aria-label="close" *ngIf="!item.value"
+        >close</mat-icon
+      >
+      {{ item.item }}
+    </div>
+
+    <div *ngFor="let item of dataStr" class="itemStr">
       <mat-icon aria-hidden="false" aria-label="close">info</mat-icon>
       <div>{{ item.item }}</div>
     </div>

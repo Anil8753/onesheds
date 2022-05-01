@@ -106,20 +106,22 @@ export class MDetailService implements IDetailService {
       },
 
       accrediatation: [
-        { item: 'AEO', value: 'Yes' },
-        { item: 'BIS/CWC/FCI Accreditation', value: 'Yes' },
-        { item: 'C-PAT', value: 'Yes' },
-        { item: 'FSSAI License', value: 'Yes' },
-        { item: 'ISO 14001', value: 'Yes' },
-        { item: 'ISO 9001', value: 'Yes' },
-        { item: 'MCX Approval', value: 'Yes' },
-        { item: 'NOC from Fire and Emergency Services', value: 'Yes' },
+        { item: 'AEO', value: true },
+        { item: 'BIS/CWC/FCI', value: false },
+        { item: 'C-PAT', value: true },
+        { item: 'FSSAI License', value: true },
+        { item: 'ISO 14001', value: false },
+        { item: 'ISO 9001', value: false },
+        { item: 'MCX Approval', value: false },
+        { item: 'Fire NOC', value: true },
         {
-          item: 'NOC from the local authority for a warehouse facility',
-          value: 'Yes',
+          item: 'NOC from the local authority ',
+          value: true,
         },
-        { item: 'NOC from the State Pollution Control Board', value: 'Yes' },
-        { item: 'WDRA Registration', value: 'Yes' },
+        { item: 'NOC from Emergency Services', value: true },
+
+        { item: 'NOC from the State Pollution Control Board', value: true },
+        { item: 'WDRA Registration', value: false },
       ],
 
       surroundings: {
