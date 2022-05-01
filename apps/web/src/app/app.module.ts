@@ -41,6 +41,10 @@ import { SliceStringPipe } from './pipes/slice-string.pipe';
 import { TextListComponent } from './controls/text-list/text-list.component';
 import { DetailsMidActionsComponent } from './components/details/details-mid-actions/details-mid-actions.component';
 import { DetailsBriefComponent } from './components/details/details-brief/details-brief.component';
+import { DetailsSurrondingComponent } from './components/details/details-surronding/details-surronding.component';
+import { DetailsDistanceComponent } from './components/details/details-distance/details-distance.component';
+import { DetailsLocalityRatingComponent } from './components/details/details-locality-rating/details-locality-rating.component';
+import { UserReviewComponent } from './controls/user-review/user-review.component';
 // import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
@@ -74,6 +78,10 @@ import { DetailsBriefComponent } from './components/details/details-brief/detail
     TextListComponent,
     DetailsMidActionsComponent,
     DetailsBriefComponent,
+    DetailsSurrondingComponent,
+    DetailsDistanceComponent,
+    DetailsLocalityRatingComponent,
+    UserReviewComponent,
   ],
   imports: [
     BrowserModule,

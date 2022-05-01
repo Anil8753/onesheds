@@ -34,12 +34,14 @@ export class DetailsBriefComponent implements OnInit {
 
   @Input() dataArray: string[] = [];
 
-  isOpen = false;
+  isOpen = true;
   arrowIcon = 'chevron_right';
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.arrowIcon = this.isOpen ? 'expand_more' : 'chevron_right';
+  }
 
   toggle() {
     this.isOpen = !this.isOpen;

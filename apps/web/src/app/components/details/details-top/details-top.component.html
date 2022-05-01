@@ -15,7 +15,8 @@
     </div>
   </div>
 
-  <div class="box-item grow-2 flex-col">
+  <div class="v-divier"></div>
+  <div class="box-item grow-2">
     <div>{{ data.name }}</div>
     <div>{{ data.address }}</div>
     <div style="flex-grow: 2"></div>
@@ -26,23 +27,49 @@
     </div>
   </div>
 
+  <div class="v-divier"></div>
   <div class="box-item grow-1">
     <app-star-rating [stars]="4"></app-star-rating>
     <app-user-review [reviews]="4"></app-user-review>
 
     <div><a href="javascript:void()">booking history</a></div>
   </div>
-  <div class="box-item" style="display: flex; flex-direction: column">
-    <button class="action-button" mat-raised-button color="primary">
-      Save for later
-    </button>
 
-    <button class="action-button" mat-raised-button color="primary">
-      Add to compare
-    </button>
+  <div class="v-divier"></div>
+  <div class="box-item">
+    <div style="display: flex; flex-direction: row">
+      <button mat-icon-button color="primary">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-icon-button color="primary">
+        <mat-icon>difference</mat-icon>
+      </button>
+      <button mat-icon-button color="primary">
+        <mat-icon>share</mat-icon>
+      </button>
+    </div>
+    <div style="margin: 5px; text-align: center">
+      <a href="javascript:void()">Draft contract</a><br />
+      <a href="javascript:void()">Terms and conditions</a>
+    </div>
+  </div>
 
-    <button class="action-button" mat-raised-button color="primary">
-      Share with friends
-    </button>
+  <div class="v-divier"></div>
+  <div class="box-item">
+    <div style="display: flex; flex-direction: row">
+      <button mat-icon-button color="primary">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-icon-button color="primary">
+        <mat-icon>difference</mat-icon>
+      </button>
+      <button mat-icon-button color="primary">
+        <mat-icon>share</mat-icon>
+      </button>
+    </div>
+    <div style="margin: 5px; text-align: center">
+      <a href="javascript:void()">Draft contract</a><br />
+      <a href="javascript:void()">Terms and conditions</a>
+    </div>
   </div>
 </div>

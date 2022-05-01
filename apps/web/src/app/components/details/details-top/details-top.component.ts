@@ -22,7 +22,7 @@ export class DetailsTopComponent implements OnInit, OnChanges {
     let change = changes['data'];
     if (change.previousValue != change.currentValue) {
       if (!!this.data) {
-        if (this.data.available) this.attractions.push('Availale');
+        if (this.data.available) this.attractions.push('Available');
         if (this.data.greenWarehouse) this.attractions.push('Green warehuse');
         if (this.data.insured) this.attractions.push('Insured');
         if (this.data.sharable) this.attractions.push('Sharable');
