@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TextFieldComponent implements OnInit {
   //
   @Input() label: string = '';
-  @Input() text: string = '';
+  @Input() text: string | null | undefined;
 
   width = 200;
 
