@@ -14,147 +14,152 @@
   </mat-card-title-group>
 
   <mat-card-content>
-    <div class="card-center-content">
-      <div>
-        <img
-          mat-card-xl-image
-          src="{{ data.thumbUrl }}"
-          style="height: 200px; width: 200px"
-        />
-      </div>
-
-      <div class="card-center-content-col">
-        <div class="m-top">
-          <b style="font-size: large">{{ data.rate }} ₹/sqft</b>
-          <small *ngIf="data.rateNegotiable"> (Negotiable)</small>
-          <small *ngIf="!data.rateNegotiable"> (Non-negotiable)</small>
+    <div style="display: flex; flex-direction: column">
+      <div class="card-center-content">
+        <div>
+          <img
+            mat-card-xl-image
+            src="{{ data.thumbUrl }}"
+            style="height: 200px; width: 200px"
+          />
         </div>
 
-        <div class="m-top">
-          <div class="wh-type" color="accent">
-            {{ data.warehouseType }}
+        <div class="card-center-content-col">
+          <div>
+            <div class="m-top">
+              <b style="font-size: large">{{ data.rate }} ₹/sqft</b>
+              <small *ngIf="data.rateNegotiable"> (Negotiable)</small>
+              <small *ngIf="!data.rateNegotiable"> (Non-negotiable)</small>
+            </div>
+
+            <div class="m-top wh-type" color="accent">
+              {{ data.warehouseType }}
+            </div>
+
+            <div class="m-top-verified">
+              <app-verification [verified]="data.verified"></app-verification>
+            </div>
+
+            <div class="m-top">
+              <app-star-rating [stars]="data.usersRating"></app-star-rating>
+            </div>
+
+            <div class="m-top">
+              <app-user-review [reviews]="data.userReviews"></app-user-review>
+            </div>
+
+            <div class="m-top">
+              <button mat-button color="primary" class="link-btn">
+                {{ data.localityRating }}/5 Locality rating
+              </button>
+            </div>
           </div>
         </div>
 
-        <div class="m-top">
-          <app-verification [verified]="data.verified"></app-verification>
+        <div class="v-divier"></div>
+
+        <div class="card-center-content-col">
+          <app-text-field
+            [label]="'Security deposit'"
+            [text]="data.securityDeposit | currency: 'INR'"
+          ></app-text-field>
+          <app-text-field
+            [label]="'Available space'"
+            [text]="(data.totalSize - data.blockedSize).toString() + ' sqft'"
+          ></app-text-field>
+          <app-text-field
+            [label]="'Total space'"
+            [text]="data.totalSize.toString() + ' sqft'"
+          ></app-text-field>
+          <app-text-field
+            [label]="'Minimum tenure'"
+            [text]="data.minTenure.toString() + ' years'"
+          ></app-text-field>
         </div>
 
-        <div class="m-top">
-          <app-star-rating [stars]="data.usersRating"></app-star-rating>
+        <div class="v-divier"></div>
+
+        <div class="card-center-content-col">
+          <app-text-field
+            [label]="'WDRA reg'"
+            [text]="data.wdraReg | yesNo"
+          ></app-text-field>
+          <app-text-field
+            [label]="'OneShedS verified'"
+            [text]="data.verified | yesNo"
+          ></app-text-field>
+          <app-text-field
+            [label]="'Operating since'"
+            [text]="data.operatingSince"
+          ></app-text-field>
+          <app-text-field
+            [label]="'Green warehouse'"
+            [text]="data.greenWarehouse | yesNo"
+          ></app-text-field>
         </div>
 
-        <div class="m-top">
-          <app-user-review [reviews]="data.userReviews"></app-user-review>
+        <div class="v-divier"></div>
+
+        <div class="card-center-content-col">
+          <app-text-field
+            [label]="'On road'"
+            [text]="data.onRoad | yesNo"
+          ></app-text-field>
+
+          <app-text-field
+            [label]="'Parking available'"
+            [text]="
+              data.parking > 0 ? data.parking.toString() : 'Not available'
+            "
+          ></app-text-field>
+          <app-text-field
+            [label]="'Shared'"
+            [text]="data.shared | yesNo"
+          ></app-text-field>
+          <app-text-field
+            [label]="'Insured'"
+            [text]="data.insured | yesNo"
+          ></app-text-field>
         </div>
 
-        <div class="m-top">
-          <button mat-button color="primary" class="link-btn">
-            {{ data.localityRating }}/5 Locality rating
+        <div class="v-divier"></div>
+        <div class="card-center-content-action-col">
+          <a
+            class="action-button"
+            mat-raised-button
+            color="primary"
+            target="_blank"
+            [routerLink]="['/detail', data.id]"
+            >View more details</a
+          >
+
+          <button class="action-button" mat-raised-button color="primary">
+            Click to shortlist
+          </button>
+
+          <button class="action-button" mat-raised-button color="primary">
+            Click to compare
+          </button>
+
+          <button class="action-button" mat-raised-button color="primary">
+            Schedule a call
+          </button>
+
+          <button class="action-button" mat-raised-button color="accent">
+            Book warehouse
           </button>
         </div>
       </div>
 
-      <div class="v-divier"></div>
+      <app-chips-list
+        class="w-resp"
+        [heading]="'Amenities'"
+        [items]="data.amenities"
+      ></app-chips-list>
 
-      <div class="card-center-content-col">
-        <app-text-field
-          [label]="'Security deposit'"
-          [text]="data.securityDeposit | currency: 'INR'"
-        ></app-text-field>
-        <app-text-field
-          [label]="'Available space'"
-          [text]="(data.totalSize - data.blockedSize).toString() + ' sqft'"
-        ></app-text-field>
-        <app-text-field
-          [label]="'Total space'"
-          [text]="data.totalSize.toString() + ' sqft'"
-        ></app-text-field>
-        <app-text-field
-          [label]="'Minimum tenure'"
-          [text]="data.minTenure.toString() + ' years'"
-        ></app-text-field>
-      </div>
-
-      <div class="v-divier"></div>
-
-      <div class="card-center-content-col">
-        <app-text-field
-          [label]="'WDRA reg'"
-          [text]="data.wdraReg | yesNo"
-        ></app-text-field>
-        <app-text-field
-          [label]="'OneShedS verified'"
-          [text]="data.verified | yesNo"
-        ></app-text-field>
-        <app-text-field
-          [label]="'Operating since'"
-          [text]="data.operatingSince"
-        ></app-text-field>
-        <app-text-field
-          [label]="'Green warehouse'"
-          [text]="data.greenWarehouse | yesNo"
-        ></app-text-field>
-      </div>
-
-      <div class="v-divier"></div>
-
-      <div class="card-center-content-col">
-        <app-text-field
-          [label]="'On road'"
-          [text]="data.onRoad | yesNo"
-        ></app-text-field>
-
-        <app-text-field
-          [label]="'Parking available'"
-          [text]="data.parking > 0 ? data.parking.toString() : 'Not available'"
-        ></app-text-field>
-        <app-text-field
-          [label]="'Shared'"
-          [text]="data.shared | yesNo"
-        ></app-text-field>
-        <app-text-field
-          [label]="'Insured'"
-          [text]="data.insured | yesNo"
-        ></app-text-field>
-      </div>
-
-      <div class="v-divier"></div>
-      <div class="card-center-content-action-col">
-        <a
-          class="action-button"
-          mat-raised-button
-          color="primary"
-          target="_blank"
-          [routerLink]="['/detail', data.id]"
-          >View more details</a
-        >
-
-        <button class="action-button" mat-raised-button color="primary">
-          Click to shortlist
-        </button>
-
-        <button class="action-button" mat-raised-button color="primary">
-          Click to compare
-        </button>
-
-        <button class="action-button" mat-raised-button color="primary">
-          Schedule a call
-        </button>
-
-        <button class="action-button" mat-raised-button color="accent">
-          Book warehouse
-        </button>
+      <div class="w-resp wh-desc text-muted">
+        {{ data.description }}
       </div>
     </div>
-
-    <app-chips-list
-      [heading]="'Amenities'"
-      [items]="data.amenities"
-    ></app-chips-list>
   </mat-card-content>
-
-  <div class="wh-desc">
-    <p class="text-muted">{{ data.description }}</p>
-  </div>
 </mat-card>

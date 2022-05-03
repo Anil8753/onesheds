@@ -23,8 +23,8 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     color: gray;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .card-center-content-action-col{
@@ -42,12 +42,18 @@
 }
 
 .m-top {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.m-top-verified {
     margin-top: 8px;
     margin-bottom: 8px;
 }
 
 .wh-type{
-
+    margin-top: 8px;
+    margin-bottom: 8px;
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 10px;
@@ -58,6 +64,24 @@
     font-size: 0.8rem;
 }
 
+.chips {
+    width: calc(100vw - 60px);
+}
 .wh-desc {
-    max-width: 800px
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100vw - 60px);
+}
+
+@media screen and (max-width: 600px) {
+    .w-resp {
+        width: calc(100vw - 60px);
+    }
+}
+
+@media screen and (min-width: 601px) {
+    .w-resp {
+        width: calc(100vw - 400px);
+    }
 }
