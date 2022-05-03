@@ -12,6 +12,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.modules';
 import { NgxGalleryModule } from 'ngx-gallery-9';
+import { MdePopoverModule } from '@material-extended/mde';
 
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SearchCtrlComponent } from './components/search-ctrl/search-ctrl.component';
@@ -47,6 +48,8 @@ import { DetailsDistanceComponent } from './components/details/details-distance/
 import { DetailsLocalityRatingComponent } from './components/details/details-locality-rating/details-locality-rating.component';
 import { UserReviewComponent } from './controls/user-review/user-review.component';
 import { DetailsContactComponent } from './components/details/details-contact/details-contact.component';
+import { RActionComponent } from './components/details/details-top/r-action/r-action.component';
+import { PriceBreakupComponent } from './components/details/details-top/price-breakup/price-breakup.component';
 // import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
@@ -85,6 +88,8 @@ import { DetailsContactComponent } from './components/details/details-contact/de
     DetailsLocalityRatingComponent,
     UserReviewComponent,
     DetailsContactComponent,
+    RActionComponent,
+    PriceBreakupComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,6 +103,7 @@ import { DetailsContactComponent } from './components/details/details-contact/de
     HttpClientModule,
     NgxSliderModule,
     NgxGalleryModule,
+    MdePopoverModule,
     GooglePlaceModule,
     // GoogleMapsModule,
   ],

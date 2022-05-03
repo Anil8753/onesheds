@@ -1,0 +1,61 @@
+<div style="display: flex; flex-direction: row">
+  <button mat-icon-button color="primary">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button color="primary">
+    <mat-icon>difference</mat-icon>
+  </button>
+  <button mat-icon-button color="primary" [matMenuTriggerFor]="socialShare">
+    <mat-icon>share</mat-icon>
+  </button>
+</div>
+<div style="margin: 5px; text-align: center">
+  <a href="javascript:void()">Draft contract</a><br />
+  <a href="javascript:void()">Terms and conditions</a>
+</div>
+
+<!----------- SOCIAL SHARE ----------------->
+<mat-menu #socialShare="matMenu">
+  <ng-template matMenuContent let-name="name">
+    <div style="padding: 10px">
+      <div>Share on</div>
+      <div style="margin: 5px">
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltip="Facebook"
+          aria-label="Facebook"
+        >
+          <i class="fa-brands fa-facebook fa-2xl"></i>
+        </button>
+
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltip="Twitter"
+          aria-label="Twitter"
+        >
+          <i class="fa-brands fa-twitter fa-2xl"></i>
+        </button>
+
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltip="Linkdin"
+          aria-label="Linkdin"
+        >
+          <i class="fa-brands fa-linkedin fa-2xl"></i>
+        </button>
+
+        <button
+          mat-icon-button
+          color="accent"
+          matTooltip="Instagram"
+          aria-label="Instagram"
+        >
+          <i class="fa-brands fa-instagram-square fa-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</mat-menu>

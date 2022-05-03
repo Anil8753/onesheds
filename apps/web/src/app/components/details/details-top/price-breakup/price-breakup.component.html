@@ -1,0 +1,130 @@
+<div *ngIf="data">
+  <span style="font-size: x-large">{{
+    data.cost.price | currency: "INR"
+  }}</span>
+  per sqft
+</div>
+
+<div>
+  <a
+    href="javascript:void(0)"
+    [mdePopoverTriggerFor]="costBreakupPopup"
+    mdePopoverTriggerOn="click"
+    #popoverTrigger="mdePopoverTrigger"
+    >Check cost breakup</a
+  >
+</div>
+
+<div>
+  <a
+    href="javascript:void(0)"
+    [mdePopoverTriggerFor]="facilitiesBreakupPopup"
+    mdePopoverTriggerOn="click"
+    #popoverTrigger="mdePopoverTrigger"
+    >See facility charges</a
+  >
+</div>
+
+<!------------------------Price breakup popup---------------------------->
+<mde-popover #costBreakupPopup="mdePopover" [mdePopoverOverlapTrigger]="false">
+  <mat-card style="box-shadow: 1px 1px 5px grey">
+    <mat-card-content>
+      <table>
+        <tr>
+          <td>
+            <app-text-field
+              [label]="'Price'"
+              [text]="(data.cost.price | currency: 'INR') + ' per sqft'"
+            ></app-text-field>
+          </td>
+          <td>
+            <app-text-field
+              [label]="'Deposit Amount'"
+              [text]="data.cost.depositAmount | currency: 'INR'"
+            ></app-text-field>
+          </td>
+          <td>
+            <app-text-field
+              [label]="'Booking Amount'"
+              [text]="data.cost.bookingAmount | currency: 'INR'"
+            ></app-text-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <app-text-field
+              [label]="'Minimum tenure'"
+              [text]="data.cost.minimumTenure + ' Years'"
+            ></app-text-field>
+          </td>
+          <td>
+            <app-text-field
+              [label]="'Rent Appreciation'"
+              [text]="data.cost.rentAppreciation + '% per year'"
+            ></app-text-field>
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</mde-popover>
+
+<!------------------------Facilities Price breakup popup----------------------------
+    facilityCharges:
+        electricityCharges: 10,
+        waterCharges: 2,
+        cleaningCharges: 1,
+        otherCharges: 2, 
+-->
+
+<mde-popover
+  #facilitiesBreakupPopup="mdePopover"
+  [mdePopoverOverlapTrigger]="false"
+>
+  <mat-card style="box-shadow: 1px 1px 5px grey">
+    <mat-card-content>
+      <table>
+        <tr>
+          <td>
+            <app-text-field
+              [label]="'Electricity Charges'"
+              [text]="
+                (data.facilityCharges.electricityCharges | currency: 'INR') +
+                ' per sqft'
+              "
+            ></app-text-field>
+          </td>
+          <td>
+            <app-text-field
+              [label]="'Water Charges'"
+              [text]="
+                (data.facilityCharges.waterCharges | currency: 'INR') +
+                ' per sqft'
+              "
+            ></app-text-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <app-text-field
+              [label]="'Cleanig Charges'"
+              [text]="
+                (data.facilityCharges.cleaningCharges | currency: 'INR') +
+                ' per sqft'
+              "
+            ></app-text-field>
+          </td>
+          <td>
+            <app-text-field
+              [label]="'Other Charges'"
+              [text]="
+                (data.facilityCharges.otherCharges | currency: 'INR') +
+                ' per sqft'
+              "
+            ></app-text-field>
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</mde-popover>

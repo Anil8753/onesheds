@@ -26,6 +26,7 @@
     "@angular/router": "~11.2.11",
     "@fortawesome/fontawesome-svg-core": "^6.1.0",
     "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@material-extended/mde": "^3.0.3",
     "ngx-gallery-9": "^1.0.6",
     "ngx-google-places-autocomplete": "^2.0.5",
     "rxjs": "~6.6.0",

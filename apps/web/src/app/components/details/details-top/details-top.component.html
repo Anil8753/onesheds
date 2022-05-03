@@ -1,36 +1,6 @@
 <div class="box" *ngIf="data">
   <div class="box-item grow-1">
-    <div>
-      <span style="font-size: x-large">{{
-        data.cost.price | currency: "INR"
-      }}</span>
-      per sqft
-    </div>
-
-    <div>
-      <a
-        href="javascript:void()"
-        [matMenuTriggerFor]="appMenu"
-        [matMenuTriggerData]="{ name: 'Sally' }"
-        >Check cost breakup</a
-      >
-    </div>
-    <div>
-      <a href="javascript:void()">See facility charges</a>
-    </div>
-    <mat-menu #appMenu="matMenu">
-      <ng-template matMenuContent let-name="name">
-        <div style="padding: 30px">
-          <strong>No breaktp</strong>
-          <p>
-            kds jfhkdjsfhjkdsfhjkdsfhkjdshf jkdshf jkfhkjh fjkdsfhkjdhf jkhdsf
-            kjdkjfhdkjs
-          </p>
-          <button>Settings</button>
-          <button mat-menu-item>Log off {{ name }}</button>
-        </div>
-      </ng-template>
-    </mat-menu>
+    <app-price-breakup [data]="data"></app-price-breakup>
   </div>
 
   <div class="v-divier"></div>
@@ -51,6 +21,11 @@
   </div>
 
   <div class="v-divier"></div>
+  <div class="box-item">
+    <app-details-contact [data]="data.contactDetails"></app-details-contact>
+  </div>
+
+  <div class="v-divier"></div>
   <div class="box-item grow-1">
     <app-star-rating [stars]="4"></app-star-rating>
     <app-user-review [reviews]="4"></app-user-review>
@@ -60,50 +35,6 @@
 
   <div class="v-divier"></div>
   <div class="box-item">
-    <app-details-contact [data]="data.contactDetails"></app-details-contact>
-  </div>
-
-  <div class="v-divier"></div>
-  <div class="box-item">
-    <div style="display: flex; flex-direction: row">
-      <button mat-icon-button color="primary">
-        <mat-icon>favorite</mat-icon>
-      </button>
-      <button mat-icon-button color="primary">
-        <mat-icon>difference</mat-icon>
-      </button>
-      <button mat-icon-button color="primary" [matMenuTriggerFor]="socialShare">
-        <mat-icon>share</mat-icon>
-      </button>
-    </div>
-    <div style="margin: 5px; text-align: center">
-      <a href="javascript:void()">Draft contract</a><br />
-      <a href="javascript:void()">Terms and conditions</a>
-    </div>
+    <app-r-action></app-r-action>
   </div>
 </div>
-
-<mat-menu #socialShare="matMenu">
-  <ng-template matMenuContent let-name="name">
-    <div style="padding: 10px">
-      <div>Share on</div>
-      <div style="margin: 5px; color: royalblue">
-        <button mat-icon-button>
-          <i class="fa-brands fa-facebook fa-2xl"></i>
-        </button>
-
-        <button mat-icon-button>
-          <i class="fa-brands fa-twitter fa-2xl"></i>
-        </button>
-
-        <button mat-icon-button>
-          <i class="fa-brands fa-linkedin fa-2xl"></i>
-        </button>
-
-        <button mat-icon-button>
-          <i class="fa-brands fa-instagram-square fa-2xl"></i>
-        </button>
-      </div>
-    </div>
-  </ng-template>
-</mat-menu>
