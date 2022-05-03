@@ -45,6 +45,7 @@ import { DetailsSurrondingComponent } from './components/details/details-surrond
 import { DetailsDistanceComponent } from './components/details/details-distance/details-distance.component';
 import { DetailsLocalityRatingComponent } from './components/details/details-locality-rating/details-locality-rating.component';
 import { UserReviewComponent } from './controls/user-review/user-review.component';
+import { DetailsContactComponent } from './components/details/details-contact/details-contact.component';
 // import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
@@ -82,6 +83,7 @@ import { UserReviewComponent } from './controls/user-review/user-review.componen
     DetailsDistanceComponent,
     DetailsLocalityRatingComponent,
     UserReviewComponent,
+    DetailsContactComponent,
   ],
   imports: [
     BrowserModule,

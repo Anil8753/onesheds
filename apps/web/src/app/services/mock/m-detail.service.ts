@@ -351,7 +351,7 @@ export class MDetailService implements IDetailService {
       },
 
       contactDetails: {
-        name: 'Manhardas',
+        name: 'Manohar Das',
         role: 'Manager',
         mobile: '98884784783',
         email: 'manohardas@saivinayakwh.com',

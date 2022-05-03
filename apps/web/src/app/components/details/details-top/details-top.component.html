@@ -42,25 +42,7 @@
 
   <div class="v-divier"></div>
   <div class="box-item">
-    <div class="contact-item">
-      <mat-icon inline="true">person</mat-icon>&nbsp;
-      {{ data.contactDetails.name }}
-    </div>
-    <div class="contact-item">
-      <mat-icon inline="true">phone</mat-icon> &nbsp;{{
-        data.contactDetails.mobile
-      }}
-    </div>
-    <div class="contact-item">
-      <mat-icon inline="true">email</mat-icon> &nbsp;{{
-        data.contactDetails.email
-      }}
-    </div>
-    <div class="contact-item">
-      <mat-icon inline="true">chat</mat-icon> &nbsp;{{
-        data.contactDetails.chat
-      }}
-    </div>
+    <app-details-contact [data]="data.contactDetails"></app-details-contact>
   </div>
 
   <div class="v-divier"></div>
