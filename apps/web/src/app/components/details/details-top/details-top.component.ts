@@ -16,6 +16,7 @@ export class DetailsTopComponent implements OnInit, OnChanges {
   //
   @Input() data: WarehouseDetail | undefined;
   attractions: string[] = [];
+
   //
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {

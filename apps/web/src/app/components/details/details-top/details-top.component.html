@@ -8,11 +8,29 @@
     </div>
 
     <div>
-      <a href="javascript:void()">Check cost breakup</a>
+      <a
+        href="javascript:void()"
+        [matMenuTriggerFor]="appMenu"
+        [matMenuTriggerData]="{ name: 'Sally' }"
+        >Check cost breakup</a
+      >
     </div>
     <div>
       <a href="javascript:void()">See facility charges</a>
     </div>
+    <mat-menu #appMenu="matMenu">
+      <ng-template matMenuContent let-name="name">
+        <div style="padding: 30px">
+          <strong>No breaktp</strong>
+          <p>
+            kds jfhkdjsfhjkdsfhjkdsfhkjdshf jkdshf jkfhkjh fjkdsfhkjdhf jkhdsf
+            kjdkjfhdkjs
+          </p>
+          <button>Settings</button>
+          <button mat-menu-item>Log off {{ name }}</button>
+        </div>
+      </ng-template>
+    </mat-menu>
   </div>
 
   <div class="v-divier"></div>
@@ -54,7 +72,7 @@
       <button mat-icon-button color="primary">
         <mat-icon>difference</mat-icon>
       </button>
-      <button mat-icon-button color="primary">
+      <button mat-icon-button color="primary" [matMenuTriggerFor]="socialShare">
         <mat-icon>share</mat-icon>
       </button>
     </div>
@@ -64,3 +82,28 @@
     </div>
   </div>
 </div>
+
+<mat-menu #socialShare="matMenu">
+  <ng-template matMenuContent let-name="name">
+    <div style="padding: 10px">
+      <div>Share on</div>
+      <div style="margin: 5px; color: royalblue">
+        <button mat-icon-button>
+          <i class="fa-brands fa-facebook fa-2xl"></i>
+        </button>
+
+        <button mat-icon-button>
+          <i class="fa-brands fa-twitter fa-2xl"></i>
+        </button>
+
+        <button mat-icon-button>
+          <i class="fa-brands fa-linkedin fa-2xl"></i>
+        </button>
+
+        <button mat-icon-button>
+          <i class="fa-brands fa-instagram-square fa-2xl"></i>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</mat-menu>
