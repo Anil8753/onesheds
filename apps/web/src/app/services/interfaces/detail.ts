@@ -1,5 +1,14 @@
 export interface IDetailService {
   get(id: string): Promise<WarehouseDetail>;
+
+  getQnA(id: string, question: string): Promise<QnA[]>;
+}
+
+export interface QnA {
+  id: string;
+  question: string;
+  answer: string;
+  answeredBy: string;
 }
 
 export interface WarehouseDetail {
@@ -112,12 +121,15 @@ export interface WarehouseDetail {
   };
 
   reviews: {
-    companyName: string;
-    userName: string;
-    rating: number;
-    feedback: string;
-    date: string;
-  }[];
+    total: number;
+    list: {
+      companyName: string;
+      userName: string;
+      rating: number;
+      feedback: string;
+      date: string;
+    }[];
+  };
 
   accrediatation: { item: string; value: boolean }[];
 

@@ -1,12 +1,14 @@
-<div style="padding: 10px; background-color: whitesmoke" *ngIf="data">
-  <app-details-top [data]="data"></app-details-top>
+<div style="background-color: whitesmoke" *ngIf="data">
+  <div class="detail-card">
+    <app-details-top [data]="data"></app-details-top>
+  </div>
 
-  <div class="mid-box-container">
+  <div class="detail-card mid-box-container">
     <app-gallery></app-gallery>
     <app-details-mid [data]="data"></app-details-mid>
   </div>
 
-  <div class="desc">
+  <div class="detail-card">
     <div><strong>Description</strong></div>
     <p>
       Industrial shed available for lease on prime location good connectivity
@@ -17,23 +19,23 @@
     </p>
   </div>
 
-  <div style="margin-top: 5px">
+  <div class="detail-card">
     <app-details-surronding [data]="data.surroundings"></app-details-surronding>
   </div>
 
-  <div class="locality-card">
+  <div class="detail-card locality-card">
     <app-details-distance
       class="box-item"
       [data]="data.distanceFrom"
     ></app-details-distance>
 
     <app-details-locality-rating
-      style="flex-grow: 3"
+      style="flex-grow: 3; padding-left: 20px"
       [data]="data.localityRatings"
     ></app-details-locality-rating>
   </div>
 
-  <div class="details">
+  <div class="detail-card">
     <div><strong>Other details</strong></div>
 
     <app-details-brief
@@ -85,5 +87,13 @@
       [heading]="'Prohibbited items'"
       [dataArray]="data.prohibbited"
     ></app-details-brief>
+  </div>
+
+  <div class="detail-card">
+    <app-reviews [data]="data.reviews"></app-reviews>
+  </div>
+
+  <div class="detail-card">
+    <app-q-n-a></app-q-n-a>
   </div>
 </div>

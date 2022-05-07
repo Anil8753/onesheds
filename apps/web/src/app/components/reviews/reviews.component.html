@@ -1,0 +1,31 @@
+<div *ngIf="data">
+  <div style="margin-bottom: 10px">
+    <span style="font-weight: bold; font-size: medium"
+      >{{ data.total }} users reviews and ratings</span
+    >
+    <a class="btn-link" href="javascript:void(0)" style="margin-left: 10px"
+      >See all</a
+    >
+  </div>
+
+  <div *ngFor="let review of data.list">
+    <mat-divider></mat-divider>
+
+    <div class="review">
+      <div class="text-muted">
+        <div>
+          {{ review.userName }}
+          <small>({{ review.companyName }}) </small>
+        </div>
+        <div class="flex-row">
+          <app-star-rating [stars]="review.rating"></app-star-rating>
+          <div>reviewed on: {{ review.date }}</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 10px">{{ review.feedback }}</div>
+    </div>
+  </div>
+
+  <a class="btn-link" href="javascript:void(0)">See all users reviews</a>
+</div>

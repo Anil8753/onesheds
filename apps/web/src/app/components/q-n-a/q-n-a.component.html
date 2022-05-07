@@ -1,0 +1,49 @@
+<div *ngIf="1">
+  <div>
+    <span style="font-size: medium; font-weight: bold"
+      >Customer questions & answers</span
+    >
+    <a class="btn-link" href="javascript:void(0)" style="margin-left: 10px"
+      >See all</a
+    >
+  </div>
+
+  <form class="search-form">
+    <mat-form-field class="search-full-width" appearance="fill">
+      <input
+        type="text"
+        placeholder="Type your question or keyword"
+        aria-label="Number"
+        matInput
+        [formControl]="formControl"
+      />
+    </mat-form-field>
+    <mat-progress-bar mode="indeterminate" *ngIf="progress"></mat-progress-bar>
+  </form>
+
+  <div class="qna-box-wrapper">
+    <div *ngFor="let entry of entries | async">
+      <div class="qna-box">
+        <div>
+          <strong>Q. {{ entry.question }}</strong>
+        </div>
+        <div><strong>A.</strong>{{ entry.answer }}</div>
+        <small
+          >By
+          <a href="javascript:void(0)" class="btn-link">{{
+            entry.answeredBy
+          }}</a></small
+        >
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="post-ques" *ngIf="!progress">
+      <span style="margin-right: 10px"
+        >Don't see the answer you're looking for?</span
+      >
+      <button mat-stroked-button color="primary">Post your question</button>
+    </div>
+  </div>
+</div>

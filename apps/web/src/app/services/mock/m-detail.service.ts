@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WarehouseDetail, IDetailService } from '../interfaces/detail';
+import { WarehouseDetail, IDetailService, QnA } from '../interfaces/detail';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +10,17 @@ export class MDetailService implements IDetailService {
 
   constructor() {
     this.initTestData();
+  }
+
+  async getQnA(id: string, question: string): Promise<QnA[]> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let entries = JSON.parse(JSON.stringify(this.initQnAData())) as QnA[];
+        entries = this.shuffleArray(entries);
+        entries = entries.slice(0, 5);
+        resolve(entries);
+      }, 1000);
+    });
   }
 
   async get(id: string): Promise<WarehouseDetail> {
@@ -190,24 +201,26 @@ export class MDetailService implements IDetailService {
         ageofConstruction: 24,
       },
 
-      reviews: [
-        {
-          companyName: 'Jayalcove Pharma',
-          userName: 'Mohan Lal',
-          rating: 4,
-          feedback:
-            'All the facilities maintioned online are available in very good condition',
-          date: '12/04/2022',
-        },
-        {
-          companyName: 'Neelkamal Furniture House',
-          userName: 'Sohan Lal',
-          rating: 5,
-          feedback:
-            'All the facilities maintioned online are available in very good condition',
-          date: '16/04/2021',
-        },
-      ],
+      reviews: {
+        total: 46,
+        list: [
+          {
+            companyName: 'Jayalcove Pharma',
+            userName: 'Mohan Lal',
+            rating: 4,
+            feedback: 'Very good staff. Smooth transacton at the time of exit',
+            date: '12/04/2022',
+          },
+          {
+            companyName: 'Neelkamal Furniture House',
+            userName: 'Sohan Lal',
+            rating: 5,
+            feedback:
+              'All the facilities maintioned online are available in very good condition',
+            date: '16/04/2021',
+          },
+        ],
+      },
 
       equipments: [
         { item: 'Forklift', value: true },
@@ -379,5 +392,109 @@ export class MDetailService implements IDetailService {
         },
       },
     };
+  }
+
+  private initQnAData(): QnA[] {
+    return [
+      {
+        id: '1',
+        question: 'Is this 5g?',
+        answer:
+          'Hey! iQOO Z6 44W comes with 4G support. Hey! iQOO Z6 comes with 5-layered liquid cooling system.',
+        answeredBy: 'Sai Vinayak Warehousing Ltd',
+      },
+      {
+        id: '2',
+        question: 'Liquid cooling system available or not?',
+        answer: 'Hey! iQOO Z6 comes with 5-layered liquid cooling system.',
+        answeredBy: 'Sai Vinayak Warehousing Ltd',
+      },
+      {
+        id: '3',
+        question: 'NFC support ?',
+        answer:
+          'Hey! There is no NFC functionality available. Hey! iQOO Z6 comes with 5-layered liquid cooling system.',
+        answeredBy: 'Sai Vinayak Warehousing Ltd',
+      },
+      {
+        id: '4',
+        question: 'Kya is phone me 5g support karega ki nahi',
+        answer: 'Hey! iQOO Z6 44W comes with 4G support in it.',
+        answeredBy: 'OneSheds',
+      },
+      {
+        id: '5',
+        question: 'Dual sim Or not?',
+        answer:
+          'Hey! iQOO Z6 44W does support expendable storage of 1TB. Hey! iQOO Z6 comes with 5-layered liquid cooling system.',
+        answeredBy: 'Sai Vinayak Warehousing Ltd',
+      },
+      {
+        id: '6',
+        question: 'Where is finger print?',
+        answer: 'Hey! iQOO Z6 4G comes with in-display fingerprint sensor.',
+        answeredBy: 'OneSheds',
+      },
+      {
+        id: '7',
+        question: 'Is this 5g?',
+        answer:
+          'Hey! iQOO Z6 44W comes with 4G support. Hey! iQOO Z6 comes with 5-layered liquid cooling system.',
+        answeredBy: 'OneSheds',
+      },
+      {
+        id: '8',
+        question: 'Is this 5g?',
+        answer:
+          'Hey! iQOO Z6 44W comes with 4G support. Hey! iQOO Z6 comes with 5-layered liquid cooling system.',
+        answeredBy: 'OneSheds',
+      },
+      {
+        id: '9',
+        question: 'How many MP camera',
+        answer:
+          'Hey! iQOO Z6 44W comes with Rear - 50MP + 2MP Macro + 2MP Bokeh and Front - 16MP. Hey! iQOO Z6 comes with 5-layered liquid cooling system.. Hey! iQOO Z6 comes with 5-layered liquid cooling system.',
+        answeredBy: 'OneSheds',
+      },
+      {
+        id: '10',
+        question: 'Is this 5g?',
+        answer:
+          'Hey! iQOO Z6 44W comes with 4G support. Hey! iQOO Z6 comes with 5-layered liquid cooling system.',
+        answeredBy: 'OneSheds',
+      },
+      {
+        id: '11',
+        question: 'Is this 5g?',
+        answer: 'Hey! iQOO Z6 44W comes with 4G support.',
+        answeredBy: 'OneSheds',
+      },
+      {
+        id: '12',
+        question: 'Is this 5g?',
+        answer: 'Hey! iQOO Z6 44W comes with 4G support.',
+        answeredBy: 'OneSheds',
+      },
+    ];
+  }
+
+  shuffleArray(array: any[]) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    return array;
   }
 }

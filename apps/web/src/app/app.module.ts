@@ -50,6 +50,8 @@ import { UserReviewComponent } from './controls/user-review/user-review.componen
 import { DetailsContactComponent } from './components/details/details-contact/details-contact.component';
 import { RActionComponent } from './components/details/details-top/r-action/r-action.component';
 import { PriceBreakupComponent } from './components/details/details-top/price-breakup/price-breakup.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
+import { QNAComponent } from './components/q-n-a/q-n-a.component';
 // import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
@@ -90,6 +92,8 @@ import { PriceBreakupComponent } from './components/details/details-top/price-br
     DetailsContactComponent,
     RActionComponent,
     PriceBreakupComponent,
+    ReviewsComponent,
+    QNAComponent,
   ],
   imports: [
     BrowserModule,
